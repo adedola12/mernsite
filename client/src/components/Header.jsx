@@ -5,10 +5,12 @@ export default function Header() {
   return (
     <header className="bg-blue-200 shadow-md">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-        <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
-          <span className="text-blue-800 ">ADLM</span>
-          <span className="text-blue-600 ">Cost</span>
-        </h1>
+        <Link to="/">
+          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
+            <span className="text-blue-800 ">ADLM</span>
+            <span className="text-blue-600 ">Cost</span>
+          </h1>
+        </Link>
 
         <form className="bg-blue-100 p-3 rounded-lg flex justify-center">
           <input
