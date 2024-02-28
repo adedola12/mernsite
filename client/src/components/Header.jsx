@@ -40,7 +40,7 @@ export default function Header() {
               <img
                 src={currentUser.avatar}
                 alt={currentUser.username.slice(-2)}
-                className="rounde-full h-7 w-7 object-cover"
+                className="rounded-full h-7 w-7 object-cover"
               />
             ) : (
               <li className="sm:inline text-blue-700 hover:underline">
