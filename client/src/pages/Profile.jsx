@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
@@ -8,14 +8,22 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase";
+import {
+  updateUserFaliure,
+  updateUserStart,
+  updateUserSuccess,
+} from "../redux/user/userSlice";
 
 export default function Profile() {
   const fileRef = useRef(null);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileError, setFileError] = useState(false);
   const [formData, setFormData] = useState({});
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (file) {
@@ -49,11 +57,41 @@ export default function Profile() {
     );
   };
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFaliure(data.message));
+        return;
+      }
+
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(updateUserFaliure(error.message));
+    }
+  };
+
   return (
     <div className="items-center justify-center p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-7">Profile</h1>
 
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           onChange={(e) => setFile(e.target.files[0])}
           type="file"
@@ -63,7 +101,7 @@ export default function Profile() {
         />
         <img
           onClick={() => fileRef.current.click()}
-          src={formData.avatar || currentUser.avatar}
+          src={formData?.avatar || currentUser.avatar}
           alt="profileImage"
           className="rounded-full h-32 w-32 self-center object-cover cursor-pointer"
         />
@@ -83,41 +121,49 @@ export default function Profile() {
 
         <input
           type="text"
-          value={currentUser.username}
+          defaultValue={currentUser.username}
           id="username"
           className="border p-3 rounded-lg"
-          disabled
+          onChange={handleChange}
         />
         <input
           type="email"
-          value={currentUser.email}
+          defaultValue={currentUser.email}
           id="email"
           className="border p-3 rounded-lg"
-          disabled
+          onChange={handleChange}
         />
         <input
           type="password"
           placeholder="Password"
           id="password"
           className="border p-3 rounded-lg"
+          onChange={handleChange}
         />
 
-        <button className="bg-blue-400 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80">
-          UPDATE
+        <button
+          className="bg-blue-400 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "loading" : "update"}
         </button>
-        <button className="bg-blue-800 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80">
+        {/* <button className="bg-blue-800 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80">
           CREATE LISTING
-        </button>
-
-        <div className="flex gap-5 justify-between my-3">
-          <Link>
-            <p className="text-red-600">Delete Account</p>
-          </Link>
-          <Link>
-            <p className="text-red-600">Sign out</p>
-          </Link>
-        </div>
+        </button> */}
       </form>
+      <div className="flex gap-5 justify-between my-3">
+        <Link>
+          <p className="text-red-600">Delete Account</p>
+        </Link>
+        <Link>
+          <p className="text-red-600">Sign out</p>
+        </Link>
+      </div>
+      <p className="text-red-700 mt-3">{error ? error : " "}</p>
+      <p className="text-green-700">
+        {updateSuccess ? "User is Updated successfully!!" : " "}
+      </p>
     </div>
   );
 }
