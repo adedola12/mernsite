@@ -9,6 +9,9 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import {
+  deleteUserFaliure,
+  deleteUserStart,
+  deleteUserSuccess,
   updateUserFaliure,
   updateUserStart,
   updateUserSuccess,
@@ -87,6 +90,27 @@ export default function Profile() {
     }
   };
 
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(deleteUserFaliure(data.message));
+        return;
+      }
+
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFaliure(error.message));
+    }
+  };
+
   return (
     <div className="items-center justify-center p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-7">Profile</h1>
@@ -153,12 +177,11 @@ export default function Profile() {
         </button> */}
       </form>
       <div className="flex gap-5 justify-between my-3">
-        <Link>
-          <p className="text-red-600">Delete Account</p>
-        </Link>
-        <Link>
-          <p className="text-red-600">Sign out</p>
-        </Link>
+        <p className="text-red-600 cursor-pointer" onClick={handleDeleteUser}>
+          Delete Account
+        </p>
+
+        <p className="text-red-600 cursor-pointer">Sign out</p>
       </div>
       <p className="text-red-700 mt-3">{error ? error : " "}</p>
       <p className="text-green-700">

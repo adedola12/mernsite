@@ -39,7 +39,7 @@ export default function Header() {
             {currentUser ? (
               <img
                 src={currentUser.avatar}
-                alt={currentUser.username.slice(-2)}
+                alt="pp"
                 className="rounded-full h-7 w-7 object-cover"
               />
             ) : (
