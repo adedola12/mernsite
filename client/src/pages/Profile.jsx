@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -12,6 +12,9 @@ import {
   deleteUserFaliure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutFaliure,
+  signOutSuccess,
+  signOutUser,
   updateUserFaliure,
   updateUserStart,
   updateUserSuccess,
@@ -27,6 +30,7 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (file) {
@@ -106,8 +110,30 @@ export default function Profile() {
       }
 
       dispatch(deleteUserSuccess(data));
+      navigate("/sign-in");
     } catch (error) {
       dispatch(deleteUserFaliure(error.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUser());
+
+      const res = await fetch("/api/auth/signout");
+
+      const data = await res.json();
+
+      if (data.success === false) {
+        dispatch(signOutFaliure(data.message));
+        return;
+      }
+
+      dispatch(signOutSuccess(data));
+
+      navigate("/sign-in");
+    } catch (error) {
+      dispatch(signOutFaliure(error.message));
     }
   };
 
@@ -181,7 +207,9 @@ export default function Profile() {
           Delete Account
         </p>
 
-        <p className="text-red-600 cursor-pointer">Sign out</p>
+        <p className="text-red-600 cursor-pointer" onClick={handleSignOut}>
+          Sign out
+        </p>
       </div>
       <p className="text-red-700 mt-3">{error ? error : " "}</p>
       <p className="text-green-700">
