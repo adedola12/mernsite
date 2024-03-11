@@ -198,9 +198,12 @@ export default function Profile() {
         >
           {loading ? "loading" : "update"}
         </button>
-        <button className="bg-blue-800 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80">
+        <Link
+          to={"/create-listing"}
+          className="bg-blue-800 text-white text-center text-bold rounded-lg max-w-auto uppercase p-3 hover:opacity-80"
+        >
           CREATE LISTING
-        </button>
+        </Link>
       </form>
       <div className="flex gap-5 justify-between my-3">
         <p className="text-red-600 cursor-pointer" onClick={handleDeleteUser}>
@@ -211,8 +214,10 @@ export default function Profile() {
           Sign out
         </p>
       </div>
-      <Link to="/show-listing">
-        <p className="text-blue-800 text-center cursor-pointer">Show Listing</p>
+      <Link to={"/show-listing"}>
+        <p className="text-blue-800 text-center cursor-pointer hover:opacity-70">
+          Show Listing
+        </p>
       </Link>
       <p className="text-red-700 mt-3">{error ? error : " "}</p>
       <p className="text-green-700">
