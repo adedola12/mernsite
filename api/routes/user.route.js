@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteUser,
+  getUserListings,
   test,
   updateUser,
 } from "../controllers/user.controller.js";
