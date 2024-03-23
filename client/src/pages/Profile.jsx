@@ -31,6 +31,7 @@ export default function Profile() {
   const [showListingError, setShowListingError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const [deleteListingError, setDeleteListingError] = useState(false);
+  const [editListingError, setEditListingError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -179,6 +180,24 @@ export default function Profile() {
     }
   };
 
+  const handleListingEdit = async (listingId) => {
+    try {
+      setEditListingError(false);
+
+      const res = await fetch(`/api/listing/update/${listingId}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        setEditListingError(true);
+        return;
+      }
+    } catch (error) {
+      setEditListingError(true);
+    }
+  };
+
   return (
     <div className="items-center justify-center p-3 max-w-lg mx-auto">
       <h1 className="font-bold text-3xl text-center my-7">Profile</h1>
@@ -303,7 +322,14 @@ export default function Profile() {
                 >
                   Delete
                 </button>
-                <button className="text-green-700 uppercase">Edit</button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button
+                    className="text-green-700 uppercase"
+                    //onClick={() => handleListingEdit(listing._id)}
+                  >
+                    Edit
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
