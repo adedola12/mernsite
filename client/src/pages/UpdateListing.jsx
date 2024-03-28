@@ -45,6 +45,7 @@ export default function UpdateListing() {
         console.log(data.message);
         return;
       }
+
       setFormData(data);
     };
 
@@ -131,10 +132,17 @@ export default function UpdateListing() {
       e.target.type === "text" ||
       e.target.type === "textarea"
     ) {
-      setFormData({
-        ...formData,
-        [e.target.id]: e.target.value,
-      });
+      if (e.target.id === "discountedPrice") {
+        setFormData({
+          ...formData,
+          discountPrice: parseFloat(e.target.value),
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [e.target.id]: e.target.value,
+        });
+      }
     }
   };
 
@@ -143,8 +151,10 @@ export default function UpdateListing() {
     try {
       if (+formData.imageUrls.length < 1)
         return setError("You must upload atleast one image");
+
       if (+formData.regularPrice < formData.discountPrice)
         return setError("Discount price must be lower than regular price");
+
       setLoading(true);
       setError(false);
 

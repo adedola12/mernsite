@@ -265,6 +265,12 @@ export default function Profile() {
         >
           CREATE LISTING
         </Link>
+        <Link
+          to={"/create-product"}
+          className="bg-blue-800 text-white text-center text-bold rounded-lg max-w-auto uppercase p-3 hover:opacity-80"
+        >
+          CREATE PRODUCT
+        </Link>
       </form>
       <div className="flex gap-5 justify-between my-3">
         <p className="text-red-600 cursor-pointer" onClick={handleDeleteUser}>

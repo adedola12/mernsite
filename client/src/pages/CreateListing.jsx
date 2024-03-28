@@ -323,7 +323,8 @@ export default function CreateListing() {
               onChange={(e) => setFiles(e.target.files)}
             />
             <button
-              className="p3 text-blue-600 border p-3 border-blue-300 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              className="p3 text-blue-600 border p-3 border-blue-300 rounded 
+              uppercase hover:shadow-lg disabled:opacity-80"
               onClick={handleImageSubmit}
               type="button"
               disabled={uploading}
