@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
+import { useSelector } from "react-redux";
 import "swiper/css/bundle";
 import {
   FaBath,
@@ -13,6 +14,7 @@ import {
   FaParking,
   FaShare,
 } from "react-icons/fa";
+import Contact from "../components/Contact";
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -20,6 +22,8 @@ export default function Listing() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [contact, setContact] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   const params = useParams();
 
@@ -113,7 +117,7 @@ export default function Listing() {
               <span className="font-semibold text-black"> Description - </span>
               {listing.description}
             </p>
-            <ul className="flex gap-4 items-center sm:gap-6 text-blue-900 font-semibold text-sm">
+            <ul className="flex gap-4 items-center sm:gap-6 text-blue-900 font-semibold text-sm flex-wrap">
               <li className="flex items-center gap-1 whitespace-nowrap">
                 <FaBed className="text-lg" />
                 {listing.bedrooms > 1
@@ -135,10 +139,15 @@ export default function Listing() {
                 {listing.furnished ? ` Furnished` : ` Not furnished`}
               </li>
             </ul>
-
-            <button className="bg-blue-700 text-white font-semibold rounded-lg p-3 uppercase hover:opacity-70">
-              Contact Seller
-            </button>
+            {currentUser && listing.userRef != currentUser._id && !contact && (
+              <button
+                className="bg-blue-700 text-white font-semibold rounded-lg p-3 uppercase hover:opacity-70"
+                onClick={() => setContact(true)}
+              >
+                Contact Seller
+              </button>
+            )}
+            {contact && <Contact listing={listing} />}
           </div>
         </div>
       )}
