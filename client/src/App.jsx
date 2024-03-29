@@ -15,6 +15,7 @@ import Marketplace from "./pages/Marketplace";
 import Pricing from "./pages/Pricing";
 import Services from "./pages/Services";
 import Newsletter from "./pages/Newsletter";
+import Search from "./pages/Search";
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route path="/product/:productId" element={<Product />} />
+        <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />} />
