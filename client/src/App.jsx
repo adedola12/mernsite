@@ -11,6 +11,10 @@ import UpdateListing from "./pages/UpdateListing";
 import Listing from "./pages/Listing";
 import CreateProduct from "./pages/CreateProduct";
 import Product from "./pages/Product";
+import Marketplace from "./pages/Marketplace";
+import Pricing from "./pages/Pricing";
+import Services from "./pages/Services";
+import Newsletter from "./pages/Newsletter";
 
 export default function App() {
   return (
@@ -21,6 +25,11 @@ export default function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/newsletter" element={<Newsletter />} />
+        <Route path="/product" element={<Product />} />
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route path="/product/:productId" element={<Product />} />
 
