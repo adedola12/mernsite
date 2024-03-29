@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState(" ");
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,12 +76,12 @@ export default function Header() {
         >
           <input
             type="text"
-            placeholder="search"
+            placeholder="Search..."
             className="bg-transparent focus:outline-none w-15 sm:w-30"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button type="submit" onClick={handleSubmit}>
+          <button>
             <FaSearch className="text-gray-75" />
           </button>
         </form>
