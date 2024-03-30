@@ -26,10 +26,8 @@ export default function ListingItem({ listing }) {
             {listing.description}
           </p>
           <p className="text-slate-500 mt-2 font-semibold">
-            N
-            {listing.offer
-              ? listing.discountPrice.toLocaleString("en-US")
-              : listing.regularPrice.toLocaleString("en-US")}
+            {listing.regularPrice}
+            {/* {listing.offer ? listing.discountPrice : listing.regularPrice} */}
             {listing.rent === "rent" && "/ month"}
           </p>
           <div className="flex gap-4 text-slate-700">
