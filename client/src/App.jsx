@@ -16,6 +16,7 @@ import Pricing from "./pages/Pricing";
 import Services from "./pages/Services";
 import Newsletter from "./pages/Newsletter";
 import Search from "./pages/Search";
+import HomeA from "./pages/HomeA";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/homeA" element={<HomeA />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />

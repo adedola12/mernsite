@@ -1,4 +1,10 @@
-import { FaSearch } from "react-icons/fa";
+import {
+  FaArrowDown,
+  FaBars,
+  FaCamera,
+  FaSearch,
+  FaTimes,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -6,6 +12,8 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState(" ");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -27,51 +35,115 @@ export default function Header() {
     }
   }, [location.search]);
 
+  const handleMouseEnter = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDropdownOpen(isDropdownOpen);
+  };
+
+  const handleToggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className="bg-white shadow-md">
-      <div className="flex justify-between items-center max-w-8xl mx-auto p-4">
-        <Link to="/">
-          <h1 className="font-bold text-sm sm:text-xl flex flex-wrap ml-5">
-            <span className="text-blue-800 ">ADLM</span>
-            <span className="text-blue-600 ">Cost</span>
-          </h1>
-        </Link>
+      <div className="container mx-auto p-4 flex max-w-full items-center justify-between">
+        <div className="">
+          <Link to="/" className="flex-shrink-0 object-contain">
+            <img
+              src="..\logo\ADLM Studio Logo PNG-07.png"
+              alt="adlmlogo"
+              className="w-10 h-10 lg:w-18 lg:h-18"
+            />
+          </Link>
+        </div>
 
-        <ul className="flex gap-4 max-w-5">
-          <Link to="/">
-            <li className="hidden sm:inline text-gray-600 hover:underline">
-              Home
-            </li>
+        {/* Hambuger Icon */}
+        <div className="md:hidden">
+          <button onClick={handleToggleMenu} className="m-02">
+            {isMenuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
+
+        <nav
+          className={`md:flex md:gap-4 md:flex-row md:relative md:h-0 md:mt-0 md:translate-x-0 md:w-90 md:p-0 md:mb-2 md:ml-0 ${
+            isMenuOpen ? "block" : "hidden"
+          } translate-x-full top-0 w-56 mt-12 flex flex-col gap-4 ml-20 bg-white shadow-lg p-4 z-20 transition-transform duration-300 h-[22vh] absolute transform`}
+        >
+          {/* Menu Items */}
+          <Link to="/HomeA" className="hover:opacity-45">
+            Home
           </Link>
-          <Link to="/marketplace">
-            <li className="hidden sm:inline text-gray-600  hover:underline">
-              Marketplace
-            </li>
+          <Link to="/marketplace" className="hover:opacity-45">
+            Marketplace
           </Link>
-          <Link to="/pricing">
-            <li className="hidden sm:inline text-gray-600  hover:underline">
-              Pricing
-            </li>
+          <Link to="/pricing" className="hover:opacity-45">
+            Pricing
           </Link>
-          <Link to="/services">
-            <li className="hidden sm:inline text-gray-600  hover:underline">
-              Services
-            </li>
+          <Link to="/services" className="hover:opacity-45">
+            Services
           </Link>
-          <Link to="/product">
-            <li className="hidden sm:inline text-gray-600  hover:underline">
-              Product
-            </li>
+
+          <div className="relative ">
+            <button
+              className="flex flex-row items-center gap-2"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <p className="hover:opacity-45">Product</p>
+              <FaArrowDown className="text-sm" />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 w-56 mt-2 py-2 bg-white border rounded shadow-xl flex flex-col p-3">
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/planswift-plugin"}
+                >
+                  Planswift Plugin
+                </Link>
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/rate-gen"}
+                >
+                  Rate Generator
+                </Link>
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/bim-course"}
+                >
+                  BIM Course
+                </Link>
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/ms-project"}
+                >
+                  Microsoft Project Course
+                </Link>
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/mat-lab-gen"}
+                >
+                  Material and Labour Generator
+                </Link>
+                <Link
+                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  to={"/revit-plugin"}
+                >
+                  Revit Plugin
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <Link to="/newsletter" className="hover:opacity-45">
+            Newsletter
           </Link>
-          <Link to="/newsletter">
-            <li className="hidden sm:inline text-gray-600  hover:underline">
-              Newsletter
-            </li>
-          </Link>
-        </ul>
+        </nav>
 
         <form
-          className="bg-gray-50 p-3 rounded-lg flex justify-center"
+          className="bg-gray-500 p-3 rounded-lg hidden justify-center lg:flex"
           onSubmit={handleSubmit}
         >
           <input
@@ -86,7 +158,7 @@ export default function Header() {
           </button>
         </form>
 
-        <Link to="/profile">
+        <Link to="/profile" className="">
           {currentUser ? (
             <img
               src={currentUser.avatar}
