@@ -11,6 +11,16 @@ export const createProduct = async (req, res, next) => {
   }
 };
 
+export const getCategories = async (req, res, next) => {
+  try {
+    const categories = await Product.distinct("categories");
+
+    res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // export const getCategories = async (req, res, next) => {
 //   try {
 //     const categories = Product.schema.path("categories").enumValues;

@@ -33,8 +33,6 @@ export default function CreateProduct() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  console.log(formData);
-
   const categories = [
     "Concrete",
     "Reinforcement",
@@ -133,7 +131,7 @@ export default function CreateProduct() {
       });
 
       const data = await res.json();
-      console.log(data);
+
       setLoading(false);
 
       if (data.success === false) {

@@ -7,34 +7,17 @@ import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import ImageSlider from "../components/ImageSlider";
+import SideBar from "../components/SideBar";
+import ProductItem from "../components/productItem";
 
 export default function HomeA() {
-  const [listing, setListing] = useState([]);
-
-  SwiperCore.use([Navigation]);
-
-  console.log(listing);
-
-  useEffect(() => {
-    const fetchListing = async () => {
-      try {
-        const res = await fetch("api/listing/get");
-        const data = await res.json();
-
-        setListing(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchListing();
-  }, []);
+  const [products, setProducts] = useState([]);
 
   return (
     <main className=" max-w-full">
       <div className="ml-[200px]">
         {/* Top Section */}
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-col md:flex-row">
           <div className="my-[100px] pt-10">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3 items-center gap-3 w-[350px]">
               <Link to={"/product"} className=" font-[Inter]">
@@ -42,7 +25,7 @@ export default function HomeA() {
               </Link>
               <FaArrowRight className="items-center" />
             </div>
-            <h1 className="text-3xl font-bold sm:text-8xl">
+            <h1 className="text-3xl font-bold sm:text-8xl md:text-8xl">
               Quantity
               <span className="text-[#9747FF]"> takeoff</span> <br /> just got
               easier <br /> and faster
@@ -65,50 +48,71 @@ export default function HomeA() {
               />
             </div>
             <div className="flex gap-3 mt-3">
-              <button className="bg-black border text-white p-4 rounded-lg  hover:bg-transparent hover:text-black">
+              <Link
+                to={"https://wa.me/message/HS7PK467KV53I1"}
+                className="bg-black border text-white p-4 rounded-lg  hover:bg-transparent hover:text-black"
+              >
                 Request a demo
-              </button>
-              <button className="border rounded-lg p-4 flex gap-3 items-center  hover:bg-black hover:text-white">
+              </Link>
+              <Link
+                to={"https://youtube.com/@ADLMStudio?si=Ul6dJx4YRVu-IR79"}
+                className="border rounded-lg p-4 flex gap-3 items-center  hover:bg-black hover:text-white"
+              >
                 <FaPlay className="bg-transparent" /> Watch Video
-              </button>
+              </Link>
             </div>
           </div>
           <div>
             <ImageSlider />
           </div>
-          {/* <div className="flex items-center justify-end">
-          <Swiper navigation>
-            {listing.map((list) => (
-              <SwiperSlide key={list._id}>
-                <div
-                  style={{
-                    background: `url(${list.imageUrls[0]}) center no-repeat`,
-                    backgroundSize: "contain md:cover",
-                  }}
-                  className="h-[700px] w-[500px]"
-                  key={list._id}
-                ></div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div> */}
         </div>
       </div>
       {/* Explore Market Place */}
-      <div className="bg-gray-300">
+      <div className="bg-[#F5F5F5]">
         <div className="ml-[200px]">
           <h2 className="font-semibold text-6xl pt-4">Expolre Marketplace</h2>
           <div className="flex gap-4 my-5">
             <div className="">
-              <div className="w-[60px] h-[60px]">
+              <div className="w-[80px] h-[80px]">
                 <img
                   src="..\logo\ADLM Studio Logo PNG-07.png"
                   alt=""
                   className="object-contain"
                 />
               </div>
+              <div>
+                <SideBar />
+              </div>
             </div>
-            <div>Market Items Search Result</div>
+            <div className="flex flex-col gap-6">
+              <h2 className="font-semibold text-3xl pt-4">ADLM Marketplace</h2>
+              <div className="m-4 flex gap-4 justify-between w-full">
+                <input
+                  type="text"
+                  className="border bg-[#F1F1F1] rounded-lg p-5 "
+                  placeholder="location"
+                  name="location"
+                />
+                <input
+                  type="text"
+                  className="border rounded-lg p-5 "
+                  placeholder="city"
+                  name="city"
+                />
+                <input
+                  type="text"
+                  className="border rounded-lg p-5 "
+                  placeholder="Product Type"
+                  name="productType"
+                />
+              </div>
+              <div className="">
+                {products &&
+                  products.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

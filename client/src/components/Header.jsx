@@ -48,8 +48,8 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-md">
-      <div className="container mx-auto p-4 flex max-w-full items-center justify-between">
+    <header className="bg-white shadow-md z-50 top-0">
+      <div className="container mx-auto p-4 flex max-w-full items-center fixed justify-between bg-white shadow-md">
         <div className="">
           <Link to="/" className="flex-shrink-0 object-contain">
             <img
@@ -143,7 +143,7 @@ export default function Header() {
         </nav>
 
         <form
-          className="bg-gray-500 p-3 rounded-lg hidden justify-center lg:flex"
+          className="bg-gray-200 p-3 rounded-lg hidden justify-center lg:flex"
           onSubmit={handleSubmit}
         >
           <input
