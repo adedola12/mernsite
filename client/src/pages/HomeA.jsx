@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FaArrowDown, FaArrowRight, FaPlay, FaStar } from "react-icons/fa";
+import {
+  FaArrowDown,
+  FaArrowLeft,
+  FaArrowRight,
+  FaPlay,
+  FaStar,
+} from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -275,6 +281,60 @@ export default function HomeA() {
         </div>
       </div>
       {/* Ready to serve */}
+      <div className="my-[160px] mx-[190px] ">
+        <div className="flex flex-col gap-3">
+          <h2 className="font-bold text-[56px] line-clamp-1">
+            We are here to serve you
+          </h2>
+          <p className="text-[#828282] font-normal text-[16px]">
+            Here are some of the serviecs you tend to benefit when you use tthe
+            ADLM Plugin
+          </p>
+        </div>
+        <div className="flex md:flex-row flex-col mt-6  gap-8 justify-center">
+          <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
+            <div className="flex flex-col">
+              <div className="mt-[25px] ml-[34px] w-[64px] h-[64px] rounded-lg bg-white">
+                <img src="" alt="Training Icon" />
+              </div>
+              <div className="md:mt-[200px] mt-[50px] flex flex-col gap-4">
+                <h2 className="text-[#212121] font-bold text-[32px]">
+                  Training
+                </h2>
+                <p className="text-[#828282]">
+                  Innovative digital learning that focus on training people on
+                  how to use BIM tools to carry out 4D, 5D, 6D designs projects
+                </p>
+              </div>
+            </div>
+          </Link>
+          <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
+            <div className="flex flex-col">
+              <div className="mt-[25px] ml-[34px] w-[64px] h-[64px] rounded-lg bg-white">
+                <img src="" alt="Installation Icon" />
+              </div>
+              <div className="md:mt-[200px] mt-[50px] flex flex-col gap-4">
+                <h2 className="text-[#212121] font-bold text-[32px]">
+                  Installation
+                </h2>
+                <p className="text-[#828282]">
+                  Learn to install plugin and software for use on each
+                  construction project
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="items-center justify-center my-[30px] flex gap-8">
+          <div className="flex items-center justify-center w-10 h-10 text-gray-600 border-2 border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none ">
+            <FaArrowLeft />
+          </div>
+          <div className="flex items-center justify-center w-10 h-10 text-gray-600 border-2 border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none ">
+            <FaArrowRight />
+          </div>
+        </div>
+      </div>
+
       {/* Client Reviews */}
       {/* News Letter */}
     </main>
