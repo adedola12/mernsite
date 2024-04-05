@@ -45,7 +45,7 @@ export default function SideBar({ onCategorySelect }) {
               <div
                 key={index}
                 onClick={() => handleClick(item)}
-                className={`flex items-center p-4 rounded-lg ${
+                className={`flex items-center justify-between p-4 rounded-lg ${
                   activeCategory === item
                     ? "bg-blue-500 text-white"
                     : "bg-[#ECECEC] "

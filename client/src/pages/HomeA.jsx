@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaArrowRight, FaPlay } from "react-icons/fa";
+import { FaArrowDown, FaArrowRight, FaPlay, FaStar } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,6 +11,7 @@ import SideBar from "../components/SideBar";
 import ProductItem from "../components/productItem";
 import { MdLocationOn } from "react-icons/md";
 import StateSelector from "../components/StateSelector";
+import TypeSelector from "../components/TypeSelector";
 
 export default function HomeA() {
   const [categoryData, setCategoryData] = useState({
@@ -25,7 +26,13 @@ export default function HomeA() {
   console.log(products);
 
   const handleCategorySelect = (category) => {
-    navigate(`?categories=${category}`);
+    const urlParams = new URLSearchParams(location.search);
+    if (category) {
+      urlParams.set("categories", category);
+    } else {
+      urlParams.delete("categories");
+    }
+    navigate(`?${urlParams.toString()}`, { replace: true });
   };
 
   const handleStateSelected = (newState) => {
@@ -37,6 +44,17 @@ export default function HomeA() {
     }
 
     // This will update the URL without navigating
+    navigate(`?${urlParams.toString()}`, { replace: true });
+  };
+
+  const handleTypeSelected = (newType) => {
+    const urlParams = new URLSearchParams(location.search);
+    if (newType) {
+      urlParams.set("type", newType);
+    } else {
+      urlParams.delete("type");
+    }
+
     navigate(`?${urlParams.toString()}`, { replace: true });
   };
 
@@ -76,38 +94,28 @@ export default function HomeA() {
   }, [location.search]);
 
   return (
-    <main className=" max-w-full">
-      <div className="ml-[200px]">
-        {/* Top Section */}
-        <div className="flex justify-between flex-col md:flex-row">
-          <div className="my-[100px] pt-10">
-            <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3 items-center gap-3 w-[350px]">
-              <Link to={"/product"} className=" font-[Inter]">
+    <main className="min-h-screen">
+      {/* Top Section */}
+      <div className="w-full">
+        <div className="flex flex-col md:flex-row md:justify-between py-16 px-4 sm:px-0 lg:px-0  gap-5">
+          <div className="flex flex-col gap-5 md:mt-[149px] mt-10 pl-[102px]">
+            <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3 items-center gap-3 w-[280px]">
+              <Link to={"/product"} className=" font-[Inter] text-[14px]">
                 Construction management plugin
               </Link>
-              <FaArrowRight className="items-center" />
+              <FaArrowRight className="items-center w-[16px] h-[16px]" />
             </div>
-            <h1 className="text-3xl font-bold sm:text-8xl md:text-8xl">
+            <h1 className="text-3xl font-bold sm:text-5xl md:text-7xl font-[DMSans]">
               Quantity
               <span className="text-[#9747FF]"> takeoff</span> <br /> just got
               easier <br /> and faster
             </h1>
-            <div className="flex items-center p-1 border rounded-full bg-purple-100 w-[150px]">
-              <img
-                src="https://www.bing.com/th?id=OIP.PztowP3ljup0SM75tkDimQHaHa&w=110&h=109&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-                alt="image"
-                className="h-[30px] w-[30px] rounded-[50%] object-cover border"
-              />
-              <img
-                src="https://www.bing.com/th?id=OIP.PztowP3ljup0SM75tkDimQHaHa&w=110&h=109&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-                alt="image"
-                className="h-[30px] w-[30px] rounded-[50%] object-cover border"
-              />
-              <img
-                src="https://www.bing.com/th?id=OIP.PztowP3ljup0SM75tkDimQHaHa&w=110&h=109&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2"
-                alt="image"
-                className="h-[30px] w-[30px] rounded-[50%] object-cover border"
-              />
+            <div className="flex flex-wrap items-center p-1 w-full">
+              <p className="">
+                ADLM studio provides a door to the world of amazing knowledge
+                and skill required for the usage of BIM tools to be within the
+                reach of Nigeria and Africa construction industry as a whole.
+              </p>
             </div>
             <div className="flex gap-3 mt-3">
               <Link
@@ -124,16 +132,18 @@ export default function HomeA() {
               </Link>
             </div>
           </div>
-          <div>
+          <div className="sm:block hidden h-full ml-[100px]">
             <ImageSlider />
           </div>
         </div>
       </div>
       {/* Explore Market Place */}
-      <div className="bg-[#F5F5F5]">
-        <div className="ml-[200px]">
-          <h2 className="font-semibold text-6xl pt-4">Expolre Marketplace</h2>
-          <div className="flex gap-4 my-5">
+      <div className="bg-[#F5F5F5] flex gap-4 ">
+        <div className="pl-[102px] w-full">
+          <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
+            Explore Marketplace
+          </h2>
+          <div className="flex md:flex-row flex-col gap-4 my-5">
             <div className="">
               <div className="w-[80px] h-[80px]">
                 <img
@@ -156,14 +166,9 @@ export default function HomeA() {
                 </div>
                 {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
                 <StateSelector onStateSelected={handleStateSelected} />
-                <input
-                  type="text"
-                  className="border rounded-lg p-5 "
-                  placeholder="Product Type"
-                  name="productType"
-                />
+                <TypeSelector onTypeSelected={handleTypeSelected} />
               </div>
-              <div className="flex gap-4 flex-wrap p-8 w-full justify-between">
+              <div className="flex gap-4 flex-wrap p-8 w-full ">
                 {products &&
                   products.map((product) => (
                     <ProductItem key={product._id} product={product} />
@@ -173,8 +178,102 @@ export default function HomeA() {
           </div>
         </div>
       </div>
-      {/* Unlock Feartures */}
+      {/* Unlock Features */}
+      <div className="flex md:flex-row flex-col items-start justify-between">
+        <div className="h-[382px] mt-[152px] ml-[121px] flex flex-col  gap-5">
+          <h2 className="font-bold text-5xl md-4">
+            Unlock features of the
+            <span className="text-[#E3B309]"> plugin</span>
+          </h2>
+          <ul className="space-y-2 text-[#828282]">
+            <li className="flex gap-2 items-center">
+              <FaStar />
+              <p>Rates</p>
+            </li>
+            <li className="flex gap-2 items-center">
+              <FaStar />
+              <p>Export to excel</p>
+            </li>
+            <li className="flex gap-2 items-center">
+              <FaStar />
+              <p>Reports</p>
+            </li>
+            <li className="flex gap-2 items-center">
+              <FaStar />
+              <p>Material schedule for measured works</p>
+            </li>
+          </ul>
+          <Link className="mt-4 flex items-center justify-between rounded-lg border bg-[#E4E7EC] w-[150px] py-3 px-6">
+            Learn more
+            <FaArrowDown />
+          </Link>
+        </div>
+        <div className="w-full md:w-1/2">
+          <img
+            src="../sliderImages/ADLM Training Teazer.jpg"
+            alt=""
+            className="inset-0 w-full h-full object-cover object-right"
+          />
+        </div>
+      </div>
       {/* Intergration  */}
+      <div className="bg-[#F5F5F5] flex flex-col md:flex-row md:items-center md:justify-between px-8 py-16">
+        <div className="flex flex-col space-y-5 md:space-y-7 w-[510px] ml-[189px] mt-[89px]">
+          <h2 className="font-bold text-5xl text-[#1D1D1D]">
+            Intergration with other Product
+          </h2>
+          <p className="text-[#1D1D1D] w-[405px]">
+            Learn how teams of all sizes are using ADLM integrate with other
+            products to create value.
+          </p>
+          <div className="flex space-x-5 ">
+            <div className="w-[246px] border-t-2 border-black">
+              <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">10,000</h3>
+              <p className="text-[#828282]">
+                Vendors from all over the country
+              </p>
+            </div>
+            <div className="w-[246px] border-t-2 border-black">
+              <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">50,000</h3>
+              <p className="text-[#828282]">Users Uses ADLM Plugins</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center items-center mt-10 md:mt-0 md:mr-6">
+          <div className="grid grid-cols-2 gap-5">
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+            <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
+              MsProject
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Ready to serve */}
       {/* Client Reviews */}
       {/* News Letter */}

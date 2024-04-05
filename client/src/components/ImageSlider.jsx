@@ -20,11 +20,11 @@ export default function ImageSlider() {
   }, [images.length]);
 
   return (
-    <div className="w-[400px] items-center h-[600px] rounded-lg md:h-[900px] md:w-[800px]">
+    <div className="w-[400px] items-center h-full rounded-lg md:h-[725px] md:w-[680px]">
       <img
         src={images[currentIndex]}
         alt="Slider Image"
-        className="object-contain"
+        className="object-cover"
       />
     </div>
   );
