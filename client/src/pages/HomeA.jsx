@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowRight, FaPlay } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -9,9 +9,58 @@ import "swiper/css/bundle";
 import ImageSlider from "../components/ImageSlider";
 import SideBar from "../components/SideBar";
 import ProductItem from "../components/productItem";
+import { MdLocationOn } from "react-icons/md";
 
 export default function HomeA() {
+  const [categoryData, setCategoryData] = useState({
+    categoryTerm: "",
+    location: "",
+    type: "",
+  });
   const [products, setProducts] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  console.log(products);
+
+  const handleCategorySelect = (category) => {
+    navigate(`?categories=${category}`);
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+
+    const categoryTermUrl = urlParams.get("categories");
+    const locationTermUrl = urlParams.get("location");
+    const typeTermUrl = urlParams.get("type");
+
+    if (categoryTermUrl || locationTermUrl || typeTermUrl) {
+      setCategoryData({
+        categoryTerm: categoryTermUrl || "",
+        location: locationTermUrl || "",
+        type: typeTermUrl || "",
+      });
+    }
+
+    const fetchCategory = async () => {
+      const searchQuery = urlParams.toString();
+      try {
+        const res = await fetch(`/api/product/getCat?${searchQuery}`);
+
+        if (!res.ok) {
+          throw new Error("Network respons was not ok");
+        }
+
+        const data = await res.json();
+
+        setProducts(data);
+      } catch (error) {
+        console.error("There is an error fetchin products:", error);
+      }
+    };
+
+    fetchCategory();
+  }, [location.search]);
 
   return (
     <main className=" max-w-full">
@@ -81,18 +130,17 @@ export default function HomeA() {
                 />
               </div>
               <div>
-                <SideBar />
+                {/* CATEGORY LIST SIDE BAR ITEM */}
+                <SideBar onCategorySelect={handleCategorySelect} />
               </div>
             </div>
             <div className="flex flex-col gap-6">
               <h2 className="font-semibold text-3xl pt-4">ADLM Marketplace</h2>
-              <div className="m-4 flex gap-4 justify-between w-full">
-                <input
-                  type="text"
-                  className="border bg-[#F1F1F1] rounded-lg p-5 "
-                  placeholder="location"
-                  name="location"
-                />
+              <div className="m-4 flex gap-4 w-full">
+                <div className="border bg-[#F1F1F1] rounded-lg p-5 flex gap-6 items-center w-[205px] justify-between">
+                  <p className="text-[#CFCFCF] font-semibold">location</p>
+                  <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
+                </div>
                 <input
                   type="text"
                   className="border rounded-lg p-5 "
@@ -106,7 +154,7 @@ export default function HomeA() {
                   name="productType"
                 />
               </div>
-              <div className="">
+              <div className="flex gap-4 flex-wrap p-8 w-full justify-between">
                 {products &&
                   products.map((product) => (
                     <ProductItem key={product._id} product={product} />
