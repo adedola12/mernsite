@@ -27,12 +27,20 @@ export const getCat = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const categoryTerm = req.query.categories;
+    const locationTerm = req.query.location;
+    const typeTerm = req.query.type;
     const sort = req.query.sort || "createdAt";
     const order = req.query.order || "desc";
 
     let queryObj = {};
     if (categoryTerm) {
-      queryObj.categories = { $regex: categoryTerm, $options: "i" };
+      queryObj.categories = { $regex: new RegExp(categoryTerm, "i") };
+    }
+    if (locationTerm) {
+      queryObj.location = { $regex: new RegExp(locationTerm, "i") };
+    }
+    if (typeTerm) {
+      queryObj.location = { $regex: new RegExp(typeTerm, "i") };
     }
 
     const products = await Product.find(queryObj)

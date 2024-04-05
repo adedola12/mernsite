@@ -10,6 +10,7 @@ import ImageSlider from "../components/ImageSlider";
 import SideBar from "../components/SideBar";
 import ProductItem from "../components/productItem";
 import { MdLocationOn } from "react-icons/md";
+import StateSelector from "../components/StateSelector";
 
 export default function HomeA() {
   const [categoryData, setCategoryData] = useState({
@@ -25,6 +26,18 @@ export default function HomeA() {
 
   const handleCategorySelect = (category) => {
     navigate(`?categories=${category}`);
+  };
+
+  const handleStateSelected = (newState) => {
+    const urlParams = new URLSearchParams(location.search);
+    if (newState) {
+      urlParams.set("location", newState);
+    } else {
+      urlParams.delete("location");
+    }
+
+    // This will update the URL without navigating
+    navigate(`?${urlParams.toString()}`, { replace: true });
   };
 
   useEffect(() => {
@@ -141,12 +154,8 @@ export default function HomeA() {
                   <p className="text-[#CFCFCF] font-semibold">location</p>
                   <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
                 </div>
-                <input
-                  type="text"
-                  className="border rounded-lg p-5 "
-                  placeholder="city"
-                  name="city"
-                />
+                {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
+                <StateSelector onStateSelected={handleStateSelected} />
                 <input
                   type="text"
                   className="border rounded-lg p-5 "
