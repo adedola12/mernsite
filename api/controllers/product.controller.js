@@ -1,4 +1,5 @@
 import Product from "../models/product.model.js";
+import User from "../models/user.model.js";
 import errorHandler from "../utils/error.js";
 
 export const createProduct = async (req, res, next) => {
@@ -16,6 +17,31 @@ export const getCategories = async (req, res, next) => {
     const categories = await Product.distinct("categories");
 
     res.status(200).json(categories);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllProductInCategory = async (req, res, next) => {
+  try {
+    const category = req.query.categories;
+
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+
+    const sort = req.query.sort || "createdAt";
+    const order = req.query.order || "desc";
+
+    const allProducts = await Product.find()
+      .sort({ [sort]: order })
+      .skip(startIndex)
+      .limit(limit);
+
+    const products = category
+      ? allProducts.filter((product) => product.categories === category)
+      : allProducts;
+
+    return res.status(200).json({ products });
   } catch (error) {
     next(error);
   }
@@ -49,6 +75,67 @@ export const getCat = async (req, res, next) => {
       .skip(startIndex);
 
     return res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findById(req.params.id).populate(
+      "userRef",
+      "-password"
+    );
+
+    if (!product) {
+      return next(errorHandler(404, "Product not found"));
+    }
+
+    res.status(200).json({ product });
+  } catch (error) {
+    next(error);
+    console.log(error);
+  }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(errorHandler(401, "Product not found"));
+  }
+
+  if (req.user.id !== product.userRef) {
+    return next;
+  }
+
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json("Product has been deleted");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const editProduct = async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(errorHandler(404, "Product not found"));
+  }
+
+  if (req.user.id !== product.userRef) {
+    return next(errorHandler(401, "You can only edit your own product!"));
+  }
+
+  try {
+    const updateProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json(updateProduct);
   } catch (error) {
     next(error);
   }

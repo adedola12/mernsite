@@ -24,6 +24,13 @@ const userSchema = new mongoose.Schema(
       default:
         "https://th.bing.com/th/id/OIP.GHGGLYe7gDfZUzF_tElxiQHaHa?w=211&h=211&c=7&r=0&o=5&pid=1.7",
     },
+    storeAddress: {
+      type: String,
+      required: true,
+    },
+    mobileNumber: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

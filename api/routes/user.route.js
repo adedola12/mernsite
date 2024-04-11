@@ -3,6 +3,7 @@ import {
   deleteUser,
   getUser,
   getUserListings,
+  getUserProduct,
   test,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -14,6 +15,7 @@ router.get("/test", test);
 router.post("/update/:id", verifyToken, updateUser);
 router.delete("/delete/:id", verifyToken, deleteUser);
 router.get("/listings/:id", verifyToken, getUserListings);
+router.get("/products/:id", verifyToken, getUserProduct);
 router.get("/:id", verifyToken, getUser);
 
 export default router;

@@ -29,9 +29,13 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingError, setShowListingError] = useState(false);
+  const [showProductError, setShowProductError] = useState(false);
   const [userListings, setUserListings] = useState([]);
+  const [userProduct, setUserProducts] = useState([]);
   const [deleteListingError, setDeleteListingError] = useState(false);
+  const [deleteProductError, setDeleteProductError] = useState(false);
   const [editListingError, setEditListingError] = useState(false);
+  const [editProductError, setEditProductError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -158,6 +162,24 @@ export default function Profile() {
     }
   };
 
+  const handleShowProduct = async () => {
+    try {
+      setShowProductError(false);
+
+      const res = await fetch(`/api/user/products/${currentUser._id}`);
+      const data = await res.json();
+
+      if (data.success === false) {
+        setShowProductError(true);
+        return;
+      }
+
+      setUserProducts(data);
+    } catch (error) {
+      setShowProductError(true);
+    }
+  };
+
   const handleListingDelete = async (listingId) => {
     try {
       setDeleteListingError(false);
@@ -180,6 +202,28 @@ export default function Profile() {
     }
   };
 
+  const handleProductDelete = async (productId) => {
+    try {
+      setDeleteProductError(false);
+
+      const res = await fetch(`/api/product/delete/${productId}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        setDeleteProductError(true);
+        return;
+      }
+
+      setUserProducts((prev) =>
+        prev.filter((product) => product._id !== product)
+      );
+    } catch (error) {
+      setDeleteProductError(true);
+    }
+  };
+
   const handleListingEdit = async (listingId) => {
     try {
       setEditListingError(false);
@@ -196,6 +240,22 @@ export default function Profile() {
     } catch (error) {
       setEditListingError(true);
     }
+  };
+
+  const handleProductEdit = async (productId) => {
+    try {
+      setEditProductError(false);
+
+      const res = await fetch(`/api/product/update/${productId}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+
+      if (data.success === false) {
+        setEditProductError(true);
+        return;
+      }
+    } catch (error) {}
   };
 
   return (
@@ -251,6 +311,22 @@ export default function Profile() {
           className="border p-3 rounded-lg"
           onChange={handleChange}
         />
+        <input
+          type="text"
+          defaultValue={currentUser.storeAddress}
+          placeholder="Store Address"
+          id="storeAddress"
+          className="border p-3 rounded-lg"
+          onChange={handleChange}
+        />
+        <input
+          type="tel"
+          defaultValue={currentUser.mobileNumber}
+          placeholder="Mobile Number"
+          id="mobileNumber"
+          className="border p-3 rounded-lg"
+          onChange={handleChange}
+        />
 
         <button
           className="bg-blue-400 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
@@ -293,6 +369,9 @@ export default function Profile() {
       <button onClick={handleShowListing} className="text-blue-800 w-full">
         Show Listing
       </button>
+      <button onClick={handleShowProduct} className="text-blue-800 w-full">
+        Show Product
+      </button>
       <p className="text-red-700 mt-5">
         {showListingError ? "Error showing listings" : ""}
       </p>
@@ -300,7 +379,7 @@ export default function Profile() {
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="text-center mt-7 text-2xl font-semibold">
-            Your Products
+            Your Listings
           </h1>
           {userListings.map((listing) => (
             <div
@@ -331,11 +410,49 @@ export default function Profile() {
                 <Link to={`/update-listing/${listing._id}`}>
                   <button
                     className="text-green-700 uppercase"
-                    //onClick={() => handleListingEdit(listing._id)}
+                    onClick={() => handleListingEdit(listing._id)}
                   >
                     Edit
                   </button>
                 </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {userProduct && userProduct.length > 0 && (
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center mt-7 text-2xl font-semibold">
+            Your Product
+          </h1>
+          {userProduct.map((product) => (
+            <div
+              key={product._id}
+              className="border rounded-lg p-3 flex justify-between items-center gap-4"
+            >
+              <Link to={`/product/${product._id}`}>
+                <img
+                  src={product.imageUrls[0]}
+                  alt="product cover"
+                  className="h-16 w-16 object-contain"
+                />
+              </Link>
+              <Link
+                to={`/product/${product._id}`}
+                className="text-slate-700 font-semibold flex-1 truncate hover:underline"
+              >
+                <p>{product.name}</p>
+              </Link>
+              <div className="flex flex-col items-center">
+                <Link>
+                  <button onClick={() => handleProductEdit(product._id)}>
+                    Edit
+                  </button>
+                </Link>
+                <button onClick={() => handleProductDelete(product._id)}>
+                  Delete
+                </button>
               </div>
             </div>
           ))}

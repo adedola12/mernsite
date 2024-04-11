@@ -17,6 +17,7 @@ import Services from "./pages/Services";
 import Newsletter from "./pages/Newsletter";
 import Search from "./pages/Search";
 import HomeA from "./pages/HomeA";
+import ProductDemo from "./pages/ProductDemo";
 
 export default function App() {
   return (
@@ -32,9 +33,11 @@ export default function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/services" element={<Services />} />
         <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/product" element={<Product />} />
+
         <Route path="/listing/:listingId" element={<Listing />} />
+
         <Route path="/product/:productId" element={<Product />} />
+
         <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>

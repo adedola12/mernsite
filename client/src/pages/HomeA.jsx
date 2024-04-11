@@ -334,8 +334,87 @@ export default function HomeA() {
           </div>
         </div>
       </div>
-
       {/* Client Reviews */}
+      <div className="bg-[#212121] text-white py-16 px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">What our client say</h2>
+          <p className="mb-8">
+            Learn how teams of all sizes are using ADLM to integrate with other
+            products to create value.
+          </p>
+        </div>
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Each Block of item */}
+          {/* TODO:|| Map our the reviews to the backend section of the code */}
+
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+            <blockquote className="mb-4">
+              <p className="mb-4">
+                "Innovative digital learning that focuses on training people on
+                how to use BIM tools to carry out 4D, 5D, 6D designs projects."
+              </p>
+            </blockquote>
+            <div className="flex items-center mt-6">
+              <img
+                src=""
+                alt="Client"
+                className="w-16 h-16 rounded-full mr-4 bg-blue-500"
+              />
+              <div className="">
+                <h4 className="text-lg font-bold">Salama</h4>
+                <p className="text-gray-400">CEO, Eden</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+            <blockquote className="mb-4">
+              <p className="mb-4">
+                "Innovative digital learning that focuses on training people on
+                how to use BIM tools to carry out 4D, 5D, 6D designs projects."
+              </p>
+            </blockquote>
+            <div className="flex items-center mt-6">
+              <img
+                src=""
+                alt="Client"
+                className="w-16 h-16 rounded-full mr-4 bg-blue-500"
+              />
+              <div className="">
+                <h4 className="text-lg font-bold">Salama</h4>
+                <p className="text-gray-400">CEO, Eden</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+            <blockquote className="mb-4">
+              <p className="mb-4">
+                "Innovative digital learning that focuses on training people on
+                how to use BIM tools to carry out 4D, 5D, 6D designs projects."
+              </p>
+            </blockquote>
+            <div className="flex items-center mt-6">
+              <img
+                src=""
+                alt="Client"
+                className="w-16 h-16 rounded-full mr-4 bg-blue-500"
+              />
+              <div className="">
+                <h4 className="text-lg font-bold">Salama</h4>
+                <p className="text-gray-400">CEO, Eden</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="items-center justify-center my-[30px] flex gap-8">
+          <div className="flex items-center justify-center w-10 h-10 text-gray-600 border-2 border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none ">
+            <FaArrowLeft />
+          </div>
+          <div className="flex items-center justify-center w-10 h-10 text-gray-600 border-2 border-gray-300 rounded-full hover:bg-gray-100 focus:outline-none ">
+            <FaArrowRight />
+          </div>
+        </div>
+      </div>
+
       {/* News Letter */}
     </main>
   );

@@ -48,8 +48,8 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-md z-50 top-0">
-      <div className="container mx-auto p-4 flex max-w-full items-center fixed justify-between bg-white shadow-md">
+    <header className="bg-white shadow-md z-10 top-0">
+      <div className="container mx-auto p-4 flex relative max-w-full items-center justify-between bg-white shadow-md">
         <div className="">
           <Link to="/" className="flex-shrink-0 object-contain">
             <img
