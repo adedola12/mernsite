@@ -18,6 +18,7 @@ import Newsletter from "./pages/Newsletter";
 import Search from "./pages/Search";
 import HomeA from "./pages/HomeA";
 import ProductDemo from "./pages/ProductDemo";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -50,6 +51,7 @@ export default function App() {
           />
         </Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
