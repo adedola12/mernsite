@@ -80,6 +80,29 @@ export const getCat = async (req, res, next) => {
   }
 };
 
+export const searchProduct = async (req, res, next) => {
+  try {
+    const { location, categories, limit = 12, startIndex = 0 } = req.query;
+
+    let filters = {};
+    if (location) {
+      filters.location = location;
+    }
+    if (categories) {
+      filters.categories = categories;
+    }
+
+    const products = await Product.find(filters).limit(limit).skip(startIndex);
+
+    res.status(200).json({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id).populate(
@@ -140,13 +163,3 @@ export const editProduct = async (req, res, next) => {
     next(error);
   }
 };
-
-// export const getCategories = async (req, res, next) => {
-//   try {
-//     const categories = Product.schema.path("categories").enumValues;
-
-//     return res.status(200).json(categories);
-//   } catch (error) {
-//     next(error);
-//   }
-// };

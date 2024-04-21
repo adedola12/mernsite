@@ -13,8 +13,8 @@ export default function TypeSelector({ onTypeSelected }) {
   return (
     <div>
       <select
-        name="stateSelector"
-        id="state-selector"
+        name="typeSelector"
+        id="type-selector"
         value={selectedType}
         onChange={handleTypeChanged}
         className="border bg-[#FFFFFF] rounded-lg p-5 flex gap-6 items-center justify-between w-full"

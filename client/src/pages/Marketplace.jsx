@@ -1,6 +1,92 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import ProductItem from "../components/productItem";
+import StateSelector from "../components/StateSelector";
+import CategorySelector from "../components/CategorySelector";
 
 export default function Marketplace() {
+  const [categoryData, setCategoryData] = useState({
+    locationTerm: "",
+    categoryTerm: "",
+    priceTerm: "",
+    subCategoryTerm: "",
+  });
+
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const location = useLocation();
+
+  const [products, setProducts] = useState([]);
+  console.log(products);
+
+  const [categoryList, setCategoryList] = useState([]);
+  const [categoryItems, setCategoryItems] = useState([]);
+  const [categoryUnit, setCategoryUnit] = useState([]);
+  const [itemPriceRange, setImagePriceRange] = useState([]);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handleLocationSelected = (location) => {
+    setSelectedState(location);
+  };
+
+  const handleSearch = () => {
+    console.log("Button Clicked");
+  };
+
+  const handlePriceSelected = () => {};
+
+  const handleMaterialSelected = () => {};
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+
+    const categoryTermUrl = urlParams.get("categories");
+    const priceTermUrl = urlParams.get("price");
+    const locationTermUrl = urlParams.get("location");
+    const subCategoryTermUrl = urlParams.get("subCategories");
+
+    console.log(categoryTermUrl);
+
+    if (
+      categoryTermUrl ||
+      priceTermUrl ||
+      locationTermUrl ||
+      subCategoryTermUrl
+    ) {
+      setCategoryData({
+        categoryTerm: categoryTermUrl || "",
+        priceTerm: priceTermUrl || "",
+        locationTerm: locationTermUrl || "",
+        subCategoryTerm: subCategoryTermUrl || "",
+      });
+    }
+
+    const fetchCategory = async () => {
+      const searchQuery = urlParams.toString();
+
+      console.log(searchQuery);
+
+      try {
+        const res = await fetch(`/api/product/getCat?${searchQuery}`);
+
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await res.json();
+
+        setProducts(data);
+      } catch (error) {
+        console.error("There is an error fetching the product", error);
+      }
+    };
+
+    fetchCategory();
+  }, [location.search]);
+
   return (
     <div className="">
       <div className="">
@@ -14,29 +100,26 @@ export default function Marketplace() {
               Explore Marketplace
             </h1>
             <div className="flex justify-center">
-              <form className="flex gap-2 bg-white p-4 rounded-lg shadow-md">
+              <div className="flex gap-2 bg-white p-4 rounded-lg shadow-md">
                 <input
                   type="text"
                   placeholder="Location"
-                  className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1
+                  focus:ring-blue-500"
+                  disabled
                 />
-                <input
-                  type="text"
-                  placeholder="City"
-                  className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                />
-                <input
-                  type="text"
-                  placeholder="Categories"
-                  className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                />
+                <StateSelector onStateSelected={handleLocationSelected} />
+                <CategorySelector onCategorySelected={handleCategorySelect} />
+                {/* Show Categories and Select Categories */}
+
                 <button
                   type="button"
                   className="bg-[#212121] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={handleSearch}
                 >
                   Search
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -87,7 +170,12 @@ export default function Marketplace() {
         <div className="bg-white flex-1 rounded-lg">
           <div className="p-3">
             <h2 className="text-2xl font-semibold mb-4">ADLM Marketplace</h2>
-            <div>Market Items</div>
+            <div className="flex gap-4 flex-wrap p-8 w-full">
+              {products &&
+                products.map((product) => (
+                  <ProductItem key={product._id} product={product} />
+                ))}
+            </div>
           </div>
         </div>
       </div>

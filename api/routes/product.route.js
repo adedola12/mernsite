@@ -8,6 +8,7 @@ import {
   getCat,
   getCategories,
   getProduct,
+  searchProduct,
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get("/getCategories", getCategories);
 router.get("/getCat", getCat);
 router.get("/getProduct/category/:category", getAllProductInCategory);
 router.get("/get/:id", getProduct);
+router.get("/search", searchProduct);
 
 export default router;

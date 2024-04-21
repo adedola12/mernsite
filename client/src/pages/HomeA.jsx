@@ -248,34 +248,74 @@ export default function HomeA() {
         <div className="flex justify-center items-center mt-10 md:mt-0 md:mr-6">
           <div className="grid grid-cols-2 gap-5">
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/msProject.png"
+                alt="msProject"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/autodesk.png"
+                alt="autodesk"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/autoCad.png"
+                alt="autoCad"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/bluebeam.png"
+                alt="bluebeam"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/costX.png"
+                alt="costX"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/excel.png"
+                alt="excel"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/navisworks.png"
+                alt="navisworks"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/planswift.png"
+                alt="planswift"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/powerBi.png"
+                alt="powerBI"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
             <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
-              MsProject
+              <img
+                src="logo/revit.png"
+                alt="revit"
+                className="object-cover w-[64px] h-[64px]"
+              />
             </div>
           </div>
         </div>
@@ -295,7 +335,7 @@ export default function HomeA() {
           <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
             <div className="flex flex-col">
               <div className="mt-[25px] ml-[34px] w-[64px] h-[64px] rounded-lg bg-white">
-                <img src="" alt="Training Icon" />
+                <img src="icon/bldg.png" alt="Training Icon" />
               </div>
               <div className="md:mt-[200px] mt-[50px] flex flex-col gap-4">
                 <h2 className="text-[#212121] font-bold text-[32px]">
@@ -310,8 +350,12 @@ export default function HomeA() {
           </Link>
           <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
             <div className="flex flex-col">
-              <div className="mt-[25px] ml-[34px] w-[64px] h-[64px] rounded-lg bg-white">
-                <img src="" alt="Installation Icon" />
+              <div className="mt-[25px] ml-[34px] w-[64px] h-[64px] rounded-lg bg-white items-center justify-center">
+                <img
+                  src="icon/bldg2.png"
+                  alt="Installation Icon"
+                  className="items-center object-cover"
+                />
               </div>
               <div className="md:mt-[200px] mt-[50px] flex flex-col gap-4">
                 <h2 className="text-[#212121] font-bold text-[32px]">

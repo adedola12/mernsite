@@ -55,9 +55,12 @@ export default function StateSelector({ onStateSelected }) {
         id="state-selector"
         value={selectedState}
         onChange={handleStateChanged}
-        className="border bg-[#FFFFFF] rounded-lg p-5 mr-2 flex gap-6 items-center w-full justify-between"
+        className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1
+        focus:ring-blue-500"
       >
-        <option value="">--Select a State in Nigeria: </option>
+        <option value="" className="text-gray-600 text-sm">
+          City{" "}
+        </option>
         {NIGERIAN_STATES.map((state) => (
           <option key={state} value={state}>
             {state}
