@@ -57,6 +57,7 @@ export default function SignInModal({ onClose }) {
       dispatch(signInSuccess(data));
 
       navigate("/");
+      setShowSignUpModal(false);
     } catch (error) {
       dispatch(signInFaliure(error.message));
     }

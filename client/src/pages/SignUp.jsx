@@ -35,13 +35,15 @@ export default function SignUpModal({ onClose }) {
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
+
+        setShowSignInModal(false);
         return;
       }
 
       setLoading(false);
       setError(null);
 
-      navigate("/sign-in");
+      navigate("/");
     } catch (error) {
       setLoading(false);
       setError(error.message);
