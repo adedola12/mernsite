@@ -12,8 +12,15 @@ export default function Marketplace() {
     subCategoryTerm: "",
   });
 
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [triggerSearch, setTriggerSearch] = useState(false);
+
+  const searchArray = searchResults.data;
+
+  console.log(searchArray);
+
   const location = useLocation();
 
   const [products, setProducts] = useState([]);
@@ -33,7 +40,7 @@ export default function Marketplace() {
   };
 
   const handleSearch = () => {
-    console.log("Button Clicked");
+    setTriggerSearch((prev) => !prev);
   };
 
   const handlePriceSelected = () => {};
@@ -86,6 +93,38 @@ export default function Marketplace() {
 
     fetchCategory();
   }, [location.search]);
+
+  useEffect(() => {
+    if (triggerSearch) {
+      const performSearch = async () => {
+        const urlParams = new URLSearchParams();
+        if (selectedState) {
+          urlParams.append("location", selectedState);
+        }
+        if (selectedCategory) {
+          urlParams.append("categories", selectedCategory);
+        }
+
+        try {
+          const res = await fetch(
+            `/api/product/search?${urlParams.toString()}`
+          );
+
+          if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+
+          const data = await res.json();
+          setSearchResults(data);
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      };
+
+      performSearch();
+    }
+    return () => setTriggerSearch(false);
+  }, [triggerSearch, selectedState, selectedCategory]);
 
   return (
     <div className="">
@@ -171,10 +210,25 @@ export default function Marketplace() {
           <div className="p-3">
             <h2 className="text-2xl font-semibold mb-4">ADLM Marketplace</h2>
             <div className="flex gap-4 flex-wrap p-8 w-full">
-              {products &&
-                products.map((product) => (
+              {/* {searchResults &&
+                searchResults.map((product) => (
                   <ProductItem key={product._id} product={product} />
-                ))}
+                ))} */}
+              {/* {searchArray.length > 0
+                ? searchArray.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                  ))
+                : products.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                  ))} */}
+
+              {searchArray ? (
+                searchArray.map((product) => (
+                  <ProductItem key={product._id} product={product} />
+                ))
+              ) : (
+                <p>Product not found</p>
+              )}
             </div>
           </div>
         </div>

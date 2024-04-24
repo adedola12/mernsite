@@ -1,5 +1,4 @@
 import Product from "../models/product.model.js";
-import User from "../models/user.model.js";
 import errorHandler from "../utils/error.js";
 
 export const createProduct = async (req, res, next) => {

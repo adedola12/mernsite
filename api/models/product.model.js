@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+const subCategorySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+});
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -26,6 +33,7 @@ const productSchema = new mongoose.Schema(
       required: true,
       //enum: ["Concrete", "Reinforcement", "Formwork", "Finishes", "Openings"],
     },
+    subCategories: [subCategorySchema],
     type: {
       type: String,
       required: true,

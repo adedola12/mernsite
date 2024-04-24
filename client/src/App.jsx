@@ -19,16 +19,34 @@ import Search from "./pages/Search";
 import HomeA from "./pages/HomeA";
 import ProductDemo from "./pages/ProductDemo";
 import Footer from "./components/Footer";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import SignInModal from "./pages/SignIn";
+import SignUpModal from "./pages/SignUp";
 
 export default function App() {
+  const [showSignInModal, setShowSignInModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  const toggleModal = (modalName) => {
+    if (modalName === "signIn") {
+      setShowSignInModal(!showSignInModal);
+      setShowSignUpModal(false);
+    } else if (modalName === "signUp") {
+      setShowSignUpModal(!showSignUpModal);
+      setShowSignInModal(false);
+    }
+  };
+
   return (
     <BrowserRouter>
-      <Header />
+      <Header toggleModal={toggleModal} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/homeA" element={<HomeA />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+        {/* <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/pricing" element={<Pricing />} />
@@ -51,6 +69,8 @@ export default function App() {
           />
         </Route>
       </Routes>
+      {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
+      {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
       <Footer />
     </BrowserRouter>
   );

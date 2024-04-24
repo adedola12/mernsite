@@ -9,22 +9,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-export default function Header() {
+export default function Header({ toggleModal }) {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState(" ");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("searchTerm", searchTerm);
-
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
-  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -51,7 +41,7 @@ export default function Header() {
     <header className="bg-white shadow-md z-10 top-0">
       <div className="container mx-auto p-4 flex relative max-w-full items-center justify-between bg-white shadow-md">
         <div className="">
-          <Link to="/" className="flex-shrink-0 object-contain">
+          <Link to="/" className="object-contain">
             <img
               src="..\logo\ADLM Studio Logo PNG-07.png"
               alt="adlmlogo"
@@ -142,33 +132,20 @@ export default function Header() {
           </Link>
         </nav>
 
-        <form
-          className="bg-gray-200 p-3 rounded-lg hidden justify-center lg:flex"
-          onSubmit={handleSubmit}
-        >
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent focus:outline-none w-15 sm:w-30"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button>
-            <FaSearch className="text-gray-75" />
-          </button>
-        </form>
-
-        <Link to="/profile" className="">
-          {currentUser ? (
+        {!currentUser ? (
+          <>
+            <button onClick={() => toggleModal("signIn")}>Sign In</button>
+            <button onClick={() => toggleModal("signUp")}>Sign Up</button>
+          </>
+        ) : (
+          <Link to="/profile" className="">
             <img
               src={currentUser.avatar}
               alt="pp"
               className="rounded-full h-7 w-7 object-cover"
             />
-          ) : (
-            <li className="sm:inline text-blue-700 hover:underline">Sign Up</li>
-          )}
-        </Link>
+          </Link>
+        )}
       </div>
     </header>
   );

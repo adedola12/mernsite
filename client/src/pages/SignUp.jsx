@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth.jsx";
+import SignInModal from "./SignIn.jsx";
 
-export default function SignUp() {
+export default function SignUpModal({ onClose }) {
   const [formData, setFormData] = useState({});
 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,49 +48,68 @@ export default function SignUp() {
     }
   };
 
+  const toggleSignInModal = () => {
+    setShowSignInModal(!showSignInModal);
+  };
+
   return (
-    <div className="items-center justify-center p-3 max-w-lg mx-auto">
-      <h1 className="font-bold text-3xl text-center my-7">Sign Up</h1>
-
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          className="border p-3 rounded-lg"
-          id="username"
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-3 rounded-lg"
-          id="email"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-3 rounded-lg"
-          id="password"
-          onChange={handleChange}
-        />
-
-        <button
-          disabled={loading}
-          className="bg-blue-500 text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 disabled:opacity-70"
-        >
-          {loading ? "LOADING..." : "SIGN UP"}
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <button onClick={onClose} className="absolute top-2 right-2 text-lg">
+          &times;
         </button>
-        <OAuth />
-      </form>
+        <div className="flex flex-col items-center justify-center">
+          <img
+            src="..\logo\ADLM Studio Logo PNG-07.png"
+            alt="ADLM Logo"
+            className="w-20 mx-auto"
+          />
+          <h1 className="font-bold text-3xl text-center my-7">Sign Up</h1>
+          <p className="text-sm text-gray-500">Sign up to sell on ADLM</p>
 
-      <div className="flex my-5 mx-auto max-w-lg gap-2">
-        <p>Have an account?</p>
-        <Link to="/sign-in">
-          <span className="text-blue-600">Sign in</span>
-        </Link>
+          <form className="mt-2" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Username"
+              className="mt-2 p-3 w-full border rounded"
+              id="username"
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="mt-2 p-3 w-full border rounded"
+              id="email"
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="mt-2 p-3 w-full border rounded"
+              id="password"
+              onChange={handleChange}
+            />
+
+            <button
+              disabled={loading}
+              className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
+            >
+              {loading ? "LOADING..." : "SIGN UP"}
+            </button>
+            <OAuth />
+          </form>
+
+          <div className="flex my-5 mx-auto max-w-lg gap-2">
+            <p>Have an account?</p>
+            <button onClick={toggleSignInModal}>
+              <span className="text-blue-600">Sign in</span>
+            </button>
+          </div>
+
+          {showSignInModal && <SignInModal onClose={toggleSignInModal} />}
+          {error && <p className="text-red-500 mt-5">{error}</p>}
+        </div>
       </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
     </div>
   );
 }

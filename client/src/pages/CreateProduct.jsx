@@ -17,6 +17,7 @@ export default function CreateProduct() {
     location: "",
     type: "",
     categories: "",
+    subCategories: [],
     regularPrice: 10,
     discountPrice: 5,
     discount: false,
@@ -30,6 +31,10 @@ export default function CreateProduct() {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [subCategories, setSubCategories] = useState([]);
+  const [customSubCategory, setCustomSubCategory] = useState("");
+  console.log(subCategories);
+
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -42,8 +47,12 @@ export default function CreateProduct() {
   ];
 
   const types = ["Material", "Labour"];
-
   const units = ["bags", "tonnes", "m", "m2", "m3"];
+
+  const predefinedSubCategories = {
+    Concrete: [{ name: "Cement" }, { name: "Sharp Sand" }, { name: "Granite" }],
+    Formwork: [{ name: "Hardwood" }, { name: "Nails" }],
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -51,6 +60,51 @@ export default function CreateProduct() {
       ...prevFormData,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  // Handler when the category changes
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    const subCategoryForCategory = predefinedSubCategories[category] || [];
+    setSubCategories(subCategoryForCategory);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      categories: category,
+      subCategories: customSubCategory ? [customSubCategory] : [],
+    }));
+  };
+
+  const handleSubCategoryChange = (e) => {
+    const selectedSubCategories = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setFormData({
+      ...formData,
+      subCategories: selectedSubCategories
+        .concat(customSubCategory)
+        .map((name) => ({ name })),
+    });
+  };
+  // Add handler for custom subcategory input
+  const handleCustomSubCategoryChange = (e) => {
+    const customSubCategoryValue = e.target.value;
+    setCustomSubCategory(customSubCategoryValue);
+
+    if (customSubCategoryValue) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        subCategories: [
+          ...prevFormData.subCategories,
+          { name: customSubCategoryValue },
+        ],
+      }));
+    }
+
+    // Optionally, you can add the custom subcategory to the list of subcategories
+    if (customSubCategory && !subCategoryOptions.includes(customSubCategory)) {
+      setSubCategories((prevOptions) => [...prevOptions, customSubCategory]);
+    }
   };
 
   const handleImageSubmit = async () => {
@@ -111,6 +165,9 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const finalSubCategories = customSubCategory
+      ? [...formData.subCategories, { name: customSubCategory }]
+      : formData.subCategories;
     try {
       if (+formData.imageUrls.length < 1)
         return setError("You must upload atleast one image");
@@ -126,6 +183,7 @@ export default function CreateProduct() {
         },
         body: JSON.stringify({
           ...formData,
+          subCategories: finalSubCategories,
           userRef: currentUser._id,
         }),
       });
@@ -230,7 +288,7 @@ export default function CreateProduct() {
               name="categories"
               value={formData.categories}
               className="p-3 rounded-lg w-[260px]"
-              onChange={handleChange}
+              onChange={handleCategoryChange}
             >
               <option>--Please choose an option--</option>
               {categories.map((category) => (
@@ -240,6 +298,38 @@ export default function CreateProduct() {
               ))}
             </select>
           </div>
+
+          <div className="flex gap-3 justify-center items-center">
+            <label htmlFor="subcategory-select" className="font-semibold">
+              Choose subcategory
+            </label>
+            <select
+              name="subCategories"
+              id="subCategory"
+              className="p-3 rounded-lg w-[260px]"
+              onChange={handleSubCategoryChange}
+            >
+              {subCategories.map((subCategory, index) => (
+                <option key={index} value={subCategory.name}>
+                  {subCategory.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex gap-3 justify-center items-center">
+            <label htmlFor="custom-subcategory" className="font-semibold">
+              Or add new subcategory:
+            </label>
+            <input
+              type="text"
+              id="custom-subcategory"
+              value={formData.customSubCategory}
+              onChange={handleCustomSubCategoryChange}
+              className="p-3 rounded-lg w-[260px]"
+            />
+          </div>
+
           <div className="flex gap-3 flex-col items-center">
             <div>
               <input
