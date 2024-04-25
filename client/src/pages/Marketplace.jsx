@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import StateSelector from "../components/StateSelector";
 import CategorySelector from "../components/CategorySelector";
+import LocationSelector from "../components/LocationSelector";
 
 export default function Marketplace() {
   const [categoryData, setCategoryData] = useState({
@@ -147,7 +148,7 @@ export default function Marketplace() {
                   focus:ring-blue-500"
                   disabled
                 />
-                <StateSelector onStateSelected={handleLocationSelected} />
+                <LocationSelector onStateSelected={handleLocationSelected} />
                 <CategorySelector onCategorySelected={handleCategorySelect} />
                 {/* Show Categories and Select Categories */}
 

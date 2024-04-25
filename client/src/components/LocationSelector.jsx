@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function StateSelector({ onStateSelected }) {
+export default function LocationSelector({ onStateSelected }) {
   const NIGERIAN_STATES = [
     "Abia",
     "Adamawa",
@@ -55,7 +55,8 @@ export default function StateSelector({ onStateSelected }) {
         id="state-selector"
         value={selectedState}
         onChange={handleStateChanged}
-        className="border bg-[#FFFFFF] rounded-lg p-5 flex gap-6 items-center justify-between w-full"
+        className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1
+        focus:ring-blue-500"
       >
         <option value="" className="text-gray-600 text-sm">
           City{" "}

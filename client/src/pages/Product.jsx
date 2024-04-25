@@ -177,7 +177,9 @@ export default function Product() {
                 </div>
 
                 <div className="flex justify-between items-center border rounded-lg p-3 text-sm">
-                  <p className="text-gray-700 w-full outline-none">City</p>
+                  <p className="text-gray-700 w-full outline-none">
+                    {product.storeAddress}
+                  </p>
                   <MdAddLocation className="text-gray-400" />
                 </div>
 
@@ -188,7 +190,7 @@ export default function Product() {
                   <div className="">
                     <p className="text-sm font-medium">Store Address</p>
                     <span className="text-sm">
-                      {product.userRef.storeAddress || "Address not available"}
+                      {product.storeAddress || "Address not available"}
                     </span>
                   </div>
                 </div>

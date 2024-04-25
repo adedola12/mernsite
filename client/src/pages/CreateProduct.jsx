@@ -15,6 +15,7 @@ export default function CreateProduct() {
     name: "",
     description: "",
     location: "",
+    storeAddress: "",
     type: "",
     categories: "",
     subCategories: [],
@@ -46,12 +47,53 @@ export default function CreateProduct() {
     "Openings",
   ];
 
+  const NIGERIAN_STATES = [
+    "Abia",
+    "Adamawa",
+    "Akwa Ibom",
+    "Anambra",
+    "Bauchi",
+    "Bayelsa",
+    "Benue",
+    "Borno",
+    "Cross River",
+    "Delta",
+    "Ebonyi",
+    "Edo",
+    "Ekiti",
+    "Enugu",
+    "Gombe",
+    "Imo",
+    "Jigawa",
+    "Kaduna",
+    "Kano",
+    "Katsina",
+    "Kebbi",
+    "Kogi",
+    "Kwara",
+    "Lagos",
+    "Nasarawa",
+    "Niger",
+    "Ogun",
+    "Ondo",
+    "Osun",
+    "Oyo",
+    "Plateau",
+    "Rivers",
+    "Sokoto",
+    "Taraba",
+    "Yobe",
+    "Zamfara",
+    "Federal Capital Territory || FCT",
+  ];
+
   const types = ["Material", "Labour"];
   const units = ["bags", "tonnes", "m", "m2", "m3"];
 
   const predefinedSubCategories = {
     Concrete: [{ name: "Cement" }, { name: "Sharp Sand" }, { name: "Granite" }],
     Formwork: [{ name: "Hardwood" }, { name: "Nails" }],
+    Reinforcement: [{ name: "Reinforcement Bar" }, { name: "Binding Wire" }],
   };
 
   const handleChange = (e) => {
@@ -196,7 +238,9 @@ export default function CreateProduct() {
         setError(data.message);
       }
 
-      navigate(`/product/${data._id}`);
+      console.log(data._id);
+
+      // navigate(`/product/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -239,15 +283,30 @@ export default function CreateProduct() {
             value={formData.mobile}
             onChange={handleChange}
           />
-          <input
-            type="text"
-            placeholder="Seller Location"
-            className="rounded-lg bg-white p-3 border"
-            name="location"
-            required
-            value={formData.location}
-            onChange={handleChange}
-          />
+          <div className="flex gap-3">
+            <input
+              type="text"
+              placeholder="Seller Address"
+              className="rounded-lg bg-white p-3 border"
+              name="storeAddress"
+              required
+              value={formData.storeAddress}
+              onChange={handleChange}
+            />
+            <select
+              name="location"
+              value={formData.location}
+              className="rounded-lg bg-white p-3 border"
+              onChange={handleChange}
+            >
+              <option className="text-gray-400">-select a State-</option>
+              {NIGERIAN_STATES.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="flex gap-3 justify-center items-center">
             <label htmlFor="unit-select" className="font-semibold ">
               Choose Unit :

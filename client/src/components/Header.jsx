@@ -40,7 +40,7 @@ export default function Header({ toggleModal }) {
   };
 
   return (
-    <header className="bg-white shadow-md z-10 top-0">
+    <header className="bg-white shadow-md z-10 top-0 items-center">
       <div className="container mx-auto p-4 flex relative max-w-full items-center justify-between bg-white shadow-md">
         <div className="">
           <Link to="/" className="object-contain">
@@ -136,8 +136,10 @@ export default function Header({ toggleModal }) {
 
         {!currentUser ? (
           <>
-            <button onClick={() => toggleModal("signIn")}>Sign In</button>
-            <button onClick={() => toggleModal("signUp")}>Sign Up</button>
+            <div className="flex gap-3">
+              <button onClick={() => toggleModal("signIn")}>Sign In</button>
+              <button onClick={() => toggleModal("signUp")}>Sign Up</button>
+            </div>
           </>
         ) : (
           <Link to="/profile" className="">

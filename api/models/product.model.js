@@ -28,6 +28,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    storeAddress: {
+      type: String,
+      required: true,
+    },
     categories: {
       type: String,
       required: true,
