@@ -121,13 +121,12 @@ export default function CreateProduct() {
       e.target.selectedOptions,
       (option) => option.value
     );
-    setFormData({
-      ...formData,
-      subCategories: selectedSubCategories
-        .concat(customSubCategory)
-        .map((name) => ({ name })),
-    });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      subCategories: selectedSubCategories,
+    }));
   };
+
   // Add handler for custom subcategory input
   const handleCustomSubCategoryChange = (e) => {
     const customSubCategoryValue = e.target.value;
@@ -207,9 +206,17 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const finalSubCategories = customSubCategory
-      ? [...formData.subCategories, { name: customSubCategory }]
-      : formData.subCategories;
+    // const finalSubCategories = customSubCategory
+    //   ? [...formData.subCategories, { name: customSubCategory }]
+    //   : formData.subCategories;
+    const finalSubCategories = formData.subCategories.concat(
+      customSubCategory ? [{ name: customSubCategory }] : []
+    );
+    if (customSubCategory) {
+      finalSubCategories.push({ name: customSubCategory });
+    }
+
+    console.log(finalSubCategories);
     try {
       if (+formData.imageUrls.length < 1)
         return setError("You must upload atleast one image");
@@ -240,7 +247,7 @@ export default function CreateProduct() {
 
       console.log(data._id);
 
-      // navigate(`/product/${data._id}`);
+      navigate(`/product/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);

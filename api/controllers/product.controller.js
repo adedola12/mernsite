@@ -2,6 +2,7 @@ import Product from "../models/product.model.js";
 import errorHandler from "../utils/error.js";
 
 export const createProduct = async (req, res, next) => {
+  console.log(req.body);
   try {
     const product = await Product.create(req.body);
 
@@ -41,6 +42,26 @@ export const getAllProductInCategory = async (req, res, next) => {
       : allProducts;
 
     return res.status(200).json({ products });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllProductInSubCategory = async (req, res, next) => {
+  const { categoryName } = req.params;
+  try {
+    const products = await Product.find({ categories: categoryName });
+
+    const subCategories = products
+      .flatMap((product) => product.subCategories.map((subCat) => subCat.name))
+      .filter(
+        (subCategory, index, self) => self.indexOf(subCategory) === index
+      );
+
+    res.status(200).json({
+      success: true,
+      subCategories,
+    });
   } catch (error) {
     next(error);
   }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ProductItem from "../components/productItem";
-import StateSelector from "../components/StateSelector";
 import CategorySelector from "../components/CategorySelector";
 import LocationSelector from "../components/LocationSelector";
 
@@ -26,14 +25,28 @@ export default function Marketplace() {
 
   const [products, setProducts] = useState([]);
   console.log(products);
+  console.log(selectedCategory);
 
   const [categoryList, setCategoryList] = useState([]);
   const [categoryItems, setCategoryItems] = useState([]);
   const [categoryUnit, setCategoryUnit] = useState([]);
   const [itemPriceRange, setImagePriceRange] = useState([]);
 
-  const handleCategorySelect = (category) => {
+  const [subCategories, setSubCategories] = useState([]);
+
+  const handleCategorySelect = async (category) => {
     setSelectedCategory(category);
+
+    try {
+      const response = await fetch(`/api/product/${category}/subcategories`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await response.json();
+      setSubCategories(result.subCategories); // Assuming the API returns an array of subcategory names
+    } catch (error) {
+      console.error("Failed to fetch subCategories:", error);
+    }
   };
 
   const handleLocationSelected = (location) => {
@@ -47,6 +60,29 @@ export default function Marketplace() {
   const handlePriceSelected = () => {};
 
   const handleMaterialSelected = () => {};
+
+  const handleSidebarSearch = async () => {
+    const searchParams = new URLSearchParams();
+    if (selectedState) {
+      searchParams.append("location", selectedState);
+    }
+    if (selectedCategory) {
+      searchParams.append("categories", selectedCategory);
+    }
+    if (categoryData.subCategoryTerm) {
+      searchParams.append("subCategories", categoryData.subCategoryTerm);
+    }
+
+    try {
+      const response = await fetch(
+        `/api/product/search?${searchParams.toString()}`
+      );
+      const result = await response.json();
+      setSearchResults(result.products); // Assuming the API returns the products
+    } catch (error) {
+      console.error("Error during the search:", error);
+    }
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -127,6 +163,25 @@ export default function Marketplace() {
     return () => setTriggerSearch(false);
   }, [triggerSearch, selectedState, selectedCategory]);
 
+  useEffect(() => {
+    const fetchProductsBySubCategory = async () => {
+      if (!selectedCategory || !categoryData.subCategoryTerm) {
+        return; // Do not fetch if no subcategory is selected
+      }
+      try {
+        const response = await fetch(
+          `/api/product?category=${selectedCategory}&subCategory=${categoryData.subCategoryTerm}`
+        );
+        const result = await response.json();
+        setProducts(result.products); // Assuming the API returns the products
+      } catch (error) {
+        console.error("Failed to fetch products by subcategory:", error);
+      }
+    };
+
+    fetchProductsBySubCategory();
+  }, [selectedCategory, categoryData.subCategoryTerm]); // Dependencies array includes the selectedCategory and the subCategoryTerm from the state
+
   return (
     <div className="">
       <div className="">
@@ -166,63 +221,36 @@ export default function Marketplace() {
       </div>
       <div className="flex flex-col md:flex-row p-4 gap-4 ml-[80px]">
         <div className="bg-white rounded-lg shadow-md p-2 w-full md:w-60">
-          <p className="font-semibold text-xl p-3 border-b">
+          <div className="font-semibold text-xl p-3 border-b">
             {/* Category Name */}
-            Concrete /m3
-          </p>
+            {/* Concrete /m3 */}
+            {searchArray.categories}
+          </div>
           <div className="p-3">
-            <div className="flex">
-              <input
-                type="checkbox"
-                name="Cement"
-                id="matName"
-                className="h-5 w-5 text-gray-600 rounded-lg"
-              />
-              <label htmlFor="matName" className="ml-2 text-gray-700">
-                {/* Categogy Breakdown From API  */}
-                Cement
-              </label>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                name="Sharpsand"
-                id="sharpsand"
-                className="h-5 w-5 text-gray-600 rounded-lg"
-              />
-              <label htmlFor="sharpsand" className=" text-gray-700">
-                Sharpsand
-              </label>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                name="Granite"
-                id="granite"
-                className="h-5 w-5 text-gray-600 rounded-lg"
-              />
-              <label htmlFor="granite" className=" text-gray-700">
-                Granite
-              </label>
-            </div>
+            {subCategories.map((subCategory) => (
+              <div key={subCategory} className="">
+                <input
+                  type="checkbox"
+                  id={subCategory}
+                  name={subCategory}
+                  value={subCategory}
+                  onChange={(e) => {
+                    setCategoryData((prevData) => ({
+                      ...prevData,
+                      subCategoryTerm: e.target.value,
+                    }));
+                  }}
+                  className=""
+                />
+                <label htmlFor={subCategory}>{subCategory}</label>
+              </div>
+            ))}
           </div>
         </div>
         <div className="bg-white flex-1 rounded-lg">
           <div className="p-3">
             <h2 className="text-2xl font-semibold mb-4">ADLM Marketplace</h2>
             <div className="flex gap-4 flex-wrap p-8 w-full">
-              {/* {searchResults &&
-                searchResults.map((product) => (
-                  <ProductItem key={product._id} product={product} />
-                ))} */}
-              {/* {searchArray.length > 0
-                ? searchArray.map((product) => (
-                    <ProductItem key={product._id} product={product} />
-                  ))
-                : products.map((product) => (
-                    <ProductItem key={product._id} product={product} />
-                  ))} */}
-
               {searchArray ? (
                 searchArray.map((product) => (
                   <ProductItem key={product._id} product={product} />

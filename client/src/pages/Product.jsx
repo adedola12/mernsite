@@ -115,6 +115,7 @@ export default function Product() {
               </div>
               <div className="my-5">
                 <h1 className="font-bold text-3xl">{product.name}</h1>
+                <h2 className="">subCate {product.subCategories}</h2>
                 {/* Create the number of star rating */}
                 <p className="text-sm">Review</p>
               </div>

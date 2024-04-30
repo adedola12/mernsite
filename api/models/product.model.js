@@ -37,7 +37,10 @@ const productSchema = new mongoose.Schema(
       required: true,
       //enum: ["Concrete", "Reinforcement", "Formwork", "Finishes", "Openings"],
     },
-    subCategories: [subCategorySchema],
+    subCategories: {
+      type: Array,
+      required: true,
+    },
     type: {
       type: String,
       required: true,

@@ -5,6 +5,7 @@ import {
   deleteProduct,
   editProduct,
   getAllProductInCategory,
+  getAllProductInSubCategory,
   getCat,
   getCategories,
   getProduct,
@@ -22,5 +23,7 @@ router.get("/getCat", getCat);
 router.get("/getProduct/category/:category", getAllProductInCategory);
 router.get("/get/:id", getProduct);
 router.get("/search", searchProduct);
+
+router.get("/:categoryName/subcategories", getAllProductInSubCategory);
 
 export default router;

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 export default function ImageSlider() {
   const images = [
-    "../sliderImages/ADLM Training Teazer.jpg",
-    "../sliderImages/ADLM Good Friday_011748.jpg",
-    "../sliderImages/Happy New Month ADLM_073426.jpg",
+    "../sliderImages/hero1.png",
+    "../sliderImages/hero2.png",
+    "../sliderImages/hero3.png",
     "../sliderImages/ADLM Training Teazer.jpg",
   ];
 
