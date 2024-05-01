@@ -1,14 +1,13 @@
+import React, { useState } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import React, { useEffect, useState } from "react";
-import { app } from "../firebase";
-
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { app } from "../firebase";
 
 export default function CreateProduct() {
   const [formData, setFormData] = useState({
@@ -17,35 +16,32 @@ export default function CreateProduct() {
     location: "",
     storeAddress: "",
     type: "",
-    categories: "",
-    subCategories: [],
-    regularPrice: 10,
-    discountPrice: 5,
+    categories: {
+      name: "",
+      subCategories: [],
+    },
+    regularPrice: "",
+    discountPrice: "",
     discount: false,
     imageUrls: [],
-    mobile: 1234567890,
+    mobile: "",
     unit: "",
   });
+
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(false);
-  const [imageUploadError, setImageUploadError] = useState(false);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const [subCategories, setSubCategories] = useState([]);
-  const [customSubCategory, setCustomSubCategory] = useState("");
-  console.log(subCategories);
-
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const categories = [
-    "Concrete",
-    "Reinforcement",
-    "Formwork",
-    "Finishes",
-    "Openings",
-  ];
+  const predefinedSubCategories = {
+    Concrete: ["Cement", "Sharp Sand", "Granite"],
+    Formwork: ["Hardwood", "Nails"],
+    Reinforcement: ["Reinforcement Bar", "Binding Wire"],
+    Finishes: [],
+    Openings: [],
+  };
 
   const NIGERIAN_STATES = [
     "Abia",
@@ -90,170 +86,111 @@ export default function CreateProduct() {
   const types = ["Material", "Labour"];
   const units = ["bags", "tonnes", "m", "m2", "m3"];
 
-  const predefinedSubCategories = {
-    Concrete: [{ name: "Cement" }, { name: "Sharp Sand" }, { name: "Granite" }],
-    Formwork: [{ name: "Hardwood" }, { name: "Nails" }],
-    Reinforcement: [{ name: "Reinforcement Bar" }, { name: "Binding Wire" }],
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  // Handler when the category changes
   const handleCategoryChange = (e) => {
     const category = e.target.value;
-    const subCategoryForCategory = predefinedSubCategories[category] || [];
-    setSubCategories(subCategoryForCategory);
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    setFormData((prev) => ({
+      ...prev,
       categories: category,
-      subCategories: customSubCategory ? [customSubCategory] : [],
+      subCategories: "", // Reset subCategories when category changes
     }));
   };
 
   const handleSubCategoryChange = (e) => {
-    const selectedSubCategories = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      subCategories: selectedSubCategories,
+    setFormData((prev) => ({
+      ...prev,
+      subCategories: e.target.value,
     }));
   };
 
-  // Add handler for custom subcategory input
-  const handleCustomSubCategoryChange = (e) => {
-    const customSubCategoryValue = e.target.value;
-    setCustomSubCategory(customSubCategoryValue);
-
-    if (customSubCategoryValue) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        subCategories: [
-          ...prevFormData.subCategories,
-          { name: customSubCategoryValue },
-        ],
-      }));
-    }
-
-    // Optionally, you can add the custom subcategory to the list of subcategories
-    if (customSubCategory && !subCategoryOptions.includes(customSubCategory)) {
-      setSubCategories((prevOptions) => [...prevOptions, customSubCategory]);
-    }
-  };
-
   const handleImageSubmit = async () => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-      const promises = [];
-
-      for (let i = 0; i < files.length; i++) {
-        promises.push(storeImage(files[i]));
-      }
-      Promise.all(promises)
-        .then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
-          setImageUploadError(false);
-        })
-        .catch((err) => {
-          setImageUploadError("Image upload failed (2mb per image)");
-        });
-    } else {
-      setImageUploadError("You can only upload 6 images per product");
-    }
-  };
-
-  const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
+    if (files.length > 0) {
+      setUploading(true);
       const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      const promises = Array.from(files).map((file) => {
+        const fileName = `${new Date().getTime()}_${file.name}`;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
-  };
+        return new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`Upload is ${progress}% done`);
+            },
+            (error) => reject(error),
+            () =>
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then(resolve)
+                .catch(reject)
+          );
+        });
+      });
 
-  const handleRemoveImage = (index) => {
-    setFormData({
-      ...formData,
-      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
-    });
+      try {
+        const urls = await Promise.all(promises);
+        setFormData((prev) => ({
+          ...prev,
+          imageUrls: [...prev.imageUrls, ...urls],
+        }));
+      } catch (error) {
+        console.error("Failed to upload images", error);
+        setError("Image upload failed (2mb per image limit)");
+      } finally {
+        setUploading(false);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const finalSubCategories = customSubCategory
-    //   ? [...formData.subCategories, { name: customSubCategory }]
-    //   : formData.subCategories;
-    const finalSubCategories = formData.subCategories.concat(
-      customSubCategory ? [{ name: customSubCategory }] : []
-    );
-    if (customSubCategory) {
-      finalSubCategories.push({ name: customSubCategory });
-    }
+    setLoading(true);
 
-    console.log(finalSubCategories);
+    // Ensure subCategories is always an array before mapping
+    const subCategories = Array.isArray(formData.categories.subCategories)
+      ? formData.categories.subCategories.map((sc) => ({ name: sc.name }))
+      : [];
+
+    const submittedData = {
+      ...formData,
+      userRef: currentUser._id,
+      categories: {
+        ...formData.categories,
+        subCategories: formData.categories.subCategories.map((sc) => ({
+          name: sc.name,
+        })),
+      },
+    };
+
     try {
-      if (+formData.imageUrls.length < 1)
-        return setError("You must upload atleast one image");
-      if (+formData.regularPrice < formData)
-        return setError("Discount price must be lower than regular price");
-      setLoading(true);
-      setError(false);
-
-      const res = await fetch("/api/product/create-product", {
+      const response = await fetch("/api/product/create-product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          ...formData,
-          subCategories: finalSubCategories,
-          userRef: currentUser._id,
-        }),
+        body: JSON.stringify(submittedData),
       });
 
-      const data = await res.json();
-
-      setLoading(false);
-
-      if (data.success === false) {
-        setError(data.message);
-      }
-
-      console.log(data._id);
-
+      const data = await response.json();
+      if (!response.ok)
+        throw new Error(data.message || "Failed to create product");
+      console.log("Product created:", data);
       navigate(`/product/${data._id}`);
     } catch (error) {
-      setError(error.message);
+      setError(error.message || "Failed to submit product");
+    } finally {
       setLoading(false);
     }
   };
-
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
@@ -346,7 +283,7 @@ export default function CreateProduct() {
               ))}
             </select>
           </div>
-          <div className="flex gap-3 justify-center items-center">
+          {/* <div className="flex gap-3 justify-center items-center">
             <label htmlFor="category-select" className="font-semibold">
               Choose a category:
             </label>
@@ -363,6 +300,51 @@ export default function CreateProduct() {
                 </option>
               ))}
             </select>
+          </div> */}
+
+          {/* <div className="flex gap-3 justify-center items-center">
+            <label htmlFor="subcategory-select" className="font-semibold">
+              Choose subcategory
+            </label>
+            <select
+              name="subCategories"
+              id="subCategory"
+              className="p-3 rounded-lg w-[260px]"
+              onChange={handleSubCategoryChange}
+              value={
+                formData.categories.subCategories.length > 0
+                  ? formData.categories.subCategories[0].name
+                  : ""
+              }
+            >
+              {formData.categories.name &&
+                predefinedSubCategories[formData.categories.name].map(
+                  (subCategory, index) => (
+                    <option key={index} value={subCategory.name}>
+                      {subCategory.name}
+                    </option>
+                  )
+                )}
+            </select>
+          </div> */}
+          <div className="flex gap-3 justify-center items-center">
+            <label htmlFor="category-select" className="font-semibold">
+              Choose a category:
+            </label>
+            <select
+              name="categories"
+              id="category-select" // Added the id for clarity
+              value={formData.categories.name}
+              className="p-3 rounded-lg w-[260px]"
+              onChange={handleCategoryChange}
+            >
+              <option value="">--Please choose an option--</option>
+              {Object.keys(predefinedSubCategories).map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex gap-3 justify-center items-center">
@@ -374,16 +356,20 @@ export default function CreateProduct() {
               id="subCategory"
               className="p-3 rounded-lg w-[260px]"
               onChange={handleSubCategoryChange}
+              value={formData.subCategories}
             >
-              {subCategories.map((subCategory, index) => (
-                <option key={index} value={subCategory.name}>
-                  {subCategory.name}
-                </option>
-              ))}
+              <option value="">--Please choose an option--</option>
+              {(predefinedSubCategories[formData.categories] || []).map(
+                (subCategory, index) => (
+                  <option key={index} value={subCategory}>
+                    {subCategory}
+                  </option>
+                )
+              )}
             </select>
           </div>
 
-          <div className="flex gap-3 justify-center items-center">
+          {/* <div className="flex gap-3 justify-center items-center">
             <label htmlFor="custom-subcategory" className="font-semibold">
               Or add new subcategory:
             </label>
@@ -394,7 +380,7 @@ export default function CreateProduct() {
               onChange={handleCustomSubCategoryChange}
               className="p-3 rounded-lg w-[260px]"
             />
-          </div>
+          </div> */}
 
           <div className="flex gap-3 flex-col items-center">
             <div>
@@ -462,9 +448,9 @@ export default function CreateProduct() {
             >
               {uploading ? "Uploading" : "Upload"}
             </button>
-            <p className="text-red-700 text-sm">
+            {/* <p className="text-red-700 text-sm">
               {imageUploadError && imageUploadError}
-            </p>
+            </p> */}
             {formData.imageUrls.length > 0 && (
               <>
                 {formData.imageUrls.map((url, index) => (
@@ -477,13 +463,13 @@ export default function CreateProduct() {
                       alt="Item Image"
                       className="w-20 h-20 object-contain rounded-lg"
                     />
-                    <button
+                    {/* <button
                       type="button"
                       className="p-3 text-red-700 rounded-lg uppercase hover:opacity-35"
                       onClick={handleRemoveImage}
                     >
                       Delete
-                    </button>
+                    </button> */}
                   </div>
                 ))}
               </>
