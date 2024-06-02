@@ -16,10 +16,7 @@ export default function CreateProduct() {
     location: "",
     storeAddress: "",
     type: "",
-    categories: {
-      name: "",
-      subCategories: [],
-    },
+    categories: "",
     regularPrice: "",
     discountPrice: "",
     discount: false,
@@ -95,18 +92,20 @@ export default function CreateProduct() {
   };
 
   const handleCategoryChange = (e) => {
-    const category = e.target.value;
+    const { value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      categories: category,
-      subCategories: "", // Reset subCategories when category changes
+      categories: value,
+      // subCategories: predefinedSubCategories[value][0],
+      // Automatically select the first subcategory
     }));
   };
 
   const handleSubCategoryChange = (e) => {
+    const { value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      subCategories: e.target.value,
+      subCategories: value,
     }));
   };
 
@@ -155,38 +154,24 @@ export default function CreateProduct() {
     e.preventDefault();
     setLoading(true);
 
-    // Ensure subCategories is always an array before mapping
-    const subCategories = Array.isArray(formData.categories.subCategories)
-      ? formData.categories.subCategories.map((sc) => ({ name: sc.name }))
-      : [];
-
-    const submittedData = {
+    const submissionData = {
       ...formData,
       userRef: currentUser._id,
-      categories: {
-        ...formData.categories,
-        subCategories: formData.categories.subCategories.map((sc) => ({
-          name: sc.name,
-        })),
-      },
     };
 
     try {
       const response = await fetch("/api/product/create-product", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submittedData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submissionData),
       });
 
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.message || "Failed to create product");
-      console.log("Product created:", data);
       navigate(`/product/${data._id}`);
     } catch (error) {
-      setError(error.message || "Failed to submit product");
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -347,7 +332,7 @@ export default function CreateProduct() {
             </select>
           </div>
 
-          <div className="flex gap-3 justify-center items-center">
+          {/* <div className="flex gap-3 justify-center items-center">
             <label htmlFor="subcategory-select" className="font-semibold">
               Choose subcategory
             </label>
@@ -359,15 +344,16 @@ export default function CreateProduct() {
               value={formData.subCategories}
             >
               <option value="">--Please choose an option--</option>
-              {(predefinedSubCategories[formData.categories] || []).map(
-                (subCategory, index) => (
-                  <option key={index} value={subCategory}>
-                    {subCategory}
-                  </option>
-                )
-              )}
+              {formData.categories &&
+                predefinedSubCategories[formData.categories].map(
+                  (subCategory, index) => (
+                    <option key={index} value={subCategory}>
+                      {subCategory}
+                    </option>
+                  )
+                )}
             </select>
-          </div>
+          </div> */}
 
           {/* <div className="flex gap-3 justify-center items-center">
             <label htmlFor="custom-subcategory" className="font-semibold">

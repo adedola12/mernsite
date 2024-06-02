@@ -220,33 +220,7 @@ export default function Marketplace() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row p-4 gap-4 ml-[80px]">
-        <div className="bg-white rounded-lg shadow-md p-2 w-full md:w-60">
-          <div className="font-semibold text-xl p-3 border-b">
-            {/* Category Name */}
-            {/* Concrete /m3 */}
-            {searchArray.categories}
-          </div>
-          <div className="p-3">
-            {subCategories.map((subCategory) => (
-              <div key={subCategory} className="">
-                <input
-                  type="checkbox"
-                  id={subCategory}
-                  name={subCategory}
-                  value={subCategory}
-                  onChange={(e) => {
-                    setCategoryData((prevData) => ({
-                      ...prevData,
-                      subCategoryTerm: e.target.value,
-                    }));
-                  }}
-                  className=""
-                />
-                <label htmlFor={subCategory}>{subCategory}</label>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* TODO: ADD SIDEBAR FUNCTIONALITY AND CODE FUNCIONALITY */}
         <div className="bg-white flex-1 rounded-lg">
           <div className="p-3">
             <h2 className="text-2xl font-semibold mb-4">ADLM Marketplace</h2>

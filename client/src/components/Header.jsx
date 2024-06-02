@@ -47,7 +47,7 @@ export default function Header({ toggleModal }) {
             <img
               src="..\logo\ADLM Studio Logo PNG-07.png"
               alt="adlmlogo"
-              className="w-10 h-10 lg:w-18 lg:h-18"
+              className="w-10 h-10 lg:w-[78px] lg:h-[78px]"
             />
           </Link>
         </div>

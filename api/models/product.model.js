@@ -25,19 +25,24 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // categories: {
+    //   name: {
+    //     type: String,
+    //     required: true,
+    //   },
+    //   subCategories: [
+    //     {
+    //       name: {
+    //         type: String,
+    //         required: true,
+    //       },
+    //     },
+    //   ],
+    // },
     categories: {
-      name: {
-        type: String,
-        required: true,
-      },
-      subCategories: [
-        {
-          name: {
-            type: String,
-            required: true,
-          },
-        },
-      ],
+      type: String,
+      required: true,
+      //enum: ["Materials", "Labour"],
     },
 
     type: {
