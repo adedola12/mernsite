@@ -4,6 +4,7 @@ import {
   getUser,
   getUserListings,
   getUserProduct,
+  productUserDetails,
   test,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -17,5 +18,7 @@ router.delete("/delete/:id", verifyToken, deleteUser);
 router.get("/listings/:id", verifyToken, getUserListings);
 router.get("/products/:id", verifyToken, getUserProduct);
 router.get("/:id", verifyToken, getUser);
+
+router.get("user/:id", productUserDetails);
 
 export default router;

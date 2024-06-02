@@ -53,6 +53,7 @@ export default function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/services" element={<Services />} />
         <Route path="/newsletter" element={<Newsletter />} />
+
         <Route path="/sellerShop/:userId" element={<SellerShop />} />
 
         <Route path="/listing/:listingId" element={<Listing />} />

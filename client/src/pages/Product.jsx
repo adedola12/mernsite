@@ -136,7 +136,7 @@ export default function Product() {
                   alt={product.userRef.username}
                   className="rounded-full h-16 w-16 object-cover mr-4"
                 />
-                <Link to={"/sellerShop"} className="">
+                <Link to={`/sellerShop/${product.userRef._id}`} className="">
                   <p className="text-md font-semibold text-[#828282] text-xl">
                     {product.userRef.username}
                   </p>

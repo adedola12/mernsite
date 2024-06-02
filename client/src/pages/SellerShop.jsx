@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ProductItem from "../components/productItem";
 
 export default function SellerShop() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [user, setUser] = useState(null);
   const [allProduct, setAllProduct] = useState([]);
   const [showNumber, setShowNumber] = useState(false);
+  const { userId } = useParams();
 
-  console.log(product);
+  console.log(products);
   console.log(allProduct);
-
-  const params = useParams();
+  console.log(userId);
+  console.log(user);
 
   useEffect(() => {
-    const fetchProductandUser = async () => {
+    const fetchProductsByUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/product/get/${params.productId}`);
+        const res = await fetch(`/api/product/user/${userId}`);
         if (!res.ok) {
-          throw new Error("Fetch to fetch");
+          throw new Error("Failed to fetch products");
         }
         const data = await res.json();
 
@@ -28,35 +31,61 @@ export default function SellerShop() {
           setLoading(false);
           return;
         } else {
-          setProduct(data.product);
+          setProducts(data.products);
+          setLoading(false);
         }
       } catch (error) {
         setError(true);
         setLoading(false);
       }
     };
-    fetchProductandUser();
-  }, [params.productId]);
+    const fetchUserInfo = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/user/${userId}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch user");
+        }
+        const data = await res.json();
+
+        if (data.success === false) {
+          setError(true);
+          setLoading(false);
+          return;
+        } else {
+          setUser(data);
+          setLoading(false);
+        }
+      } catch (error) {
+        setError(true);
+        setLoading(false);
+      }
+    };
+
+    fetchProductsByUser();
+    fetchUserInfo();
+  }, [userId]);
+
   return (
     <main className="min-h-screen">
       <div className="m-[100px] text-2xl">
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
             <div className="w-[305px] h-[334px] relative bg-white rounded-lg border">
-              <div className="w-[305px] p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
+              <div className="p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
                 <div className="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
                   Seller Profile
                 </div>
               </div>
               <div className="left-[16px] top-[71px] absolute justify-start items-center gap-2 inline-flex">
                 <img
-                  src=""
+                  src={user.avatar}
                   alt=""
                   className="w-14 h-14 rounded-[200px] border border-white"
                 />
                 <div className="flex-col justify-start items-start gap-1 inline-flex">
                   <div className="text-zinc-500 text-lg font-normal font-['DM Sans'] leading-snug">
-                    Store Name
+                    {user.username}
                   </div>
                   <div className="px-3 py-1 bg-emerald-50 rounded-xl flex-col justify-center items-center gap-2 flex">
                     <div className="justify-center items-center gap-1 inline-flex">
@@ -124,7 +153,7 @@ export default function SellerShop() {
                   </div>
                 </div>
               </div>
-              <div class="w-[740px] p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
+              <div class="p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
                 <div class="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
                   Product Categories
                 </div>
@@ -132,19 +161,18 @@ export default function SellerShop() {
             </div>
           </div>
           <div className="">
-            <div class="w-[1059px] h-[931px] relative bg-white">
+            <div class="h-[931px] relative bg-white">
               <div class="w-[1061px] p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
                 <div class="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
                   Shop
                 </div>
               </div>
-              <div class="left-[16px] top-[82px] absolute justify-start items-start gap-4 inline-flex">
-                <div class="w-[331px] pt-3 pb-[25px] bg-white rounded-lg shadow border flex-col justify-start items-center gap-[34px] inline-flex">
-                  <div class="w-[299px] h-[212px] relative bg-black/opacity-20 rounded-tl rounded-tr rounded-bl rounded-br-md"></div>
-                  <div class="self-stretch h-[65px] flex-col justify-start items-start gap-4 inline-flex">
-                    {/* PRODUCTITEM  CARD */}
-                  </div>
-                </div>
+
+              <div className="left-[16px] top-[82px] absolute flex flex-wrap gap-4 p-8 w-full">
+                {products &&
+                  products.map((product) => (
+                    <ProductItem key={product._id} product={product} />
+                  ))}
               </div>
 
               <div class="h-[77px] py-2 left-0 top-[854px] absolute bg-white flex-col justify-center items-center gap-2 inline-flex">
@@ -186,9 +214,9 @@ export default function SellerShop() {
             </div>
           </div>
           <div className="">
-            <div class="w-[1064px] h-[695px] px-[202px] pt-[77px] pb-[76.04px] bg-white rounded-lg justify-center items-center inline-flex">
+            <div class="h-[695px] px-[202px] pt-[77px] pb-[76.04px] bg-white rounded-lg justify-center items-center inline-flex">
               <div class="self-stretch flex-col justify-start items-start gap-8 inline-flex">
-                <div class="w-[660px] border-b border-zinc-600 justify-center items-center gap-10 inline-flex">
+                <div class="border-b border-zinc-600 justify-center items-center gap-10 inline-flex">
                   <div class="text-center text-zinc-600 text-base font-normal font-['DM Sans'] leading-tight">
                     Reviews
                   </div>
@@ -222,7 +250,7 @@ export default function SellerShop() {
                             <div className="">
                               <input
                                 type="text"
-                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-sm font-normal font-['Calibri']"
+                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-normal font-normal font-['Calibri']"
                                 placeholder="Name"
                               />
                             </div>
@@ -236,7 +264,7 @@ export default function SellerShop() {
                                 type="email"
                                 name=""
                                 id=""
-                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-sm font-normal font-['Calibri']"
+                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-normal font-normal font-['Calibri']"
                                 placeholder="Email"
                               />
                             </div>
@@ -249,7 +277,7 @@ export default function SellerShop() {
                           <div className="">
                             <input
                               type="text"
-                              className="w-[659px] h-[161px] pl-[19px] pr-[576px] pt-4 pb-32 rounded-2xl border border-stone-300 justify-start items-center inline-flex text-stone-300 text-sm font-normal font-['Calibri']"
+                              className="w-[659px] h-[161px] pl-[19px] pr-[576px] pt-4 pb-32 rounded-2xl border border-stone-300 justify-start items-center inline-flex text-stone-300 text-normal font-normal font-['Calibri']"
                               placeholder="Your Review"
                             />
                           </div>
@@ -257,7 +285,7 @@ export default function SellerShop() {
                       </div>
                       <div class="h-12 px-6 py-[14.50px] bg-cyan-950 rounded-lg flex-col justify-center items-center gap-2.5 flex">
                         <div class="justify-center items-center gap-2 inline-flex">
-                          <button class="text-center text-white text-base font-normal font-['DM Sans'] leading-tight">
+                          <button class="text-center text-white text-base font-lg font-['DM Sans'] leading-tight">
                             Submit Reviews
                           </button>
                         </div>

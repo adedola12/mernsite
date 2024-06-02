@@ -67,6 +67,15 @@ export const getAllProductInSubCategory = async (req, res, next) => {
   }
 };
 
+export const getAllUserProduct = async (req, res, next) => {
+  try {
+    const products = await Product.find({ userRef: req.params.userId });
+    res.json({ success: true, products });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getCat = async (req, res, next) => {
   try {
     const limit = parseInt(req.query.limit) || 9;
