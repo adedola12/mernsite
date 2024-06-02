@@ -136,14 +136,14 @@ export default function Product() {
                   alt={product.userRef.username}
                   className="rounded-full h-16 w-16 object-cover mr-4"
                 />
-                <div className="">
+                <Link to={"/sellerShop"} className="">
                   <p className="text-md font-semibold text-[#828282] text-xl">
                     {product.userRef.username}
                   </p>
                   <span className="bg-green-100 text-green-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
                     Verified
                   </span>
-                </div>
+                </Link>
               </div>
               <div className="flex gap-2 flex-col">
                 <Link

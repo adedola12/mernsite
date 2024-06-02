@@ -23,6 +23,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import SignInModal from "./pages/SignIn";
 import SignUpModal from "./pages/SignUp";
+import SellerShop from "./pages/SellerShop";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -52,6 +53,7 @@ export default function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/services" element={<Services />} />
         <Route path="/newsletter" element={<Newsletter />} />
+        <Route path="/sellerShop/:userId" element={<SellerShop />} />
 
         <Route path="/listing/:listingId" element={<Listing />} />
 
