@@ -47,7 +47,7 @@ export default function Header({ toggleModal }) {
             <img
               src="..\logo\ADLM Studio Logo PNG-07.png"
               alt="adlmlogo"
-              className="w-10 h-10 lg:w-[78px] lg:h-[78px]"
+              className="w-10 h-10 lg:w-[95px] lg:h-[95px]"
             />
           </Link>
         </div>
@@ -62,7 +62,7 @@ export default function Header({ toggleModal }) {
         <nav
           className={`md:flex md:gap-4 md:flex-row md:relative md:h-0 md:mt-0 md:translate-x-0 md:w-90 md:p-0 md:mb-2 md:ml-0 ${
             isMenuOpen ? "block" : "hidden"
-          } translate-x-full top-0 w-56 mt-12 flex flex-col gap-4 ml-20 bg-white shadow-lg p-4 z-20 transition-transform duration-300 h-[22vh] absolute transform`}
+          } translate-x-full top-0 w-56 mt-12 flex flex-col gap-4 ml-20 bg-white shadow-lg p-4 z-20 transition-transform duration-300 h-[22vh] absolute transform text-2xl`}
         >
           {/* Menu Items */}
           <Link to="/HomeA" className="hover:opacity-45">
@@ -71,12 +71,12 @@ export default function Header({ toggleModal }) {
           <Link to="/marketplace" className="hover:opacity-45">
             Marketplace
           </Link>
-          <Link to="/pricing" className="hover:opacity-45">
+          {/* <Link to="/pricing" className="hover:opacity-45">
             Pricing
           </Link>
           <Link to="/services" className="hover:opacity-45">
             Services
-          </Link>
+          </Link> */}
 
           <div className="relative ">
             <button
@@ -129,14 +129,14 @@ export default function Header({ toggleModal }) {
             )}
           </div>
 
-          <Link to="/newsletter" className="hover:opacity-45">
+          {/* <Link to="/newsletter" className="hover:opacity-45">
             Newsletter
-          </Link>
+          </Link> */}
         </nav>
 
         {!currentUser ? (
           <>
-            <div className="flex gap-3">
+            <div className="flex gap-3 text-2xl">
               <button onClick={() => toggleModal("signIn")}>Sign In</button>
               <button onClick={() => toggleModal("signUp")}>Sign Up</button>
             </div>

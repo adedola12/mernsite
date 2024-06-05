@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
+import { FaPhone } from "react-icons/fa";
 
 export default function SellerShop() {
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,8 @@ export default function SellerShop() {
         }
         const data = await res.json();
 
+        console.log(data);
+
         if (data.success === false) {
           setError(true);
           setLoading(false);
@@ -66,54 +69,50 @@ export default function SellerShop() {
     fetchUserInfo();
   }, [userId]);
 
+  const showMobile = () => {
+    setShowNumber(!showNumber);
+  };
+
   return (
     <main className="min-h-screen">
       <div className="m-[100px] text-2xl">
         <div className="flex flex-col gap-4">
           <div className="flex gap-2">
-            <div className="w-[305px] h-[334px] relative bg-white rounded-lg border">
-              <div className="p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
-                <div className="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
-                  Seller Profile
-                </div>
-              </div>
-              <div className="left-[16px] top-[71px] absolute justify-start items-center gap-2 inline-flex">
+            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm md:w-[330px]">
+              <h2 className="text-3xl font-semibold">Seller Profile</h2>
+
+              <div className="flex items-center mb-3">
                 <img
-                  src={user.avatar}
-                  alt=""
-                  className="w-14 h-14 rounded-[200px] border border-white"
+                  src={user?.avatar ?? "default-avatar-url.jpg"}
+                  alt="NA"
+                  className="rounded-full h-16 w-16 object-cover mr-4"
                 />
-                <div className="flex-col justify-start items-start gap-1 inline-flex">
-                  <div className="text-zinc-500 text-lg font-normal font-['DM Sans'] leading-snug">
-                    {user.username}
-                  </div>
-                  <div className="px-3 py-1 bg-emerald-50 rounded-xl flex-col justify-center items-center gap-2 flex">
-                    <div className="justify-center items-center gap-1 inline-flex">
-                      <div className="text-center text-green-800 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                        Verified
-                      </div>
-                    </div>
-                  </div>
+                <div className="">
+                  <p className="text-lg font-semibold text-[#828282]">
+                    {user?.username ?? "Store Owner"}
+                  </p>
+                  <span className="bg-green-100 text-green-700 text-lg font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                    Verified
+                  </span>
                 </div>
               </div>
-              <div className="left-[16px] top-[191px] absolute flex-col justify-start items-start gap-2 inline-flex">
-                <div className="w-[273px] justify-start items-start gap-2 inline-flex">
-                  <div className="pl-[90px] pr-[70px] pt-4 pb-[15px] bg-cyan-950 rounded-lg justify-end items-center flex">
-                    <div className="text-white text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                      Text on Whatsapp
-                    </div>
-                  </div>
-                </div>
-                <div className="px-[88px] pt-4 pb-[15px] bg-neutral-100 rounded-lg border border-gray-200 justify-center items-center inline-flex">
-                  <div className="self-stretch justify-start items-start gap-[3px] inline-flex">
-                    <div className="w-4 h-4 p-[1.33px] justify-center items-center flex"></div>
-                    <div className="text-neutral-800 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                      See Number
-                    </div>
-                  </div>
-                </div>
+
+              <div className="flex gap-2 flex-col mt-10">
+                <Link
+                  to={`https://wa.me/+2340${user?.mobileNumber}?text=I am intrested in your product in your store ${user?.username} listed on the ADLM Marketplace`}
+                  className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-lg rounded-lg font-medium"
+                >
+                  Text on Whatsapp
+                </Link>
+                <button
+                  className="bg-gray-300 text-black py-2 px-4 rounded-lg text-lg font-medium flex items-center justify-center"
+                  onClick={showNumber}
+                >
+                  Show Number
+                </button>
               </div>
             </div>
+
             <div class="w-[740px] h-[334px] relative bg-white rounded-lg">
               <div class="left-[23px] top-[85px] absolute flex-col justify-start items-start gap-4 inline-flex">
                 <div class="justify-center items-center gap-4 inline-flex">

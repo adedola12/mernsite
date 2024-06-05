@@ -1,3 +1,4 @@
+// HomeA.js
 import React, { useEffect, useState } from "react";
 import {
   FaArrowDown,
@@ -13,98 +14,16 @@ import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import ImageSlider from "../components/ImageSlider";
-import SideBar from "../components/SideBar";
-import ProductItem from "../components/productItem";
-import { MdLocationOn } from "react-icons/md";
-import StateSelector from "../components/StateSelector";
-import TypeSelector from "../components/TypeSelector";
+import Marketplace from "../components/MarketPlace";
+// Import Marketplace component
 
 export default function HomeA() {
-  const [categoryData, setCategoryData] = useState({
-    categoryTerm: "",
-    location: "",
-    type: "",
-  });
-  const [products, setProducts] = useState([]);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  console.log(products);
-
-  const handleCategorySelect = (category) => {
-    const urlParams = new URLSearchParams(location.search);
-    if (category) {
-      urlParams.set("categories", category);
-    } else {
-      urlParams.delete("categories");
-    }
-    navigate(`?${urlParams.toString()}`, { replace: true });
-  };
-
-  const handleStateSelected = (newState) => {
-    const urlParams = new URLSearchParams(location.search);
-    if (newState) {
-      urlParams.set("location", newState);
-    } else {
-      urlParams.delete("location");
-    }
-
-    // This will update the URL without navigating
-    navigate(`?${urlParams.toString()}`, { replace: true });
-  };
-
-  const handleTypeSelected = (newType) => {
-    const urlParams = new URLSearchParams(location.search);
-    if (newType) {
-      urlParams.set("type", newType);
-    } else {
-      urlParams.delete("type");
-    }
-
-    navigate(`?${urlParams.toString()}`, { replace: true });
-  };
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-
-    const categoryTermUrl = urlParams.get("categories");
-    const locationTermUrl = urlParams.get("location");
-    const typeTermUrl = urlParams.get("type");
-
-    if (categoryTermUrl || locationTermUrl || typeTermUrl) {
-      setCategoryData({
-        categoryTerm: categoryTermUrl || "",
-        location: locationTermUrl || "",
-        type: typeTermUrl || "",
-      });
-    }
-
-    const fetchCategory = async () => {
-      const searchQuery = urlParams.toString();
-      try {
-        const res = await fetch(`/api/product/getCat?${searchQuery}`);
-
-        if (!res.ok) {
-          throw new Error("Network respons was not ok");
-        }
-
-        const data = await res.json();
-
-        setProducts(data);
-      } catch (error) {
-        console.error("There is an error fetchin products:", error);
-      }
-    };
-
-    fetchCategory();
-  }, [location.search]);
-
   return (
     <main className="min-h-screen">
       {/* Top Section */}
       <div className="w-full">
         <div className="flex flex-col md:flex-row md:justify-between py-16 px-4 sm:px-0 lg:px-0  gap-5">
-          <div className="flex flex-col gap-5 md:mt-[149px] mt-10 pl-[102px]">
+          <div className="flex flex-col gap-5 md:mt-[50px] mt-10 pl-[102px]">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3 items-center gap-3 w-[280px]">
               <Link to={"/product"} className=" font-[Inter] text-[14px]">
                 Construction management plugin
@@ -144,55 +63,16 @@ export default function HomeA() {
         </div>
       </div>
       {/* Explore Market Place */}
-      <div className="bg-[#F5F5F5] flex gap-4 ">
-        <div className="pl-[102px] w-full">
-          <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
-            Explore Marketplace
-          </h2>
-          <div className="flex md:flex-row flex-col gap-4 my-5">
-            <div className="">
-              <div className="w-[80px] h-[80px]">
-                <img
-                  src="..\logo\ADLM Studio Logo PNG-07.png"
-                  alt=""
-                  className="object-contain"
-                />
-              </div>
-              <div>
-                {/* CATEGORY LIST SIDE BAR ITEM */}
-                <SideBar onCategorySelect={handleCategorySelect} />
-              </div>
-            </div>
-            <div className="flex flex-col gap-6">
-              <h2 className="font-semibold text-3xl pt-4">ADLM Marketplace</h2>
-              <div className="m-4 flex gap-4 w-full">
-                <div className="border bg-[#F1F1F1] rounded-lg p-5 flex gap-6 items-center w-[205px] justify-between">
-                  <p className="text-[#CFCFCF] font-semibold">location</p>
-                  <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
-                </div>
-                {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
-                <StateSelector onStateSelected={handleStateSelected} />
-                <TypeSelector onTypeSelected={handleTypeSelected} />
-              </div>
-              <div className="flex gap-4 flex-wrap p-8 w-full ">
-                {products &&
-                  products.map((product) => (
-                    <ProductItem key={product._id} product={product} />
-                  ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Marketplace /> {/* Use Marketplace component */}
       {/* Unlock Features */}
       <div className="flex md:flex-row flex-col items-start justify-between">
         <div className="h-[382px] mt-[152px] ml-[121px] flex flex-col  gap-5">
-          <h2 className="font-bold text-5xl md-4">
+          <h2 className="font-bold text-5xl my-4 md:text-7xl">
             Unlock features of the
             <span className="text-[#E3B309]"> plugin</span>
           </h2>
-          <ul className="space-y-2 text-[#828282]">
-            <li className="flex gap-2 items-center">
+          <ul className="space-y-2 text-[#828282] text-lg md:text-2xl">
+            <li className="flex gap-2 items-center ">
               <FaStar />
               <p>Rates</p>
             </li>
@@ -209,8 +89,8 @@ export default function HomeA() {
               <p>Material schedule for measured works</p>
             </li>
           </ul>
-          <Link className="mt-4 flex items-center justify-between rounded-lg border bg-[#E4E7EC] w-[150px] py-3 px-6">
-            Learn more
+          <Link className="mt-4 flex items-center justify-between rounded-lg border bg-[#6a98e9] w-[170px] py-3 px-4">
+            <span className="font-bold text-lg">Learn more</span>
             <FaArrowDown />
           </Link>
         </div>
@@ -222,13 +102,13 @@ export default function HomeA() {
           />
         </div>
       </div>
-      {/* Intergration  */}
+      {/* Integration */}
       <div className="bg-[#F5F5F5] flex flex-col md:flex-row md:items-center md:justify-between px-8 py-16">
         <div className="flex flex-col space-y-5 md:space-y-7 w-[510px] ml-[189px] mt-[89px]">
-          <h2 className="font-bold text-5xl text-[#1D1D1D]">
-            Intergration with other Product
+          <h2 className="font-bold text-5xl md:text-8xl text-[#1D1D1D]">
+            Integration with other Product
           </h2>
-          <p className="text-[#1D1D1D] w-[405px]">
+          <p className="text-[#1D1D1D] w-[405px] md:text-2xl">
             Learn how teams of all sizes are using ADLM integrate with other
             products to create value.
           </p>
@@ -458,7 +338,6 @@ export default function HomeA() {
           </div>
         </div>
       </div>
-
       {/* News Letter */}
     </main>
   );

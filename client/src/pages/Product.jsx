@@ -77,38 +77,29 @@ export default function Product() {
   return (
     <main className="min-h-screen">
       <div className="m-[100px] text-2xl">
-        <div className=" flex gap-4 justify-between">
-          <div className="flex flex-col gap-4">
+        <div className="flex gap-4 justify-between">
+          <div className="flex flex-col gap-4 w-full lg:w-2/3">
             <div className="bg-[#FFFFFF] p-4 rounded-lg">
               <h1 className="my-5 font-normal text-xl">Product Details</h1>
-              <div className=" flex gap-3">
+              <div className="flex gap-3">
                 <div className="flex flex-col gap-3">
-                  <div className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden">
-                    <img
-                      src={product.imageUrls[0]}
-                      alt="product image 1"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden">
-                    <img
-                      src={product.imageUrls[1]}
-                      alt="product image 1"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden">
-                    <img
-                      src={product.imageUrls[2]}
-                      alt="product image 1"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+                  {product.imageUrls.slice(0, 3).map((url, index) => (
+                    <div
+                      key={index}
+                      className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden"
+                    >
+                      <img
+                        src={url}
+                        alt={`product image ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="flex-grow border-2 border-gray-200 overflow-hidden">
                   <img
                     src={product.imageUrls[0]}
-                    alt=""
+                    alt="main product"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -116,7 +107,6 @@ export default function Product() {
               <div className="my-5">
                 <h1 className="font-bold text-3xl">{product.name}</h1>
                 <h2 className="">subCate {product.subCategories}</h2>
-                {/* Create the number of star rating */}
                 <p className="text-sm">Review</p>
               </div>
             </div>
@@ -127,8 +117,8 @@ export default function Product() {
               </p>
             </div>
           </div>
-          <div className="md:flex flex-col gap-4 hidden">
-            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm md:w-[330px]">
+          <div className="flex flex-col gap-4 w-full lg:w-1/3">
+            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm">
               <h2 className="text-lg font-semibold">Seller Profile</h2>
               <div className="flex items-center mb-4 mt-3">
                 <img
@@ -167,7 +157,7 @@ export default function Product() {
                 </button>
               </div>
             </div>
-            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm md:w-[330px]">
+            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm">
               <h2 className="text-lg font-semibold pb-4">Location</h2>
               <div className="flex gap-2 flex-col">
                 <div className="flex justify-between items-center border rounded-lg p-3 text-sm ">
@@ -185,7 +175,7 @@ export default function Product() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className=" border p-3 rounded-lg">
+                  <div className="border p-3 rounded-lg">
                     <MdAddLocation className="text-gray-400 " />
                   </div>
                   <div className="">
@@ -197,7 +187,7 @@ export default function Product() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className=" border p-3 rounded-lg">
+                  <div className="border p-3 rounded-lg">
                     <FaCar className="text-gray-400" />
                   </div>
                   <div className="">
@@ -214,12 +204,12 @@ export default function Product() {
       </div>
       <div className="my-3 bg-[#FFFFFF] w-full p-8">
         <h2 className="font-bold text-[24px]">Product like this</h2>
-        <Link className="my-6 flex gap-4">
+        <div className="my-6 flex gap-4">
           {allProduct &&
             allProduct.map((product) => (
               <ProductItem key={product._id} product={product} />
             ))}
-        </Link>
+        </div>
       </div>
     </main>
   );
