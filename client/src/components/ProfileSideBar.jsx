@@ -15,7 +15,7 @@ export default function ProfileSideBar({
   handleShowShopDetails,
 }) {
   return (
-    <div className="w-64 flex-shrink-0 p-5 flex flex-col bg-[#FFFFFF]">
+    <div className="hidden w-64 flex-shrink-0 p-5 md:flex flex-col bg-[#FFFFFF]">
       <h1 className="font-bold text-xl mb-4 border-b pb-4">Profile</h1>
       <div className="flex flex-col gap-2">
         <button

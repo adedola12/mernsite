@@ -66,11 +66,9 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/create-product" element={<CreateProduct />} />
-          <Route
-            path="/update-listing/:listingId"
-            element={<UpdateListing />}
-          />
+          <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         </Route>
+        
       </Routes>
       {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
       {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}

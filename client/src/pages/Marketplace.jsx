@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import CategorySelector from "../components/CategorySelector";
 import LocationSelector from "../components/LocationSelector";
@@ -17,15 +17,13 @@ export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
   const [triggerSearch, setTriggerSearch] = useState(false);
 
-  const searchArray = searchResults.data;
+  let [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(searchArray);
+  const searchArray = searchResults.data;
 
   const location = useLocation();
 
   const [products, setProducts] = useState([]);
-  console.log(products);
-  console.log(selectedCategory);
 
   const [categoryList, setCategoryList] = useState([]);
   const [categoryItems, setCategoryItems] = useState([]);
@@ -35,6 +33,15 @@ export default function Marketplace() {
   const [subCategories, setSubCategories] = useState([]);
 
   const handleCategorySelect = async (category) => {
+
+    if(category) {
+      searchParams.set("categories", category)
+      setSearchParams(searchParams)
+    } else {
+      searchParams.delete("categories")
+      setSearchParams(searchParams)
+    }
+
     setSelectedCategory(category);
 
     try {
@@ -50,6 +57,13 @@ export default function Marketplace() {
   };
 
   const handleLocationSelected = (location) => {
+    if(!location) {
+      searchParams.delete("location");
+      setSearchParams(searchParams)
+    }else {
+      searchParams.set("location", location)
+      setSearchParams(searchParams)
+    }
     setSelectedState(location);
   };
 
@@ -85,6 +99,7 @@ export default function Marketplace() {
   };
 
   useEffect(() => {
+    
     const urlParams = new URLSearchParams(location.search);
 
     const categoryTermUrl = urlParams.get("categories");
@@ -92,7 +107,6 @@ export default function Marketplace() {
     const locationTermUrl = urlParams.get("location");
     const subCategoryTermUrl = urlParams.get("subCategories");
 
-    console.log(categoryTermUrl);
 
     if (
       categoryTermUrl ||
@@ -100,6 +114,7 @@ export default function Marketplace() {
       locationTermUrl ||
       subCategoryTermUrl
     ) {
+
       setCategoryData({
         categoryTerm: categoryTermUrl || "",
         priceTerm: priceTermUrl || "",
@@ -134,8 +149,10 @@ export default function Marketplace() {
   useEffect(() => {
     if (triggerSearch) {
       const performSearch = async () => {
-        const urlParams = new URLSearchParams();
+        const urlParams = new URLSearchParams(location.search);
+        
         if (selectedState) {
+          searchParams.set("location", selectedState)
           urlParams.append("location", selectedState);
         }
         if (selectedCategory) {
@@ -161,7 +178,7 @@ export default function Marketplace() {
       performSearch();
     }
     return () => setTriggerSearch(false);
-  }, [triggerSearch, selectedState, selectedCategory]);
+  }, [triggerSearch, searchParams, selectedState, selectedCategory]);
 
   useEffect(() => {
     const fetchProductsBySubCategory = async () => {

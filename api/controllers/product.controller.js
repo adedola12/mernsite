@@ -1,8 +1,11 @@
 import Product from "../models/product.model.js";
 import errorHandler from "../utils/error.js";
 
+import { productCategories } from "../constants/data.js";
+
+
 export const createProduct = async (req, res, next) => {
-  console.log(req.body);
+
   try {
     const product = await Product.create(req.body);
 
@@ -16,7 +19,8 @@ export const getCategories = async (req, res, next) => {
   try {
     const categories = await Product.distinct("categories");
 
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
+
   } catch (error) {
     next(error);
   }
@@ -24,6 +28,7 @@ export const getCategories = async (req, res, next) => {
 
 export const getAllProductInCategory = async (req, res, next) => {
   try {
+
     const category = req.query.categories;
 
     const limit = parseInt(req.query.limit) || 9;
@@ -58,6 +63,9 @@ export const getAllProductInSubCategory = async (req, res, next) => {
         (subCategory, index, self) => self.indexOf(subCategory) === index
       );
 
+
+    const categorySub = productCategories.find((category) => category.name.toString() === categoryName.toString());
+
     res.status(200).json({
       success: true,
       subCategories,
@@ -78,6 +86,7 @@ export const getAllUserProduct = async (req, res, next) => {
 
 export const getCat = async (req, res, next) => {
   try {
+    
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
@@ -94,6 +103,7 @@ export const getCat = async (req, res, next) => {
     if (locationTerm) {
       queryObj.location = { $regex: new RegExp(locationTerm, "i") };
     }
+
     if (typeTerm) {
       queryObj.location = { $regex: new RegExp(typeTerm, "i") };
     }
