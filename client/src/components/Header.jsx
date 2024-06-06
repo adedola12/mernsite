@@ -40,8 +40,8 @@ export default function Header({ toggleModal }) {
   };
 
   return (
-    <header className="bg-white shadow-md z-10 top-0 items-center">
-      <div className="container mx-auto p-4 flex relative max-w-full items-center justify-between bg-white shadow-md">
+    <header className="bg-white z-10 top-0 items-center">
+      <div className="container shadow-sm mx-auto p-4 md:py-0 flex relative max-w-full items-center justify-between bg-white ">
         <div className="">
           <Link to="/" className="object-contain">
             <img
@@ -53,7 +53,7 @@ export default function Header({ toggleModal }) {
         </div>
 
         {/* Hambuger Icon */}
-        <div className="md:hidden">
+        <div className="md:hidden  ml-auto mr-5">
           <button onClick={handleToggleMenu} className="m-02">
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -62,19 +62,19 @@ export default function Header({ toggleModal }) {
         <nav
           className={`md:flex md:gap-4 md:flex-row md:relative md:h-0 md:mt-0 md:translate-x-0 md:w-90 md:p-0 md:mb-2 md:ml-0 ${
             isMenuOpen ? "block" : "hidden"
-          } translate-x-full top-0 w-56 mt-12 flex flex-col gap-4 ml-20 bg-white shadow-lg p-4 z-20 transition-transform duration-300 h-[22vh] absolute transform text-2xl`}
+          } translate-x-full top-0 w-56 mt-12 flex items-center flex-col gap-4 ml-20 bg-white p-4 z-20 transition-transform duration-300 h-[22vh] absolute transform text-2xl`}
         >
           {/* Menu Items */}
-          <Link to="/HomeA" className="hover:opacity-45">
+          <Link to="/HomeA" className="hover:opacity-45 text-lg">
             Home
           </Link>
-          <Link to="/marketplace" className="hover:opacity-45">
+          <Link to="/marketplace" className="hover:opacity-45 text-lg">
             Marketplace
           </Link>
-          {/* <Link to="/pricing" className="hover:opacity-45">
+          {/* <Link to="/pricing" className="hover:opacity-45 text-lg">
             Pricing
           </Link>
-          <Link to="/services" className="hover:opacity-45">
+          <Link to="/services" className="hover:opacity-45 text-lg">
             Services
           </Link> */}
 
@@ -84,43 +84,43 @@ export default function Header({ toggleModal }) {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <p className="hover:opacity-45">Product</p>
+              <p className="hover:opacity-45 text-lg">Product</p>
               <FaArrowDown className="text-sm" />
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 w-56 mt-2 py-2 bg-white border rounded shadow-xl flex flex-col p-3">
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/planswift-plugin"}
                 >
                   Planswift Plugin
                 </Link>
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/rate-gen"}
                 >
                   Rate Generator
                 </Link>
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/bim-course"}
                 >
                   BIM Course
                 </Link>
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/ms-project"}
                 >
                   Microsoft Project Course
                 </Link>
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/mat-lab-gen"}
                 >
                   Material and Labour Generator
                 </Link>
                 <Link
-                  className="hover:underline block px-4 py-2 hover:opacity-85"
+                  className="hover:underline block px-4 py-2 hover:opacity-85 text-lg"
                   to={"/revit-plugin"}
                 >
                   Revit Plugin

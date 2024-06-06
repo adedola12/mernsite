@@ -5,7 +5,6 @@ export default function CategorySelector({ onCategorySelected }) {
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  console.log(categoryList);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -25,7 +24,7 @@ export default function CategorySelector({ onCategorySelected }) {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    onCategorySelected(e.target);
+    onCategorySelected(e.target.value);
   };
   return (
     <div>

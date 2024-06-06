@@ -289,8 +289,8 @@ export default function Profile() {
   console.log(userProduct);
 
   return (
-    <div className="flex justify-center p-8 mx-auto min-h-screen">
-      <div className="flex gap-6 shadow rounded-lg overflow-hidden">
+    <div className="flex justify-center w-full p-8 px-0  min-h-screen">
+      <div className="flex gap-6 shadow rounded-lg w-full p-5">
         {/* SIDE BAR SECTION */}
         <ProfileSideBar
           activeView={activeView}
@@ -299,13 +299,13 @@ export default function Profile() {
           handleDeleteUser={handleDeleteUser}
           handleShowShopDetails={handleShowShopDetails}
         />
-        {/* DYNAMIC COMPONENT SECTION */}
-        <div className="bg-[#FFFFFF] rounded w-[800px] p-5 flex-grow">
+        {/* DYNAMIC COMPONENT SECTION w-[800px] */}
+        <div className="bg-[#FFFFFF] rounded  w-full p-5 flex-grow">
           {activeView === views.Personal_Details && (
             <>
-              <h2 className="">Personal Details</h2>
+              <h2 className="font-semibold ">Personal Details</h2>
               <form
-                className="flex flex-col gap-4 p-10"
+                className="flex flex-col gap-4 md:p-10"
                 onSubmit={handleSubmit}
               >
                 <input
@@ -387,14 +387,14 @@ export default function Profile() {
               <div className="flex mt-5 gap-3 items-center">
                 <Link
                   to={"/create-product"}
-                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 hover:opacity-80"
+                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
                 >
                   CREATE PRODUCT
                 </Link>
 
                 <Link
                   to={"/create-listing"}
-                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 hover:opacity-80"
+                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
                 >
                   CREATE LISTING
                 </Link>

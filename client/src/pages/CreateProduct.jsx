@@ -245,8 +245,8 @@ export default function CreateProduct() {
   };
 
   return (
-    <main className="p-[100px] max-w-auto mx-auto">
-      <div className="flex gap-6 shadow rounded-lg overflow-hidden">
+    <main className="w-full mx-auto pt-10 px-5 ">
+      <div className="flex gap-6 shadow rounded-lg ">
         <ProfileSideBar
           activeView={activeView}
           changeActiveView={changeActiveView}
@@ -254,15 +254,17 @@ export default function CreateProduct() {
           handleDeleteUser={handleDeleteUser}
           handleShowShopDetails={handleShowShopDetails}
         />
-        <div className="flex-1 p-4">
-          <h1 className="text-3xl font-semibold text-center my-7">
+
+        <div className="flex-1 bg-white p-4">
+          <h1 className="text-3xl font-semibold text-center py-5">
             Create a Product
           </h1>
           <form
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4"
             onSubmit={handleSubmit}
           >
-            <div className="flex flex-col gap-4">
+            
+            <div className="flex flex-col gap-4 w-full p-2">
               <input
                 type="text"
                 placeholder="Product Name"
@@ -292,20 +294,21 @@ export default function CreateProduct() {
                 value={formData.mobile}
                 onChange={handleChange}
               />
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  placeholder="Seller Address"
-                  className="rounded-lg bg-white p-3 border"
-                  name="storeAddress"
-                  required
-                  value={formData.storeAddress}
-                  onChange={handleChange}
-                />
+
+              <div className="flex flex-wrap gap-3 w-full">
+                  <input
+                    type="text"
+                    placeholder="Seller Address"
+                    className="rounded-lg bg-white p-3 border flex-1"
+                    name="storeAddress"
+                    required
+                    value={formData.storeAddress}
+                    onChange={handleChange}
+                  />
                 <select
                   name="location"
                   value={formData.location}
-                  className="rounded-lg bg-white p-3 border"
+                  className="rounded-lg p-3 border  flex-1"
                   onChange={handleChange}
                 >
                   <option className="text-gray-400">-select a State-</option>
@@ -316,14 +319,15 @@ export default function CreateProduct() {
                   ))}
                 </select>
               </div>
-              <div className="flex gap-3 justify-center items-center">
-                <label htmlFor="unit-select" className="font-semibold">
+
+              <div className="flex gap-3 flex-row items-center">
+                <label htmlFor="unit-select" className="font-semibold flex-1">
                   Choose Unit:
                 </label>
                 <select
                   name="unit"
                   value={formData.unit}
-                  className="p-3 rounded-lg w-[300px]"
+                  className="p-3 rounded-lg flex-1 border"
                   onChange={handleChange}
                 >
                   <option>--Please choose an option--</option>
@@ -334,14 +338,14 @@ export default function CreateProduct() {
                   ))}
                 </select>
               </div>
-              <div className="flex gap-3 justify-center items-center">
-                <label htmlFor="type-select" className="font-semibold">
+              <div className="flex gap-3 flex-row items-center">
+                <label htmlFor="type-select" className="font-semibold  flex-1">
                   Choose Product Type:
                 </label>
                 <select
                   name="type"
                   value={formData.type}
-                  className="p-3 rounded-lg"
+                  className="p-3 rounded-lg border  flex-1"
                   onChange={handleChange}
                 >
                   <option>--Please choose an option--</option>
@@ -352,15 +356,15 @@ export default function CreateProduct() {
                   ))}
                 </select>
               </div>
-              <div className="flex gap-3 justify-center items-center">
-                <label htmlFor="category-select" className="font-semibold">
+              <div className="flex gap-3 flex-row items-center">
+                <label htmlFor="category-select" className="font-semibold  flex-1">
                   Choose a category:
                 </label>
                 <select
                   name="categories"
                   id="category-select"
                   value={formData.categories}
-                  className="p-3 rounded-lg w-[260px]"
+                  className="p-3 rounded-lg  flex-1 border"
                   onChange={handleCategoryChange}
                 >
                   <option value="">--Please choose an option--</option>
@@ -371,8 +375,8 @@ export default function CreateProduct() {
                   ))}
                 </select>
               </div>
-              <div className="flex gap-3 flex-col items-center">
-                <div>
+              <div className="flex gap-3 sm:flex-row w-full flex-col self-start items-center">
+                <div className="flex-1">
                   <input
                     type="checkbox"
                     name="discount"
@@ -382,7 +386,7 @@ export default function CreateProduct() {
                   />
                   <span>Discount Offer</span>
                 </div>
-                <div className="flex gap-2 justify-center items-center">
+                <div className="flex gap-2 self-start items-center flex-1">
                   <input
                     type="number"
                     name="regularPrice"
@@ -395,7 +399,7 @@ export default function CreateProduct() {
                   />
                   <span className="font-semibold text-xl">Price</span>
                   {formData.discount && (
-                    <div className="flex gap-2 justify-center items-center">
+                    <div className="flex gap-2  items-center">
                       <input
                         type="number"
                         name="discountPrice"
@@ -413,11 +417,13 @@ export default function CreateProduct() {
                   )}
                 </div>
               </div>
+
             </div>
-            <div className="flex flex-col flex-1 gap-4">
+            
+            <div className="flex flex-col flex-1 gap-4px-2">
               <div className="flex items-center">
                 <p className="font-semibold">Images:</p>
-                <span className="font-normal ml-2">
+                <span className="font-normal ml-2 my-4">
                   The first image will be the cover (max 6)
                 </span>
               </div>
@@ -458,12 +464,13 @@ export default function CreateProduct() {
               <button
                 type="submit"
                 disabled={loading || uploading}
-                className="p-3 bg-blue-900 text-white font-semibold rounded-lg uppercase hover:opacity-80 disabled:opacity-40"
+                className="p-3 mt-5 bg-blue-900 text-white font-semibold rounded-lg uppercase hover:opacity-80 disabled:opacity-40"
               >
                 {loading ? "Creating..." : "Create Product"}
               </button>
               {error && <p className="text-red-900 text-sm">{error}</p>}
             </div>
+
           </form>
         </div>
       </div>

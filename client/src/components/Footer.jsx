@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-white mt-3 p-5 ">
-      <div className="flex gap-6 p-10 ">
+    <div className="bg-white mt-3">
+      <div className="flex flex-col md:flex-row gap-6 px-5 md:p-10 ">
         <div className="flex flex-col gap-3 items-start">
           <img
             src="..\logo\ADLM Studio Logo PNG-07.png"
@@ -15,14 +15,14 @@ export default function Footer() {
             Be the first to receive all the recent updates, articles, and
             valuable materials.
           </span>
-          <div className="">
+          <div className="w-full">
             <form action="" className="w-full">
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-col md:flex-row">
                 <input
                   type="email"
                   placeholder="Email address"
                   id="emailAddress"
-                  className="border px-4 py-2"
+                  className="border px-4 py-2 flex-1 w-full"
                 />
                 <button className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2">
                   Subscribe
@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-3 w-full">
-          <div className="flex flex-wrap justify-between px-10 py-8">
+          <div className="flex flex-wrap justify-between md:px-10 py-8">
             <div className="w-full md:w-1/4 mb-6 md:mb-0">
               <h2 className="font-bold text-md mb-2">Product</h2>
               <ul className="list-none mb-0">
@@ -184,11 +184,11 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="">
-        <div className="border border-y-2 border-x-0 py-5 flex justify-between">
+      <div className="border border-t border-x-0 ">
+        <div className="py-5 flex flex-col md:flex-row md:justify-between p-3 md:p-10">
           <h3 className="font-semibold text-[18px]">Connect with us</h3>
           <div className="">
-            <ul className="list-none mb-0 flex flex-row gap-5">
+            <ul className="list-none mb-0 flex flex-col md:flex-row gap-5">
               <li>
                 <a
                   href="https://twitter.com/Adlm_studio"
@@ -232,7 +232,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex justify-between my-5 items-center">
+        <div className="flex flex-wrap justify-between my-5 px-5 md:px-10 items-center">
           <ul className="list-none  flex gap-6">
             <li>
               <Link

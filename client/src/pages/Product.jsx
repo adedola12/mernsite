@@ -24,6 +24,7 @@ export default function Product() {
         if (!res.ok) {
           throw new Error("Failed to fetch");
         }
+        
         const data = await res.json();
 
         if (data.success === false) {
