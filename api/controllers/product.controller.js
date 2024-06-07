@@ -54,23 +54,31 @@ export const getAllProductInCategory = async (req, res, next) => {
 
 export const getAllProductInSubCategory = async (req, res, next) => {
   const { categoryName } = req.params;
+  
   try {
+
     const products = await Product.find({ categories: categoryName });
+    
+    let subCategories = [];
 
-    const subCategories = products
-      .flatMap((product) => product.subCategories.map((subCat) => subCat.name))
-      .filter(
-        (subCategory, index, self) => self.indexOf(subCategory) === index
+    // subCategories = products
+    //   .flatMap((product) => product.subCategories.map((subCat) => subCat.name))
+    //   .filter(
+    //     (subCategory, index, self) => self.indexOf(subCategory) === index
+    //   );
+
+    if(products && products.length > 0) {
+      subCategories = products.filter(product => 
+        productCategories.some(subCategory => product.categories === subCategory.name)
       );
-
-
-    const categorySub = productCategories.find((category) => category.name.toString() === categoryName.toString());
+    }
 
     res.status(200).json({
       success: true,
       subCategories,
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
@@ -120,22 +128,35 @@ export const getCat = async (req, res, next) => {
 };
 
 export const searchProduct = async (req, res, next) => {
+
   try {
+    console.log(req.query)
     const { location, categories, limit = 12, startIndex = 0 } = req.query;
 
     let filters = {};
     if (location) {
-      filters.location = location;
+      filters.location = { $regex: location, $options: 'i' }
     }
     if (categories) {
-      filters.categories = categories;
+      filters.categories = { $regex: categories, $options: 'i' }
     }
 
+    let subCategories = [];
     const products = await Product.find(filters).limit(limit).skip(startIndex);
+    
+    if(products.length) {
+      subCategories = products.filter(product => 
+        productCategories.some(subCategory => product.categories.toLowerCase() === subCategory.name.toLowerCase())
+      );
+    }
+   
 
     res.status(200).json({
       success: true,
-      data: products,
+      data: {
+        products,
+        subCategories
+      },
     });
   } catch (error) {
     next(error);

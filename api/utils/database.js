@@ -24,9 +24,12 @@ import appConstants from "../constants/index.js";
       try {
           mongoose.connect(DATABASEURL, {
               bufferCommands: true
-          })
+          });
+          console.log("Connected!");
       } catch (error) {
           throw new Error("Error: ", error);
       }
   }
+
+
   export default connectDb;
