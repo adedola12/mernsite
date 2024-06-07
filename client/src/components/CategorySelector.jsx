@@ -27,13 +27,12 @@ export default function CategorySelector({ onCategorySelected }) {
     onCategorySelected(e.target.value);
   };
   return (
-    <div>
       <select
         name="categorySelector"
         id="type-selector"
         value={selectedCategory}
         onChange={handleCategoryChange}
-        className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1
+        className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
         focus:ring-blue-500"
       >
         <option value="">Categories</option>
@@ -43,6 +42,5 @@ export default function CategorySelector({ onCategorySelected }) {
           </option>
         ))}
       </select>
-    </div>
   );
 }

@@ -134,22 +134,31 @@ export default function Header({ toggleModal }) {
           </Link> */}
         </nav>
 
-        {!currentUser ? (
-          <>
+        {
+          currentUser == "User has been logged out!!" && (
+            <>
             <div className="flex gap-3 text-2xl">
               <button onClick={() => toggleModal("signIn")}>Sign In</button>
               <button onClick={() => toggleModal("signUp")}>Sign Up</button>
             </div>
           </>
-        ) : (
-          <Link to="/profile" className="">
-            <img
-              src={currentUser.avatar}
-              alt="pp"
-              className="rounded-full h-7 w-7 object-cover"
-            />
-          </Link>
-        )}
+          )
+        }
+
+        {
+          currentUser !== "User has been logged out!!" && (
+            <>
+            <Link to="/profile" className="">
+              <img
+                src={currentUser.avatar || "https://placehold.jp/150x150.png"}
+                alt="pp"
+                className="rounded-full h-7 w-7 object-cover"
+              />
+            </Link>
+          </>
+          )
+        }
+
       </div>
     </header>
   );

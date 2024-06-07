@@ -9,6 +9,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import ProfileSideBar from "../components/ProfileSideBar";
+import CreateProductStageOne from "../components/CreateProductStageOne";
+import CreateProductStageTwo from "../components/CreateProductStageTwo";
 import {
   deleteUserFaliure,
   deleteUserStart,
@@ -255,7 +257,7 @@ export default function CreateProduct() {
           handleShowShopDetails={handleShowShopDetails}
         />
 
-        <div className="flex-1 bg-white p-4">
+        {/* <div className="flex-1 bg-white p-4">
           <h1 className="text-3xl font-semibold text-center py-5">
             Create a Product
           </h1>
@@ -472,7 +474,11 @@ export default function CreateProduct() {
             </div>
 
           </form>
-        </div>
+        </div> */}
+
+        {/* <CreateProductStageOne /> */}
+        <CreateProductStageTwo />
+
       </div>
     </main>
   );

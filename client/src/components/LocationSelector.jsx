@@ -49,13 +49,12 @@ export default function LocationSelector({ onStateSelected }) {
   };
 
   return (
-    <div>
       <select
         name="stateSelector"
         id="state-selector"
         value={selectedState}
         onChange={handleStateChanged}
-        className="border-2 border-gray-300 rounded-lg p-2 mr-2 focus:border-blue-500 focus:ring-1
+        className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
         focus:ring-blue-500"
       >
         <option value="" className="text-gray-600 text-sm">
@@ -67,6 +66,5 @@ export default function LocationSelector({ onStateSelected }) {
           </option>
         ))}
       </select>
-    </div>
   );
 }
