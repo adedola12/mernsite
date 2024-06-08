@@ -1,3 +1,9 @@
+const array1 = [
+  { name: 'Concrete', age: 25 },
+  { name: 'Formwork', age: 30 },
+  { name: 'Reinforcement', age: 28 }
+];
+
 
 export const productCategories = [
     {
@@ -11,7 +17,7 @@ export const productCategories = [
     },
     {
       id: 2,
-      name: 'Concrete',
+      name: 'Formwork',
       subCategories: [
         { id: 1, name: 'Cement' },
         { id: 2, name: 'Sharp Sand' },
@@ -20,7 +26,7 @@ export const productCategories = [
     },
     {
       id: 3,
-      name: 'Concrete',
+      name: 'Reinforcement',
       subCategories: [
         { id: 1, name: 'Cement' },
         { id: 2, name: 'Sharp Sand' },

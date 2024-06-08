@@ -14,6 +14,8 @@ export default function Product() {
   console.log(product);
   console.log(allProduct);
 
+  console.log("Product page")
+
   const params = useParams();
 
   useEffect(() => {
@@ -77,13 +79,13 @@ export default function Product() {
 
   return (
     <main className="min-h-screen">
-      <div className="m-[100px] text-2xl">
-        <div className="flex gap-4 justify-between">
-          <div className="flex flex-col gap-4 w-full lg:w-2/3">
-            <div className="bg-[#FFFFFF] p-4 rounded-lg">
+      <div className="m-5 md:m-20 lg:m-[100px] text-2xl">
+        <div className="flex gap-4 flex-col lg:flex-row justify-between">
+          <div className="flex flex-col  gap-4 w-full lg:w-2/3">
+            <div className="bg-[#FFFFFF]  p-4 rounded-lg">
               <h1 className="my-5 font-normal text-xl">Product Details</h1>
-              <div className="flex gap-3">
-                <div className="flex flex-col gap-3">
+              <div className="flex flex-col-reverse md:flex-row gap-3">
+                <div className="flex flex-row flex-wrap md:flex-col gap-3">
                   {product.imageUrls.slice(0, 3).map((url, index) => (
                     <div
                       key={index}
@@ -118,7 +120,7 @@ export default function Product() {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-4 w-full lg:w-1/3">
+          <div className="flex  flex-col gap-4 w-full lg:w-1/3">
             <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm">
               <h2 className="text-lg font-semibold">Seller Profile</h2>
               <div className="flex items-center mb-4 mt-3">
@@ -205,7 +207,7 @@ export default function Product() {
       </div>
       <div className="my-3 bg-[#FFFFFF] w-full p-8">
         <h2 className="font-bold text-[24px]">Product like this</h2>
-        <div className="my-6 flex gap-4">
+        <div className="my-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {allProduct &&
             allProduct.map((product) => (
               <ProductItem key={product._id} product={product} />

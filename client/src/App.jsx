@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import SignInModal from "./pages/SignIn";
 import SignUpModal from "./pages/SignUp";
 import SellerShop from "./pages/SellerShop";
+import Header2 from "./components/Header2";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -42,7 +43,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Header toggleModal={toggleModal} />
+      {/* <Header toggleModal={toggleModal} /> */}
+      <Header2  toggleModal={toggleModal} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/homeA" element={<HomeA />} />

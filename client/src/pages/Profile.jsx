@@ -141,6 +141,7 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     try {
+      
       dispatch(signOutUser());
 
       const res = await fetch("/api/auth/signout");
@@ -154,7 +155,7 @@ export default function Profile() {
 
       dispatch(signOutSuccess(data));
 
-      navigate("/");
+      navigate("/", {replace:true });
     } catch (error) {
       dispatch(signOutFaliure(error.message));
     }
@@ -286,7 +287,7 @@ export default function Profile() {
     setActiveView(newView);
   };
 
-  console.log(userProduct);
+  // console.log(userProduct);
 
   return (
     <div className="flex justify-center w-full p-8 px-0  min-h-screen">
@@ -317,7 +318,7 @@ export default function Profile() {
                 />
                 <img
                   onClick={() => fileRef.current.click()}
-                  src={formData?.avatar || currentUser.avatar}
+                  src={formData?.avatar || currentUser.avatar || "https://placehold.jp/150x150.png"}
                   alt="profileImage"
                   className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
                 />

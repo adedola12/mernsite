@@ -131,7 +131,7 @@ export default function Search() {
   };
 
   return (
-    <div className="flex gap-6 flex-col md:flex-row">
+    <div className="flex gap-6 flex-col md:flex-row ">
       <div className="p-7 md:min-h-screen  border-gray-500 border-b-2 md:border-r-2 ">
         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
           <div className="flex items-center gap-4">
