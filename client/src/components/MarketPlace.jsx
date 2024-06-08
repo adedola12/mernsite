@@ -83,11 +83,11 @@ export default function Marketplace() {
 
   return (
     <div className="bg-[#F5F5F5] flex gap-4 ">
-      <div className="pl-[102px] w-full">
-        <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
+      <div className="p-5 lg:pl-[102px] w-full">
+        <h2 className="font-semibold text-6xl pt-4  font-[DMSans]">
           Explore Marketplace
         </h2>
-        <div className="flex md:flex-row flex-col gap-4 my-5">
+        <div className="flex lg:flex-row flex-col gap-4 my-5">
           <div className="">
             <div className="w-[80px] h-[80px]">
               <img
@@ -102,9 +102,9 @@ export default function Marketplace() {
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <h2 className="font-semibold text-3xl pt-4">ADLM Marketplace</h2>
-            <div className="m-4 flex gap-4 w-full">
-              <div className="border bg-[#F1F1F1] rounded-lg p-5 flex gap-6 items-center w-[205px] justify-between">
+            <h2 className="font-semibold text-3xl ">ADLM Marketplace</h2>
+            <div className="flex flex-col md:flex-row gap-4 w-full">
+              <div className="border p-4 bg-[#F1F1F1] rounded-lg flex gap-6 items-center md:w-[205px] justify-between">
                 <p className="text-[#CFCFCF] font-semibold">Location</p>
                 <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
               </div>
@@ -112,7 +112,9 @@ export default function Marketplace() {
               <StateSelector onStateSelected={handleStateSelected} />
               <TypeSelector onTypeSelected={handleTypeSelected} />
             </div>
-            <div className="flex gap-4 flex-wrap p-8 w-full ">
+            
+            {/* flex gap-4 flex-wrap p-8 w-full */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5  w-full">
               {products.length > 0 ? (
                 products.map((product) => (
                   <ProductItem key={product._id} product={product} />

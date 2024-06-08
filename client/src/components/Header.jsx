@@ -16,7 +16,7 @@ export default function Header({ toggleModal }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  console.log(currentUser);
+
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -155,6 +155,7 @@ export default function Header({ toggleModal }) {
                 className="rounded-full h-7 w-7 object-cover"
               />
             </Link>
+
           </>
           )
         }

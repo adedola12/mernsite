@@ -28,6 +28,7 @@ const views = {
 };
 
 export default function CreateProduct() {
+  
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -51,6 +52,16 @@ export default function CreateProduct() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [steps, setSteps] = useState(1);
+
+  const previousStep = () => {
+    setSteps((prevState) => prevState - 1)
+  }
+
+  const nextStep = () => {
+    setSteps((prevState) => prevState + 1)
+  }
 
   const predefinedSubCategories = {
     Concrete: ["Cement", "Sharp Sand", "Granite"],
@@ -155,6 +166,7 @@ export default function CreateProduct() {
 
       try {
         const urls = await Promise.all(promises);
+
         setFormData((prev) => ({
           ...prev,
           imageUrls: [...prev.imageUrls, ...urls],
@@ -176,6 +188,8 @@ export default function CreateProduct() {
       ...formData,
       userRef: currentUser._id,
     };
+
+    console.log({submissionData})
 
     try {
       const response = await fetch("/api/product/create-product", {
@@ -245,6 +259,28 @@ export default function CreateProduct() {
   const handleShowShopDetails = () => {
     changeActiveView(views.Shop_Details);
   };
+
+  const showMultipleStepForm = () => {
+    switch(steps) {
+      case 1:
+        return <CreateProductStageOne nextStep={nextStep} formData={formData} handleChange={handleChange} />
+      case 2:
+        return <CreateProductStageTwo 
+              handleCategoryChange={handleCategoryChange} 
+              handleSubmit={handleSubmit} 
+              previousStep={previousStep} 
+              formData={formData}
+              setFiles={setFiles}
+              handleChange={handleChange}
+              isLoading={loading}
+              error={error}
+              handleImageSubmit={handleImageSubmit}
+              uploading={uploading}
+        />
+        default:
+          return null;
+    }
+  }
 
   return (
     <main className="w-full mx-auto pt-10 px-5 ">
@@ -395,8 +431,8 @@ export default function CreateProduct() {
                     min="10"
                     max="100000000"
                     required
-                    className="p-2 border border-gray-200 rounded w-[100px]"
                     value={formData.regularPrice}
+                    className="p-2 border border-gray-200 rounded w-[100px]"
                     onChange={handleChange}
                   />
                   <span className="font-semibold text-xl">Price</span>
@@ -476,9 +512,9 @@ export default function CreateProduct() {
           </form>
         </div> */}
 
-        {/* <CreateProductStageOne /> */}
-        <CreateProductStageTwo />
-
+        <form className='w-full flex flex-col gap-y-3'>
+          {showMultipleStepForm()}
+        </form>
       </div>
     </main>
   );

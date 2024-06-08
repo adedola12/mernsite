@@ -274,7 +274,7 @@ export default function Marketplace() {
           style={{ backgroundImage: `url("background image/Mp1.jpg")` }}
         >
           <div className="absolute inset-0 bg-black opacity-20"></div>
-          <div className="z-10 w-full max-w-3xl mx-auto">
+          <div className="z-10 w-full px-2 md:px-0 max-w-3xl mx-auto">
             <h1 className="font-semibold text-4xl items-center text-white text-center mb-4">
               Explore Marketplace
             </h1>
@@ -311,7 +311,7 @@ export default function Marketplace() {
           <div className="p-3">
             <h2 className="text-2xl font-semibold mb-4 inline-block">ADLM Marketplace</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5  w-full">
-{/* flex items-center gap-4 flex-wrap justify-center */}
+                {/* flex items-center gap-4 flex-wrap justify-center */}
              
                 {
                   isloading 
