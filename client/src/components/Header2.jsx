@@ -130,7 +130,7 @@ const Header2 = ({ toggleModal }) => {
                     <li onClick={closeNavMenu} className='relative group px-3 py-2'> 
                         <div className='flex items-center cursor-pointer h-full'>
                             <span className="flex items-center hover:opacity-50 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
-                                Product <IoIosArrowForward className="ml-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
+                                Product <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
                             </span>                        
                         </div>  
                         <div className="absolute top-0 -left-12 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
@@ -291,7 +291,7 @@ const Header2 = ({ toggleModal }) => {
                          currentUser !== "User has been logged out!!" && (
                             <div className="w-full mt-6 flex flex-col gap-y-3 px-5 ">
                                 <button
-                                    className="bg-red-600 hover:bg-red-500 duration-300 px-5 py-3 rounded-md text-white text-left"
+                                    className="bg-red-500 hover:bg-red-400 duration-300 px-5 py-3 rounded-md text-white  text-center"
                                     onClick={() => {
                                         handleSignOut(),
                                         closeNavMenu()
@@ -300,7 +300,7 @@ const Header2 = ({ toggleModal }) => {
                                 Log Out
                                 </button>
                                 <button
-                                    className="border-red-600 hover:bg-red-200 duration-300 bg-red-100 border-2  px-5 py-3 rounded-md text-black text-left"
+                                    className="border-red-500 hover:bg-red-200 text-center duration-300 bg-red-100 border-2  px-5 py-3 rounded-md text-black"
                                     onClick={handleDeleteUser}
                                     >
                                     Delete Account
