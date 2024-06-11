@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth.jsx";
 import SignInModal from "./SignIn.jsx";
+import { MdClose } from "react-icons/md";
 
 export default function SignUpModal({ onClose }) {
   const [formData, setFormData] = useState({});
@@ -22,6 +23,7 @@ export default function SignUpModal({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch("/api/auth/sign-up", {
         method: "POST",
         headers: {
@@ -31,34 +33,41 @@ export default function SignUpModal({ onClose }) {
       });
 
       const data = await res.json();
-      console.log(data);
+  
       if (data.success === false) {
-        setLoading(false);
+        // setLoading(false);
         setError(data.message);
 
         setShowSignInModal(false);
         return;
       }
 
-      setLoading(false);
+      // setLoading(false);
       setError(null);
-
+      onClose();
       navigate("/");
     } catch (error) {
-      setLoading(false);
+      // setLoading(false);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const toggleSignInModal = () => {
     setShowSignInModal(!showSignInModal);
   };
+  const handleShowModal = (event) => {
+    if(event.target.id === 'signup-modal') {
+      onClose()
+    }
+  }
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <button onClick={onClose} className="absolute top-2 right-2 text-lg">
-          &times;
+    <div id="signup-modal" onClick={handleShowModal} className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full">
+      <div onClick={event => event.stopPropagation()} className="relative top-10 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <button onClick={onClose} className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300">
+          <MdClose className="text-gray-500 group-hover:text-gray-600" />
         </button>
         <div className="flex flex-col items-center justify-center">
           <img
@@ -87,6 +96,7 @@ export default function SignUpModal({ onClose }) {
             <input
               type="password"
               placeholder="Password"
+              autoComplete="off"
               className="mt-2 p-3 w-full border rounded"
               id="password"
               onChange={handleChange}

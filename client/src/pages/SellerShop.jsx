@@ -1,7 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
-import { FaPhone } from "react-icons/fa";
+import { FaPhone, FaStar } from "react-icons/fa";
+import { MdLocationOn } from "react-icons/md";
+
+const reviewTabs = [
+  { id: 0, name: "Reviews"},
+  { id: 1, name: "Add Review"},
+];
+
+const NIGERIAN_STATES = [
+  "Abia",
+  "Adamawa",
+  "Akwa Ibom",
+  "Anambra",
+  "Bauchi",
+  "Bayelsa",
+  "Benue",
+  "Borno",
+  "Cross River",
+  "Delta",
+  "Ebonyi",
+  "Edo",
+  "Ekiti",
+  "Enugu",
+  "Gombe",
+  "Imo",
+  "Jigawa",
+  "Kaduna",
+  "Kano",
+  "Katsina",
+  "Kebbi",
+  "Kogi",
+  "Kwara",
+  "Lagos",
+  "Nasarawa",
+  "Niger",
+  "Ogun",
+  "Ondo",
+  "Osun",
+  "Oyo",
+  "Plateau",
+  "Rivers",
+  "Sokoto",
+  "Taraba",
+  "Yobe",
+  "Zamfara",
+  "Federal Capital Territory || FCT",
+];
+
 
 export default function SellerShop() {
   const [loading, setLoading] = useState(true);
@@ -12,10 +59,51 @@ export default function SellerShop() {
   const [showNumber, setShowNumber] = useState(false);
   const { userId } = useParams();
 
-  console.log(products);
-  console.log(allProduct);
-  console.log(userId);
-  console.log(user);
+  const [selectedTab, setSelectedTab] = useState(1);
+
+  
+
+  const [reviewForm, setReviewForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [category, setCategory] = useState({
+    location: "",
+    city: "",
+    category: "",
+  });
+
+
+  const handleCategoryFormInputChange = (event) => {
+    const {name, value} = event.target;
+    setCategory((prevState) => ({...prevState, [name]: value}));
+  }
+
+  const handleSubmitReview  = (event) => {
+    event.preventDefault();
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const handleReviewFormInputChange = (event) => {
+    const {name, value} = event.target;
+    setReviewForm((prevState) => ({...prevState, [name]: value}));
+  }
+
+  const handleSubmitCategory = (event) => {
+    event.preventDefault();
+    try {
+    } catch (error) {
+    }
+  }
+
+
+
 
   useEffect(() => {
     const fetchProductsByUser = async () => {
@@ -29,14 +117,14 @@ export default function SellerShop() {
 
         if (data.success === false) {
           setError(true);
-          setLoading(false);
           return;
         } else {
+          console.log(data.products)
           setProducts(data.products);
-          setLoading(false);
         }
       } catch (error) {
-        setError(true);
+        setError(true)
+      } finally {
         setLoading(false);
       }
     };
@@ -49,18 +137,15 @@ export default function SellerShop() {
         }
         const data = await res.json();
 
-        console.log(data);
-
         if (data.success === false) {
           setError(true);
-          setLoading(false);
           return;
         } else {
           setUser(data);
-          setLoading(false);
         }
       } catch (error) {
-        setError(true);
+        setError(true)
+      } finally {
         setLoading(false);
       }
     };
@@ -69,232 +154,231 @@ export default function SellerShop() {
     fetchUserInfo();
   }, [userId]);
 
-  const showMobile = () => {
-    setShowNumber(!showNumber);
+  const handleShowNumber = () => {
+    setShowNumber((prevState) => !prevState);
   };
 
   return (
     <main className="min-h-screen">
-      <div className="m-[100px] text-2xl">
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-2">
-            <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm md:w-[330px]">
-              <h2 className="text-3xl font-semibold">Seller Profile</h2>
+      <div className="text-2xl max-w-screen-lg mx-auto my-10">
+        <div className="flex flex-col gap-4 w-full px-4">
 
-              <div className="flex items-center mb-3">
-                <img
-                  src={user?.avatar ?? "default-avatar-url.jpg"}
-                  alt="NA"
-                  className="rounded-full h-16 w-16 object-cover mr-4"
-                />
-                <div className="">
-                  <p className="text-lg font-semibold text-[#828282]">
-                    {user?.username ?? "Store Owner"}
-                  </p>
-                  <span className="bg-green-100 text-green-700 text-lg font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-                    Verified
-                  </span>
+        <div className="grid grid-cols-1 lg:grid-cols-[300px,_1fr] gap-3">
+              <div className="bg-white pb-3 rounded-lg shadow-sm">
+
+                <div className="border-b py-4">
+                    <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+                    Seller Profile
+                    </h2>
+                  </div>
+
+                <div className="flex items-center mb-3 p-3 gap-x-2">
+                  <img
+                    src={user?.avatar ?? "default-avatar-url.jpg"}
+                    alt="NA"
+                    className="rounded-full h-16 w-16 object-cover"
+                  />
+                  <div className="">
+                    <p className="text-base font-semibold leading-none text-[#828282]">
+                      {user?.username ?? "Store Owner"}
+                    </p>
+                    <span className="bg-green-100 text-green-700 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+                      Verified
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex gap-2 flex-col mt-10 px-3">
+                  <Link
+                    to={`https://wa.me/+2340${user?.mobileNumber}?text=I am intrested in your product in your store ${user?.username} listed on the ADLM Marketplace`}
+                    className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-lg rounded-lg font-medium"
+                  >
+                    Text on Whatsapp
+                  </Link>
+
+                  <button
+                    type="button"
+                      className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
+                      onClick={handleShowNumber} >
+                      {showNumber ? (
+                        `${products[0]?.userRef?.mobileNumber ? "+2340"+products[0]?.userRef?.mobileNumber : "No number"}`
+                      ) : (
+                        <>
+                          <FaPhone className="mr-2" /> See Number
+                        </>
+                      )}
+                    </button>
+
                 </div>
               </div>
 
-              <div className="flex gap-2 flex-col mt-10">
-                <Link
-                  to={`https://wa.me/+2340${user?.mobileNumber}?text=I am intrested in your product in your store ${user?.username} listed on the ADLM Marketplace`}
-                  className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-lg rounded-lg font-medium"
-                >
-                  Text on Whatsapp
-                </Link>
-                <button
-                  className="bg-gray-300 text-black py-2 px-4 rounded-lg text-lg font-medium flex items-center justify-center"
-                  onClick={showNumber}
-                >
-                  Show Number
-                </button>
+              <div className="bg-white rounded-lg shadow-sm">
+                <div className="border-b py-4">
+                    <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+                      Product Categories
+                    </h2>
+                  </div>
+                  <form onSubmit={handleSubmitCategory} className="w-full">
+                    <div className="p-4 grid md:grid-cols-2 gap-4">
+                      <div className="relative">
+                          <input type="text" value={category.location} onChange={handleCategoryFormInputChange} name="location" placeholder="location" className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri'] w-full px-4 pr-10 " />
+                          <MdLocationOn size={15} className="absolute text-gray-400 top-2/4 right-4 -translate-y-2/4 " />
+                      </div>
+                      <div className="relative">
+                          
+                          <select
+                              name="city"
+                              value={category.city}
+                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
+                              onChange={handleCategoryFormInputChange}
+                            >
+                              <option className="text-gray-400">select a city</option>
+                              {NIGERIAN_STATES.map((state) => (
+                                <option key={state} value={state}>
+                                  {state}
+                                </option>
+                              ))}
+                          </select>
+                      </div>
+                      <div className="relative">
+                         
+                          <select
+                              name="category"
+                              value={category.category}
+                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
+                              onChange={handleCategoryFormInputChange}
+                            >
+                              <option className="text-gray-400">select a category</option>
+                              {NIGERIAN_STATES.map((state) => (
+                                <option key={state} value={state}>
+                                  {state}
+                                </option>
+                              ))}
+                          </select>
+                      </div>
+
+                    </div>
+
+                    {/* <div className="p-4">
+                      <button type="button" className="py-2 rounded-md text-white cursor-pointer text-base px-6 bg-black/90">Search</button>
+                    </div> */}
+
+
+
+                    
+                    
+                  </form>
               </div>
+        </div>
+
+        <div className="flex flex-col w-full gap-3 bg-white rounded-md ">
+
+            <div className="border-b py-4">
+              <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+                Shop
+              </h2>
             </div>
 
-            <div class="w-[740px] h-[334px] relative bg-white rounded-lg">
-              <div class="left-[23px] top-[85px] absolute flex-col justify-start items-start gap-4 inline-flex">
-                <div class="justify-center items-center gap-4 inline-flex">
-                  <div class="h-12 px-4 pt-4 pb-[15px] rounded-xl border border-stone-300 justify-center items-center flex">
-                    <div class="grow shrink basis-0 self-stretch justify-between items-center inline-flex">
-                      <div class="text-stone-300 text-sm font-normal font-['Calibri']">
-                        Location
-                      </div>
-                      <div class="w-4 h-4 px-0.5 py-[1.33px] justify-center items-center flex">
-                        <div class="w-3 h-[13.33px] relative"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="h-12 px-4 pt-4 pb-[15px] rounded-xl border border-stone-300 justify-center items-center flex">
-                    <div class="grow shrink basis-0 self-stretch justify-between items-center inline-flex">
-                      <div class="text-stone-300 text-sm font-normal font-['Calibri']">
-                        {/* <TODO>ADD DYNAMIC SELLER CITY</TODO> */}
-                        City
-                      </div>
-                      <div class="w-4 h-4 px-1 justify-center items-center flex"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="w-[237px] px-4 pt-4 pb-[15px] rounded-xl border border-stone-300 justify-center items-center inline-flex">
-                  <div class="grow shrink basis-0 self-stretch justify-between items-start inline-flex">
-                    <div class="text-stone-300 text-sm font-normal font-['Calibri']">
-                      Categories
-                    </div>
-                    <div class="w-4 h-4 px-1 justify-center items-center flex"></div>
-                  </div>
-                </div>
-                <div class="w-[129px] h-12 bg-neutral-800 rounded-lg justify-start items-start inline-flex">
-                  <div class="w-[129px] h-12 px-5 py-3 bg-neutral-800 rounded-lg shadow border justify-center items-center gap-2 flex">
-                    <div class="text-white text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                      Search
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
-                <div class="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
-                  Product Categories
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div class="h-[931px] relative bg-white">
-              <div class="w-[1061px] p-4 left-0 top-0 absolute border-b border-gray-200 justify-start items-center gap-2.5 inline-flex">
-                <div class="text-neutral-800 text-lg font-medium font-['DM Sans'] leading-snug">
-                  Shop
-                </div>
-              </div>
-
-              <div className="left-[16px] top-[82px] absolute flex flex-wrap gap-4 p-8 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
                 {products &&
                   products.map((product) => (
                     <ProductItem key={product._id} product={product} />
                   ))}
+             </div>
+
+             <div className="border-t p-5 text-base text-gray-400 gap-2 gap-y-4 flex flex-wrap items-center justify-center mt-5 ">
+                  <div className="">
+                    Page of 1 of 30
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">1</button>
+                    <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">2</button>
+                    <button className="border cursor-pointer border-yellow-500 rounded-md px-2 h-8 w-8 flex items-center justify-center ">3</button>
+                    <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">...</button>
+                    <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">4</button>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="border w-[105px] rounded-md px-3 py-1.5"> - Previous</button>
+                    <button className="border w-[105px] rounded-md px-3 py-1.5">Next + </button>
+                  </div>
+             </div>
+
+        </div>
+
+        <div className="flex flex-col w-full gap-3 bg-white rounded-md ">
+
+            <div className="w-full px-4 lg:w-[70%] mx-auto py-5 mt-10">
+              <div className="flex items-center justify-center gap-4 text-base border-b">
+                {
+                  reviewTabs.map((tab) => (
+                    <button onClick={() => setSelectedTab(tab.id)} key={tab.id} className={`border-b ${selectedTab === tab.id ? "border-orange-600 text-orange-600" : "border-transparent text-black/80"} `}>{tab.name}</button> 
+                  ))
+                }
+
               </div>
 
-              <div class="h-[77px] py-2 left-0 top-[854px] absolute bg-white flex-col justify-center items-center gap-2 inline-flex">
-                <div class="w-[1059px] h-px justify-center items-center inline-flex">
-                  <div class="w-[1059px] self-stretch bg-gray-100"></div>
-                </div>
-                <div class="self-stretch py-2 bg-white justify-center items-center gap-6 inline-flex">
-                  <div class="justify-start items-center gap-6 flex">
-                    <div class="w-[87px] h-5 pl-[5px] pr-2 pt-0.5 pb-px justify-center items-center flex">
-                      <div class="text-center text-black text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                        Page 1 of 30
+              {
+                selectedTab === 0 && (
+                  <>
+                    <div className="flex flex-col flex-wrap gap-2 my-6">
+                      <h2 className="text-base text-gray-500">REVIEWS SECTION</h2>
+                      <div className="flex flex-col w-full gap-3 ">
+                        
+                      </div>
+                    </div>         
+                  
+                  </>
+                )
+              }
+
+              {
+                selectedTab === 1 && (
+                  <>
+                    <div className="flex flex-col flex-wrap gap-2 my-6">
+                      <h2 className="text-base text-gray-500">Rating</h2>
+                      <div className="flex items-center flex-wrap gap-3 ">
+                        <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
+                        <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
+                        <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
+                        <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
                       </div>
                     </div>
-                  </div>
-                  <div class="justify-center items-center gap-4 flex">
-                    <div class="flex-col justify-start items-start inline-flex">
-                      <div class="px-3 py-2 bg-white rounded-lg border border-gray-300 flex-col justify-center items-center gap-2.5 flex">
-                        <div class="justify-center items-center gap-2 inline-flex">
-                          <div class="w-5 h-5 relative"></div>
-                          <div class="text-center text-slate-700 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                            Previous
+
+                    <form onSubmit={handleSubmitReview} className="w-full flex flex-col gap-y-4 my-10">
+                        <div className="grid lg:grid-cols-2 gap-3">
+                          <div className="flex flex-col gap-2">
+                            <label htmlFor="name" className="text-base">Name</label>
+                            <input id="name" name="name" type="text" value={reviewForm.name} onChange={handleReviewFormInputChange} required placeholder="Name" className="border rounded-lg w-full px-3 py-3 text-base" />
+                          </div>
+                          <div className="flex flex-col gap-2">
+                            <label htmlFor="email" className="text-base">Email</label>
+                            <input id="email" name="email" type="email" value={reviewForm.email} onChange={handleReviewFormInputChange} required placeholder="Email" className="border rounded-lg w-full px-3 py-3 text-base" />
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div class="flex-col justify-start items-start inline-flex">
-                      <div class="h-9 px-3 py-2 bg-white rounded-lg border border-gray-300 flex-col justify-center items-center gap-2.5 flex">
-                        <div class="justify-center items-center gap-2 inline-flex">
-                          <div class="text-center text-slate-700 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-                            Next
-                          </div>
-                          <div class="w-5 h-5 relative"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div class="h-[695px] px-[202px] pt-[77px] pb-[76.04px] bg-white rounded-lg justify-center items-center inline-flex">
-              <div class="self-stretch flex-col justify-start items-start gap-8 inline-flex">
-                <div class="border-b border-zinc-600 justify-center items-center gap-10 inline-flex">
-                  <div class="text-center text-zinc-600 text-base font-normal font-['DM Sans'] leading-tight">
-                    Reviews
-                  </div>
-                  <div class="pb-1.5 border-b border-orange-600 justify-center items-center gap-2.5 flex">
-                    <div class="text-center text-orange-600 text-base font-normal font-['DM Sans'] leading-tight">
-                      Add a review
-                    </div>
-                  </div>
-                </div>
-                <div class="flex-col justify-start items-start gap-4 flex">
-                  <div class="flex-col justify-start items-start gap-2 flex">
-                    <div class="text-center text-neutral-800 text-base font-normal font-['DM Sans'] leading-tight">
-                      Rating
-                    </div>
-                    <div class="justify-start items-start gap-2 inline-flex">
-                      <div class="w-[26.83px] h-[26.96px] relative"></div>
-                      <div class="w-[26.83px] h-[26.96px] relative"></div>
-                      <div class="w-[26.83px] h-[26.96px] relative"></div>
-                      <div class="w-[26.83px] h-[26.96px] relative"></div>
-                      <div class="w-[26.83px] h-[26.96px] relative"></div>
-                    </div>
-                  </div>
-                  <div class="flex-col justify-start items-start gap-8 flex">
-                    <div class="flex-col justify-start items-start gap-10 flex">
-                      <div class="flex-col justify-start items-start gap-8 flex">
-                        <div class="justify-start items-start gap-5 inline-flex">
-                          <div class="flex-col justify-start items-start gap-4 inline-flex">
-                            <div class="text-center text-neutral-800 text-base font-normal font-['DM Sans'] leading-tight">
-                              Name
-                            </div>
-                            <div className="">
-                              <input
-                                type="text"
-                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-normal font-normal font-['Calibri']"
-                                placeholder="Name"
-                              />
-                            </div>
-                          </div>
-                          <div class="flex-col justify-start items-start gap-4 inline-flex">
-                            <div class="text-center text-neutral-800 text-base font-normal font-['DM Sans'] leading-tight">
-                              Email
-                            </div>
-                            <div className="">
-                              <input
-                                type="email"
-                                name=""
-                                id=""
-                                className="w-80 h-16 pl-[13px] pr-[270px] rounded-2xl border border-stone-300 justify-start items-center inline-flex   self-stretch text-stone-300 text-normal font-normal font-['Calibri']"
-                                placeholder="Email"
-                              />
-                            </div>
+                        <div className="w-full">
+                          <div className="flex flex-col gap-2">
+                            <label htmlFor="message" className="text-base">Your Review</label>
+                            <textarea rows={6} id="message" name="message" value={reviewForm.message} onChange={handleReviewFormInputChange} placeholder="Your review" className="border resize-y rounded-lg w-full px-3 py-3 text-base"></textarea>
                           </div>
                         </div>
-                        <div class="flex-col justify-start items-start gap-4 flex">
-                          <div class="text-center text-neutral-800 text-base font-normal font-['DM Sans'] leading-tight">
-                            Your Review
-                          </div>
-                          <div className="">
-                            <input
-                              type="text"
-                              className="w-[659px] h-[161px] pl-[19px] pr-[576px] pt-4 pb-32 rounded-2xl border border-stone-300 justify-start items-center inline-flex text-stone-300 text-normal font-normal font-['Calibri']"
-                              placeholder="Your Review"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="h-12 px-6 py-[14.50px] bg-cyan-950 rounded-lg flex-col justify-center items-center gap-2.5 flex">
-                        <div class="justify-center items-center gap-2 inline-flex">
-                          <button class="text-center text-white text-base font-lg font-['DM Sans'] leading-tight">
+
+                        <div className="w-full">
+                          <button type="button" onClick={handleSubmitReview} className="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight">
                             Submit Reviews
                           </button>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+                    </form>              
+                  
+                  </>
+                )
+              }
+              
             </div>
-          </div>
+
+        </div>
+
+ 
         </div>
       </div>
     </main>

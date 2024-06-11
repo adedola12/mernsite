@@ -1,4 +1,5 @@
-const array1 = [
+
+export const array1 = [
   { name: 'Concrete', age: 25 },
   { name: 'Formwork', age: 30 },
   { name: 'Reinforcement', age: 28 }

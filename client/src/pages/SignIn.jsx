@@ -8,6 +8,7 @@ import {
 } from "../redux/user/userSlice.js";
 import OAuth from "../components/OAuth.jsx";
 import SignUpModal from "./SignUp.jsx";
+import { MdClose } from "react-icons/md";
 
 export default function SignInModal({ onClose }) {
   const [formData, setFormData] = useState({});
@@ -55,7 +56,7 @@ export default function SignInModal({ onClose }) {
       }
 
       dispatch(signInSuccess(data));
-
+      onClose();
       navigate("/");
       setShowSignUpModal(false);
     } catch (error) {
@@ -67,11 +68,17 @@ export default function SignInModal({ onClose }) {
     setShowSignUpModal(!showSignUpModal);
   };
 
+  const handleShowModal = (event) => {
+    if(event.target.id === 'signin-modal') {
+      onClose()
+    }
+  }
+
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <button onClick={onClose} className="absolute top-2 right-2 text-lg">
-          &times;
+    <div id="signin-modal" onClick={handleShowModal} className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full">
+      <div onClick={event => event.stopPropagation()} className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <button onClick={onClose} className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300">
+          <MdClose className="text-gray-500 group-hover:text-gray-600" />
         </button>
         <div className="flex flex-col items-center justify-center">
           <img
@@ -95,6 +102,7 @@ export default function SignInModal({ onClose }) {
             <input
               type="password"
               placeholder="Password"
+              autoComplete="off"
               className="mt-2 p-3 w-full border rounded"
               id="password"
               onChange={handleChange}
@@ -133,7 +141,7 @@ export default function SignInModal({ onClose }) {
             >
               {loading ? "LOADING..." : "SIGN IN"}
             </button>
-            <OAuth />
+            <OAuth onClose={onClose} />
             <div className="mt-3 text-center">
               <button onClick={toggleSignUpModal} className="text-[#828282]">
                 Create account

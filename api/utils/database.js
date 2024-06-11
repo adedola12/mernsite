@@ -4,30 +4,29 @@ import appConstants from "../constants/index.js";
 
   const DATABASEURL = appConstants.DATABASEURL;
 
+  let connected = false;
+
+
   const connectDb = async () => {
     
     if(!DATABASEURL) {
         throw new Error("No database url");
     }
-    
-    const connectionState = mongoose.connection.readyState;
-      if(connectionState === 1) {
-          console.log("Already connected");
-          return;
-      }
-  
-      if(connectionState === 2) {
-          console.log("Connecting...");
-          return;
-      }
+
+    mongoose.set("strictQuery", true);
+
+    if(connected) {
+        console.log("Connection already established")
+        return;
+    }
   
       try {
-          mongoose.connect(DATABASEURL, {
-              bufferCommands: true
-          });
-          console.log("Connected!");
+          mongoose.connect(DATABASEURL);
+          connected = true;
+          console.log("Database connected established")
       } catch (error) {
           throw new Error("Error: ", error);
+      } finally {
       }
   }
 

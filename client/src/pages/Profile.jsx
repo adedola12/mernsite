@@ -48,9 +48,6 @@ export default function Profile() {
   const [editListingError, setEditListingError] = useState(false);
   const [editProductError, setEditProductError] = useState(false);
 
-  console.log(userListings);
-  console.log(userProduct);
-
   const [activeView, setActiveView] = useState(views.Personal_Details);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -182,8 +179,6 @@ export default function Profile() {
     try {
       setShowProductError(false);
 
-      console.log(`current user ID : ${currentUser._id}`);
-
       const res = await fetch(`/api/user/products/${currentUser._id}`);
       const data = await res.json();
 
@@ -192,7 +187,6 @@ export default function Profile() {
         return;
       }
 
-      console.log(data);
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);
@@ -286,8 +280,6 @@ export default function Profile() {
   const changeActiveView = (newView) => {
     setActiveView(newView);
   };
-
-  // console.log(userProduct);
 
   return (
     <div className="flex justify-center w-full p-8 px-0  min-h-screen">
@@ -504,6 +496,7 @@ export default function Profile() {
                   type="password"
                   placeholder="Password"
                   id="password"
+                  autoComplete="off"
                   className="border p-3 rounded-lg"
                   onChange={handleChange}
                 />

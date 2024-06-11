@@ -181,15 +181,22 @@ export default function CreateProduct() {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
     setLoading(true);
 
+    const { categories: categoryName } = formData;
+
     const submissionData = {
       ...formData,
+      categoryData: {
+        categoryName,
+        subCategories: predefinedSubCategories[formData.categories],
+      },
       userRef: currentUser._id,
     };
-
-    console.log({submissionData})
+ 
+    console.log({submissionData});
 
     try {
       const response = await fetch("/api/product/create-product", {
