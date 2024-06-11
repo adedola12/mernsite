@@ -22,20 +22,20 @@ export default function HomeA() {
     <main className="min-h-screen">
       {/* Top Section */}
       <div className="w-full text-center md:text-start">
-        <div className="flex flex-col lg:flex-row lg:justify-between py-16 px-4 sm:px-0 lg:px-0  gap-5">
-          <div className="flex flex-col items-center md:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
-            <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 w-[280px]">
+        <div className="flex flex-col lg:flex-row lg:justify-between py-16 px-4 sm:px-0 lg:pl-20  gap-5">
+          <div className="flex flex-col items-center lg:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
+            <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 lg:w-[280px]">
               <Link to={"/product"} className=" font-[Inter] text-[14px]">
                 Construction management plugin
               </Link>
               <FaArrowRight className="items-center w-[16px] h-[16px]" />
             </div>
-            <h1 className="text-3xl font-bold sm:text-5xl md:text-7xl font-[DMSans] w-full">
+            <h1 className="text-4xl text-center lg:text-start font-bold md:text-6xl font-[DMSans] w-full">
               Quantity
               <span className="text-[#9747FF]"> takeoff</span> <br /> just got
               easier <br /> and faster
             </h1>
-            <div className="flex flex-wrap items-center p-1 w-full">
+            <div className="flex flex-wrap items-center p-1 w-full md:max-w-2xl md:mx-auto">
               <p className="">
                 ADLM studio provides a door to the world of amazing knowledge
                 and skill required for the usage of BIM tools to be within the
@@ -45,28 +45,31 @@ export default function HomeA() {
             <div className="flex gap-3 mt-3">
               <Link
                 to={"https://wa.me/message/HS7PK467KV53I1"}
-                className="bg-black border text-white p-4 rounded-lg  hover:bg-transparent hover:text-black"
+                className="bg-black duration-300 border-2 text-white p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"
               >
                 Request a demo
               </Link>
               <Link
                 to={"https://youtube.com/@ADLMStudio?si=Ul6dJx4YRVu-IR79"}
-                className="border rounded-lg p-4 flex gap-3 items-center  hover:bg-black hover:text-white"
+                className="rounded-lg p-4 flex gap-3 items-center border-2  border-black duration-300  hover:bg-black  hover:text-white"
               >
                 <FaPlay className="bg-transparent" /> Watch Video
               </Link>
             </div>
           </div>
-          <div className="md:block hidden px-5">
+          <div className="md:block hidden md:self-center">
             <ImageSlider />
           </div>
         </div>
       </div>
       {/* Explore Market Place */}
-      <div className="w-full">
+      <div className="w-full flex flex-col ">
         {/* Use Marketplace component */}
         <Marketplace /> 
+
       </div>
+
+
       {/* Unlock Features */}
       <div className="flex lg:flex-row flex-col items-start justify-between">
         <div className="p-5 mb-5  flex flex-col  gap-5">

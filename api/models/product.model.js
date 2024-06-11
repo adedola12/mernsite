@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -25,17 +26,15 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
-    categories: {
-      type: String,
-      required: true,
-      //enum: ["Materials", "Labour"],
-    },
-
+    category: { type: String, required: true, trim: true, },
+    subCategories: [{ type: String, required: true }],
+    categories: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category'
+    }],
     type: {
       type: String,
       required: true,
-      //enum: ["Materials", "Labour"],
     },
     imageUrls: {
       type: Array,
