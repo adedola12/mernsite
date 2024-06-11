@@ -35,9 +35,6 @@ export default function Marketplace() {
       const {data} = await response.json();
 
       setSearchResults([...data.products]);
-      setSubCategories([...data.subCategories]);
-
-
 
   } catch (error) {
     console.error("Failed to fetch subCategories:", error);
