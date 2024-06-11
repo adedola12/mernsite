@@ -166,8 +166,13 @@ export default function SellerShop() {
         <div className="grid grid-cols-1 lg:grid-cols-[300px,_1fr] gap-3">
               <div className="bg-white pb-3 rounded-lg shadow-sm">
 
+
+                <div class="border-b py-4">
+                    <h2 class="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
                 <div className="border-b py-4">
                     <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
                     Seller Profile
                     </h2>
                   </div>
@@ -197,6 +202,14 @@ export default function SellerShop() {
                   </Link>
 
                   <button
+                    className="bg-gray-300 text-black py-2 px-4 rounded-lg text-lg font-medium flex items-center justify-center"
+                    onClick={showNumber}
+                  >
+                    Show Number
+                  </button>
+
+
+                  <button
                     type="button"
                       className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
                       onClick={handleShowNumber} >
@@ -209,12 +222,18 @@ export default function SellerShop() {
                       )}
                     </button>
 
+
                 </div>
               </div>
 
               <div className="bg-white rounded-lg shadow-sm">
+
+                <div class="border-b py-4">
+                    <h2 class="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
                 <div className="border-b py-4">
                     <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
                       Product Categories
                     </h2>
                   </div>
@@ -257,6 +276,12 @@ export default function SellerShop() {
                           </select>
                       </div>
 
+
+                    </div>
+
+                    <div className="p-4">
+                      <button className="py-2 rounded-md text-white cursor-pointer text-base px-6 bg-black/90">Search</button>
+                    </div>
                     </div>
 
                     {/* <div className="p-4">
@@ -266,6 +291,7 @@ export default function SellerShop() {
 
 
                     
+
                     
                   </form>
               </div>
@@ -273,8 +299,12 @@ export default function SellerShop() {
 
         <div className="flex flex-col w-full gap-3 bg-white rounded-md ">
 
+            <div class="border-b py-4">
+              <h2 class="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
             <div className="border-b py-4">
               <h2 className="text-neutral-800 px-4 text-lg font-medium font-['DM Sans'] leading-snug">
+
                 Shop
               </h2>
             </div>
@@ -363,7 +393,11 @@ export default function SellerShop() {
                         </div>
 
                         <div className="w-full">
+
+                          <button type="button" onClick={handleSubmitReview} class="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight">
+
                           <button type="button" onClick={handleSubmitReview} className="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight">
+
                             Submit Reviews
                           </button>
                         </div>
