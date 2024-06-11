@@ -7,11 +7,18 @@ import jwt from "jsonwebtoken";
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
-  const hashedPassword = bcryptjs.hashSync(password, 10);
+  // const hashedPassword = bcryptjs.hashSync(password, 10);
 
   const newUser = new User({ username, email, password: hashedPassword });
 
   try {
+
+    const userExist = await User.find({email});
+    
+    if(userExist) {
+      return res.status(400).json({message: "User already exist"});
+    }
+
     await newUser.save();
     res.status(201).json("User Created Successfully!");
   } catch (error) {
@@ -26,7 +33,9 @@ export const signin = async (req, res, next) => {
     const validUser = await User.findOne({ email });
     if (!validUser) return next(errorHandler(404, "User not found"));
 
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    // const validPassword = bcryptjs.compareSync(password, validUser.password);
+    const validPassword = await validUser.comparePassword(password);
+    console.log({validPassword})
     if (!validPassword) return next(errorHandler(404, "Wrong password!!"));
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
@@ -43,8 +52,16 @@ export const signin = async (req, res, next) => {
 };
 
 export const google = async (req, res, next) => {
+
+const { email } = req.body;
+
+    if(!email.trim()) {
+      return res.status(400).json({message: "Email is required"});
+    }
+
   try {
-    const user = await User.findOne({ email: req.body.email });
+
+    const user = await User.findOne({ email });
 
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
@@ -62,9 +79,9 @@ export const google = async (req, res, next) => {
         username:
           req.body.name.split(" ").join("").toLowerCase() +
           Math.random().toString(36).slice(-4),
-        email: req.body.email,
-        password: hashedPassword,
-        avatar: req.body.photo,
+          email: req.body.email,
+          password: hashedPassword,
+          avatar: req.body.photo,
       });
 
       await newUser.save();

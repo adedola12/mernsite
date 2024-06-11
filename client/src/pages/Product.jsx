@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
-import { FaCar, FaPhone } from "react-icons/fa";
+import { FaCar, FaDivide, FaPhone } from "react-icons/fa";
 import { MdAddLocation } from "react-icons/md";
 
 export default function Product() {
@@ -11,8 +11,6 @@ export default function Product() {
   const [allProduct, setAllProduct] = useState([]);
   const [showNumber, setShowNumber] = useState(false);
 
-  console.log(product);
-  console.log(allProduct);
 
   console.log("Product page")
 
@@ -31,13 +29,13 @@ export default function Product() {
 
         if (data.success === false) {
           setError(true);
-          setLoading(false);
           return;
         } else {
           setProduct(data.product);
         }
       } catch (error) {
         setError(true);
+      } finally {        
         setLoading(false);
       }
     };
@@ -52,7 +50,7 @@ export default function Product() {
 
       try {
         const response = await fetch(
-          `/api/product/getProduct/category/${product.categories}`
+          `/api/product/getProduct/category/${product._id}`
         );
         if (!response.ok) {
           throw new Error("Related Categories cannot be fetched");
@@ -62,6 +60,8 @@ export default function Product() {
         setAllProduct(data.products);
       } catch (error) {
         console.error("Failed to fetch products", error);
+      } finally {
+
       }
     };
 
@@ -69,16 +69,19 @@ export default function Product() {
   }, [product]);
 
   const showMobile = () => {
-    setShowNumber(!showNumber);
+    setShowNumber((prevState) => !prevState);
     console.log(product.userRef.mobileNumber);
   };
 
   // if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading product details</div>;
-  if (!product) return <div>No product found.</div>;
+  if (loading) return <div className="h-full text-center p-4 md:px-10">Loading...</div>;
+  if (!product) return <div className="h-full text-center p-4 md:px-10">No product found.</div>;
+  if (error) return <div className="h-full text-center p-4 md:px-10">Error loading product details</div>;
 
   return (
     <main className="min-h-screen">
+      
+      
       <div className="m-5 md:m-20 lg:m-[100px] text-2xl">
         <div className="flex gap-4 flex-col lg:flex-row justify-between">
           <div className="flex flex-col  gap-4 w-full lg:w-2/3">
@@ -99,6 +102,7 @@ export default function Product() {
                     </div>
                   ))}
                 </div>
+                
                 <div className="flex-grow border-2 border-gray-200 overflow-hidden">
                   <img
                     src={product.imageUrls[0]}
@@ -106,15 +110,32 @@ export default function Product() {
                     className="w-full h-full object-cover"
                   />
                 </div>
+
               </div>
+              
               <div className="my-5">
-                <h1 className="font-bold text-3xl">{product.name}</h1>
-                <h2 className="">subCate {product.subCategories}</h2>
+                <h1 className="font-bold text-2xl text-gray-900">{product.name}</h1>
+
+                {
+                  product?.subCategories?.length && (
+                    <div className="flex flex-col gap-2 mb-4">
+                      <h2 className="text-base font-semibold text-gray-700">Sub Categories:</h2>
+                      <div className="flex items-center flex-wrap gap-2 ">
+                        {
+                          product.subCategories.map((sub, index) => (
+                            <span key={index} className="text-xs bg-gray-100 text-gray-600 p-1 px-1.5 rounded-md">{sub}</span>
+                          ))
+                        }
+                      </div>
+                      </div>
+                  )
+                }
                 <p className="text-sm">Review</p>
               </div>
+
             </div>
             <div className="bg-[#FFFFFF] p-4 rounded-lg">
-              <h1 className="text-[18px] my-5 font-semibold">Description</h1>
+              <h1 className="text-[18px] font-semibold">Description</h1>
               <p className="font-normal text-wrap flex-wrap text-[14px] text-[#828282] mb-5">
                 {product.description}
               </p>
@@ -147,17 +168,17 @@ export default function Product() {
                 </Link>
 
                 <button
-                  className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
-                  onClick={showMobile}
-                >
-                  {showNumber ? (
-                    `+2340${product.userRef.mobileNumber}`
-                  ) : (
-                    <>
-                      <FaPhone className="mr-2" /> See Number
-                    </>
-                  )}
-                </button>
+                    type="button"
+                      className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
+                      onClick={showMobile} >
+                      {showNumber ? (
+                        `${product?.userRef?.mobileNumber ? "+2340"+product?.userRef?.mobileNumber : "No number"}`
+                      ) : (
+                        <>
+                          <FaPhone className="mr-2" /> See Number
+                        </>
+                      )}
+                    </button>
               </div>
             </div>
             <div className="bg-[#FFFFFF] p-4 rounded-lg shadow-sm">
@@ -207,7 +228,7 @@ export default function Product() {
       </div>
       <div className="my-3 bg-[#FFFFFF] w-full p-8">
         <h2 className="font-bold text-[24px]">Product like this</h2>
-        <div className="my-6 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="my-6 overflow-hidden grid grid-cols-1 grid-rows-2 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4">
           {allProduct &&
             allProduct.map((product) => (
               <ProductItem key={product._id} product={product} />

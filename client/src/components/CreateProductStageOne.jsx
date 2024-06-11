@@ -65,7 +65,7 @@ const CreateProductStageOne = ({nextStep, formData, handleChange}) => {
                     />
                     <input 
                     type="tel" 
-                    value={formData.name} 
+                    value={formData.mobile} 
                     onChange={handleChange}
                     placeholder='Mobile Number'
                     name="mobile"

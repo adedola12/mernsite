@@ -9,10 +9,10 @@ export default function CategorySelector({ onCategorySelected }) {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
+
         const res = await fetch(`/api/product/getCategories`);
 
         const data = await res.json();
-
         setCategoryList(data);
       } catch (error) {
         setError(true);
@@ -26,6 +26,7 @@ export default function CategorySelector({ onCategorySelected }) {
     setSelectedCategory(e.target.value);
     onCategorySelected(e.target.value);
   };
+
   return (
       <select
         name="categorySelector"
@@ -36,9 +37,9 @@ export default function CategorySelector({ onCategorySelected }) {
         focus:ring-blue-500"
       >
         <option value="">Categories</option>
-        {categoryList.map((category) => (
-          <option key={category} value={category}>
-            {category}
+        {categoryList?.length && categoryList?.map((category) => (
+          <option key={category.category} value={category.category}>
+            {category.category}
           </option>
         ))}
       </select>
