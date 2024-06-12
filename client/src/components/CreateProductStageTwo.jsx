@@ -120,27 +120,13 @@ const CreateProductStageTwo = ({previousStep, formData, setFiles, isLoading, upl
                 )}
               </div>
 
-{/* 
-                    <label htmlFor="product-images" className='cursor-pointer w-full focus-within:border-2 focus-within:border-black text-gray-400 px-2 py-3 border rounded-md flex flex-col justify-center h-[151px]'>
-                        <input 
-                        type="file"
-                        name="images"
-                        accept="image/*"
-                        multiple
-                        onChange={(e) => setFiles(e.target.files)}
-                        className='w-full h-full hidden' 
-                        />
-                        <div className="flex flex-col items-center justify-center">
-                            <span> <span className='text-black/90'>Click to upload</span> or drag and drop </span>
-                            <span>SVG, PNG, JPG, JPEG (max. 800x400px) </span>
-                        </div>
-                    </label>                    */}
+    
                 </div>
             </div>
 
         <div className="border-t flex items-end p-5">
             <div className="flex items-center self-end ml-auto gap-x-4 ">
-                <button onClick={previousStep} className='px-12 py-3 ml-auto inline-block text-black/90 bg-gray-300 hover:bg-gray-200 duration-200 rounded-md '>Next</button>
+                <button onClick={previousStep} className='px-12 py-3 ml-auto inline-block text-black/90 bg-gray-300 hover:bg-gray-200 duration-200 rounded-md '>Back</button>
                 <button onClick={handleSubmit} type='button' className='px-12 py-3 ml-auto inline-block text-white bg-blue-950 hover:bg-blue-900 duration-200 rounded-md '>
                     {isLoading ? "Creating..." : "Create Product"}
                 </button>

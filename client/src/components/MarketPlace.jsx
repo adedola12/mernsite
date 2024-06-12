@@ -1,99 +1,49 @@
 // Marketplace.js
 import React, { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import StateSelector from "../components/StateSelector";
 import TypeSelector from "../components/TypeSelector";
 import ProductItem from "./productItem";
 import { PiSpinnerBold } from "react-icons/pi";
+import useSearchParams from "../hooks/useSearchParams";
 
 const MAX_LIMIT = 10;
 
 export default function Marketplace() {
-  const [categoryData, setCategoryData] = useState({
-    categoryTerm: "",
-    location: "",
-    type: "",
-  });
 
   const [products, setProducts] = useState([]);
 
   const [isProductLoading, setIsLoadingProduct] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const location = useLocation();
-  const navigate = useNavigate();
 
-  let [urlParams, setUrlParams] = useSearchParams();
-
-  const [queryParams, setQueryParams] = useState({});
+  const [params, setParams, queryString] = useSearchParams();
 
   const handleCategorySelect = (category) => {
-
-    if (category) {
-      urlParams.set("category", category);
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("category");
-      setUrlParams(urlParams, { replace: true })
-    }
+    setParams({...params, category })
   };
 
   const handleSubCategorySelect = (subCategory) => {
-
-    if (subCategory) {
-      urlParams.set("subCategory", subCategory)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("subCategory");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+      setParams({...params, subCategory })
   };
 
-  const handleStateSelected = (newState) => {
-    if (newState) {
-      urlParams.set("location", newState)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("location");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+  const handleStateSelected = (location) => {
+    setParams({...params, location })
   };
 
-  const handleTypeSelected = (newType) => {
-    if (newType) {
-      urlParams.set("type", newType)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("type");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+  const handleTypeSelected = (type) => {
+    setParams({...params, type })
   };
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const params = {};
-    for (let [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    setQueryParams(params);
-  }, [location.search]);
 
   useEffect(() => {
 
     const fetchCategory = async () => {
 
-      let fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
-
-      if(Object.keys(queryParams).length > 0) {
-        const queryString = new URLSearchParams(queryParams).toString();
-        
-        fetchUrl = `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`;
-      }
+      const fetchUrl = queryString
+                   ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+                   : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
   
       try {
 
@@ -109,7 +59,6 @@ export default function Marketplace() {
         setProducts(data?.products);
 
         if (page  >= data.pagination.pages) {
-          // setPage(Number(data.pagination.page))
           setHasMore(false)
         }
 
@@ -121,7 +70,7 @@ export default function Marketplace() {
     };
 
     fetchCategory();
-  }, [queryParams]);
+  }, [queryString]);
 
 
   const loadMore = async () => {
@@ -129,11 +78,10 @@ export default function Marketplace() {
     if(!hasMore) return;
     
     try {
-      console.log("LOAD MORE")
-      setIsLoadingProduct(true)
-      let fetchUrl = '';
       
-      fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+      setIsLoadingProduct(true);
+
+      const fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
       const res = await fetch(fetchUrl);
 
       if (!res.ok) {
