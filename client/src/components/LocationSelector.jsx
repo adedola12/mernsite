@@ -45,7 +45,7 @@ export default function LocationSelector({ onStateSelected }) {
 
   const handleStateChanged = (e) => {
     setSelectedState(e.target.value);
-    onStateSelected(e.target.value);
+    onStateSelected("location", e.target.value);
   };
 
   return (

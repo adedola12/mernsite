@@ -35,7 +35,7 @@ export default function Marketplace() {
   } finally {
     setIsLoading(false)
   }
-  
+
   }
 
     useEffect(() => {
@@ -47,9 +47,10 @@ export default function Marketplace() {
     setParams({...params, value })
   };
 
-  const handleChange = (type) => {
-    if(type == "location".toString()) setParams({...params, location})
-    if(type == "category".toString()) setParams({...params, category})
+  const handleChange = (type, value) => {
+    console.log(type)
+    if(type == "location".toString()) setParams({...params, "location": value})
+    if(type == "category".toString()) setParams({...params, "category": value})
   }
 
 
