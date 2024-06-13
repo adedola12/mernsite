@@ -49,9 +49,9 @@ export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
 
   return (
     <aside className="w-full">
-      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
+      {loading && <p className="text-center my-7 text-base font-semibold">Loading...</p>}
       {error && (
-        <p className="text-center my-7 text-2xl">Something went wrong!!</p>
+        <p className="text-center my-7 text-base font-semibold">No data</p>
       )}
       {categories?.length > 0 && !error && (
         <div className="flex flex-col gap-y-2">

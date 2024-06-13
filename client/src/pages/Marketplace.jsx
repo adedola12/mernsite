@@ -48,9 +48,8 @@ export default function Marketplace() {
   };
 
   const handleChange = (type, value) => {
-    console.log(type)
-    if(type == "location".toString()) setParams({...params, "location": value})
-    if(type == "category".toString()) setParams({...params, "category": value})
+    if(type == "location") setParams({...params, "location": value})
+    if(type == "category") setParams({...params, "category": value})
   }
 
 

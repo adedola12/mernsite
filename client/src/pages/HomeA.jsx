@@ -1,5 +1,5 @@
 // HomeA.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaArrowDown,
   FaArrowLeft,
@@ -7,7 +7,7 @@ import {
   FaPlay,
   FaStar,
 } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
@@ -18,11 +18,14 @@ import Marketplace from "../components/MarketPlace";
 // Import Marketplace component
 
 export default function HomeA() {
+
+
+
   return (
     <main className="min-h-screen">
       {/* Top Section */}
       <div className="w-full text-center md:text-start">
-        <div className="flex flex-col lg:flex-row lg:justify-between py-16 px-4 sm:px-0 lg:pl-20  gap-5">
+        <div className="flex flex-col lg:flex-row lg:justify-between py-16 px-4 sm:px-0 lg:pl-10  gap-5">
           <div className="flex flex-col items-center lg:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 lg:w-[280px]">
               <Link to={"/product"} className=" font-[Inter] text-[14px]">
@@ -57,13 +60,13 @@ export default function HomeA() {
               </Link>
             </div>
           </div>
-          <div className="md:block hidden md:self-center">
+          <div className="lg:block hidden lg:self-center overflow-hidden">
             <ImageSlider />
           </div>
         </div>
       </div>
       {/* Explore Market Place */}
-      <div className="w-full flex flex-col ">
+      <div className="w-full flex flex-col">
         {/* Use Marketplace component */}
         <Marketplace /> 
 
@@ -71,8 +74,8 @@ export default function HomeA() {
 
 
       {/* Unlock Features */}
-      <div className="flex lg:flex-row flex-col items-start justify-between">
-        <div className="p-5 mb-5  flex flex-col  gap-5">
+      <div className="flex lg:flex-row flex-col items-start justify-between px-10">
+        <div className="p-5 mb-5  flex flex-col gap-5">
           <h2 className="font-bold text-4xl my-4 md:text-6xl">
             Unlock features of the
             <span className="text-[#E3B309]"> plugin</span>
@@ -100,7 +103,7 @@ export default function HomeA() {
             <FaArrowDown />
           </Link>
         </div>
-        <div className="w-full md:w-1/2">
+        <div className="w-full lg:w-1/2">
           <img
             src="../sliderImages/ADLM Training Teazer.jpg"
             alt=""
@@ -111,7 +114,7 @@ export default function HomeA() {
       {/* Integration */}
 
     <div className="bg-[#F5F5F5] ">
-        <div className="lg:max-w-screen-lg lg:mx-auto flex flex-col lg:flex-row md:items-center lg:justify-between px-8 py-16">
+        <div className="lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between px-8 py-16">
           <div className="flex flex-col space-y-5 md:space-y-7 lg:w-[510px] lg:mt-[89px]">
             <h2 className="font-bold text-5xl md:text-6xl text-[#1D1D1D]">
               Integration with other Product
@@ -133,8 +136,8 @@ export default function HomeA() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center items-center mt-10 md:mt-0 md:mr-6">
-            <div className="grid grid-cols-2 gap-5">
+          <div className="flex justify-center items-center mt-10 md:mt-0 ">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-5">
               <div className="flex justify-center items-center w-40 h-24 bg-white shadow-md rounded hover:opacity-65">
                 <img
                   src="logo/msProject.png"

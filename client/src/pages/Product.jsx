@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
-import { FaCar, FaDivide, FaPhone } from "react-icons/fa";
+import { FaCar, FaPhone } from "react-icons/fa";
 import { MdAddLocation } from "react-icons/md";
 
 export default function Product() {
@@ -12,7 +12,6 @@ export default function Product() {
   const [showNumber, setShowNumber] = useState(false);
 
 
-  console.log("Product page")
 
   const params = useParams();
 
@@ -72,6 +71,9 @@ export default function Product() {
     setShowNumber((prevState) => !prevState);
     console.log(product.userRef.mobileNumber);
   };
+
+
+  
 
   // if (loading) return <div>Loading...</div>;
   if (loading) return <div className="h-full text-center p-4 md:px-10">Loading...</div>;
@@ -231,7 +233,10 @@ export default function Product() {
         <div className="my-6 overflow-hidden grid grid-cols-1 grid-rows-2 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4">
           {allProduct &&
             allProduct.map((product) => (
-              <ProductItem key={product._id} product={product} />
+              <ProductItem 
+              key={product._id} 
+              product={product}
+              />
             ))}
         </div>
       </div>

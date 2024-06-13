@@ -1,33 +1,38 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import StarRating from "./Rating";
 
-export default function ProductItem({ product }) {
+
+export default function ProductItem({ product}) {
+
+
   return (
-    <div className="bg-white  shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full ">
-      <Link to={`/product/${product._id}`}>
-        <img
-          src={product.imageUrls[0]}
-          alt="imageUrl"
-          className="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
-        />
-        <div className="p-3">
-          <p className="text-lg font-semibold truncate text-slate-700">
-            {product.name}
-          </p>
-          <p className="font-semibold flex items-center gap-2 text-base text-gray-500">
-            NGN {product.regularPrice}/ {product.unit}
-          </p>
-          <div className="flex items-center flex-wrap gap-2 ">
-            <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
-            <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
-            <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
-            <FaStar onClick={() => {}} size={18} className="text-gray-300 cursor-pointer" />
-              <span className="text-base text-gray-800">(91)</span>
+    <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full ">
+      
+      <div className=" flex flex-col ">
+        <Link to={`/product/${product._id}`}>
+          <img
+            src={product.imageUrls[0]}
+            alt="imageUrl"
+            className="h-[320px] sm:max-h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
+          />
+          <div className="px-4 pt-2">
+            <p className="text-lg font-semibold truncate text-slate-700">
+              {product.name}
+            </p>
+            <p className="font-semibold flex items-center gap-2 text-base text-gray-500">
+              NGN {product.regularPrice}/ {product.unit}
+            </p>
+
           </div>
-        </div>
+        </Link>
         {/* Add RATING */}
-      </Link>
+        
+        <div className="flex items-center flex-wrap gap-2 p-4">
+            <StarRating />
+            <span className="text-base text-gray-800">(91)</span>
+        </div>
+      </div>
     </div>
   );
 }

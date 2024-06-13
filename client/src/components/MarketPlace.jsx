@@ -1,7 +1,6 @@
 // Marketplace.js
 import React, { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import StateSelector from "../components/StateSelector";
 import TypeSelector from "../components/TypeSelector";
@@ -36,6 +35,8 @@ export default function Marketplace() {
   const handleTypeSelected = (type) => {
     setParams({...params, type })
   };
+
+
 
   useEffect(() => {
 
@@ -114,26 +115,29 @@ export default function Marketplace() {
   }, [page]);
 
   return (
-    <div className="bg-[#F5F5F5] flex gap-4 ">
-      <div className="w-full max-w-[90%] mx-auto ">
-        <h2 className="font-semibold text-6xl pt-4  font-[DMSans]">
+    <div className="bg-[#F5F5F5]">
+      <div className="w-full lg:max-w-[90%] mx-auto p-5">
+        <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
           Explore Marketplace
         </h2>
-        <div className="flex lg:flex-row flex-col gap-4 my-5">
-          <div className="bg-white p-5 px-3 rounded-md">
-            <div className="w-[80px] h-[80px]">
-              <img
-                src="..\logo\ADLM Studio Logo PNG-07.png"
-                alt="ADLM Logo"
-                className="object-contain"
-              />
-            </div>
-            <div >
-              {/* CATEGORY LIST SIDE BAR ITEM */}
-              <SideBar 
-                onSubCategorySelect={handleSubCategorySelect} 
-                onCategorySelect={handleCategorySelect} 
-              />
+        <div className=" gap-4 my-5 grid grid-cols-1 lg:grid-cols-[300px_1fr] w-full">
+          <div className="bg-white p-5 px-3 rounded-md">            
+            <div className="flex flex-col">
+                <div className="w-[80px] h-[80px]">
+                  <img
+                    src="..\logo\ADLM Studio Logo PNG-07.png"
+                    alt="ADLM Logo"
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-full">
+                  {/* CATEGORY LIST SIDE BAR ITEM */}
+                  <SideBar 
+                    onSubCategorySelect={handleSubCategorySelect} 
+                    onCategorySelect={handleCategorySelect} 
+                  />
+                </div>
+
             </div>
           </div>
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md">
@@ -154,7 +158,10 @@ export default function Marketplace() {
                   ? <h2 className="text-center col-span-3  text-lg font-semibold text-slate-500">Loading...</h2>
                   : products.length == 0
                   ? <p className="text-center col-span-3 text-lg font-semibold text-slate-500">No product found</p>
-                  : products.map((product) => <ProductItem key={product._id} product={product} />)
+                  : products.map((product) => <ProductItem 
+                    key={product._id} 
+                    product={product}
+                  />)
             }
           </div>
 
