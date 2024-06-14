@@ -43,11 +43,13 @@ const CreateProductStageOne = ({ nextStep, formData, handleChange }) => {
 
   return (
 
+
     <div className='flex flex-col w-full gap-y-5 bg-white rounded-md'>
         
         <div className="border-b w-full">
             <h2 className="text-2xl font-bold p-5">Create Product </h2>
         </div>
+
 
       <div className="w-full md:max-w-2xl mx-auto flex flex-col p-5">
           <div className='w-full flex flex-col gap-y-3'>

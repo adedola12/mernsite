@@ -1,4 +1,9 @@
 import React from "react";
+
+import { FaStar } from "react-icons/fa";
+
+import { MdLocationOn } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import StarRating from "./Rating";
 
@@ -7,6 +12,7 @@ export default function ProductItem({ product}) {
 
 
   return (
+
     <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full ">
       
       <div className=" flex flex-col ">
@@ -23,6 +29,8 @@ export default function ProductItem({ product}) {
             <p className="font-semibold flex items-center gap-2 text-base text-gray-500">
               NGN {product.regularPrice}/ {product.unit}
             </p>
+
+    
 
           </div>
         </Link>
