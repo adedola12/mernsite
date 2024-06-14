@@ -10,9 +10,6 @@ export default function Product() {
   const [product, setProduct] = useState(null);
   const [allProduct, setAllProduct] = useState([]);
   const [showNumber, setShowNumber] = useState(false);
-
-
-
   const params = useParams();
 
   useEffect(() => {

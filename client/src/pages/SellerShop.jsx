@@ -4,6 +4,7 @@ import ProductItem from "../components/productItem";
 import { FaPhone, FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
+import { useSelector } from "react-redux";
 
 const reviewTabs = [
   { id: 0, name: "Reviews"},
@@ -60,10 +61,11 @@ export default function SellerShop() {
   const [showNumber, setShowNumber] = useState(false);
   const { userId } = useParams();
 
+  const { currentUser } = useSelector((state) => state.user);
+
   const [selectedTab, setSelectedTab] = useState(1);
 
   
-
   const [reviewForm, setReviewForm] = useState({
     name: "",
     email: "",
@@ -82,17 +84,46 @@ export default function SellerShop() {
     setCategory((prevState) => ({...prevState, [name]: value}));
   }
 
-  const handleSubmitReview  = (event) => {
+  const handleSubmitReview  = async (event) => {
     event.preventDefault();
+
+    const reviewFormData = {
+      ...reviewForm,
+    }
+
+    if(!currentUser?._id) {
+      alert("Please sign in");
+      return;
+    }
+
     try {
+
+        const response = await fetch("/api/review/create-review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...reviewFormData,
+        }),
+        credentials: true
+      });
+
+      const data = await response.json();
       
+      if(!response.ok) {
+        setError(data.message);
+      }
+
     } catch (error) {
-      
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   const handleReviewFormInputChange = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     setReviewForm((prevState) => ({...prevState, [name]: value}));
   }
 
@@ -107,6 +138,7 @@ export default function SellerShop() {
 
 
   useEffect(() => {
+    
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
@@ -129,6 +161,7 @@ export default function SellerShop() {
         setLoading(false);
       }
     };
+
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
