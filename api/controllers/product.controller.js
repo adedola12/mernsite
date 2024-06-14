@@ -26,6 +26,7 @@ export const createProduct = async (req, res, next) => {
   const { categoryName, subCategories } = categoryData;
 
   try {
+    
     const subCat = subCategories.map((name) => name);
 
       const newProduct = new Product({
@@ -217,7 +218,6 @@ export const searchProduct = async (req, res, next) => {
   try {
    
     const { location, category, subCategory, type, limit = 12, startIndex = 0 } = req.query;
-
 
     const distinctCategories = await Product.distinct('category');
 

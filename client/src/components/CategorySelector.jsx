@@ -24,7 +24,7 @@ export default function CategorySelector({ onCategorySelected }) {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    onCategorySelected(e.target.value);
+    onCategorySelected("category", e.target.value);
   };
 
   return (

@@ -36,6 +36,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
     imageUrls: {
       type: Array,
       required: true,

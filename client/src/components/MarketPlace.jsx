@@ -1,99 +1,50 @@
 // Marketplace.js
 import React, { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import StateSelector from "../components/StateSelector";
 import TypeSelector from "../components/TypeSelector";
 import ProductItem from "./productItem";
 import { PiSpinnerBold } from "react-icons/pi";
+import useSearchParams from "../hooks/useSearchParams";
 
 const MAX_LIMIT = 10;
 
 export default function Marketplace() {
-  const [categoryData, setCategoryData] = useState({
-    categoryTerm: "",
-    location: "",
-    type: "",
-  });
 
   const [products, setProducts] = useState([]);
 
   const [isProductLoading, setIsLoadingProduct] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const location = useLocation();
-  const navigate = useNavigate();
 
-  let [urlParams, setUrlParams] = useSearchParams();
-
-  const [queryParams, setQueryParams] = useState({});
+  const [params, setParams, queryString] = useSearchParams();
 
   const handleCategorySelect = (category) => {
-
-    if (category) {
-      urlParams.set("category", category);
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("category");
-      setUrlParams(urlParams, { replace: true })
-    }
+    setParams({...params, category })
   };
 
   const handleSubCategorySelect = (subCategory) => {
-
-    if (subCategory) {
-      urlParams.set("subCategory", subCategory)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("subCategory");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+      setParams({...params, subCategory })
   };
 
-  const handleStateSelected = (newState) => {
-    if (newState) {
-      urlParams.set("location", newState)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("location");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+  const handleStateSelected = (location) => {
+    setParams({...params, location })
   };
 
-  const handleTypeSelected = (newType) => {
-    if (newType) {
-      urlParams.set("type", newType)
-      setUrlParams(urlParams, { replace: true })
-    } else {
-      urlParams.delete("type");
-      setUrlParams(urlParams, { replace: true })
-      return;
-    }
+  const handleTypeSelected = (type) => {
+    setParams({...params, type })
   };
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const params = {};
-    for (let [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    setQueryParams(params);
-  }, [location.search]);
+
 
   useEffect(() => {
 
     const fetchCategory = async () => {
 
-      let fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
-
-      if(Object.keys(queryParams).length > 0) {
-        const queryString = new URLSearchParams(queryParams).toString();
-        
-        fetchUrl = `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`;
-      }
+      const fetchUrl = queryString
+                   ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+                   : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
   
       try {
 
@@ -109,7 +60,6 @@ export default function Marketplace() {
         setProducts(data?.products);
 
         if (page  >= data.pagination.pages) {
-          // setPage(Number(data.pagination.page))
           setHasMore(false)
         }
 
@@ -121,7 +71,7 @@ export default function Marketplace() {
     };
 
     fetchCategory();
-  }, [queryParams]);
+  }, [queryString]);
 
 
   const loadMore = async () => {
@@ -129,11 +79,10 @@ export default function Marketplace() {
     if(!hasMore) return;
     
     try {
-      console.log("LOAD MORE")
-      setIsLoadingProduct(true)
-      let fetchUrl = '';
       
-      fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+      setIsLoadingProduct(true);
+
+      const fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
       const res = await fetch(fetchUrl);
 
       if (!res.ok) {
@@ -166,26 +115,29 @@ export default function Marketplace() {
   }, [page]);
 
   return (
-    <div className="bg-[#F5F5F5] flex gap-4 ">
-      <div className="w-full max-w-[90%] mx-auto ">
-        <h2 className="font-semibold text-6xl pt-4  font-[DMSans]">
+    <div className="bg-[#F5F5F5]">
+      <div className="w-full lg:max-w-[90%] mx-auto p-5">
+        <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
           Explore Marketplace
         </h2>
-        <div className="flex lg:flex-row flex-col gap-4 my-5">
-          <div className="bg-white p-5 px-3 rounded-md">
-            <div className="w-[80px] h-[80px]">
-              <img
-                src="..\logo\ADLM Studio Logo PNG-07.png"
-                alt="ADLM Logo"
-                className="object-contain"
-              />
-            </div>
-            <div >
-              {/* CATEGORY LIST SIDE BAR ITEM */}
-              <SideBar 
-                onSubCategorySelect={handleSubCategorySelect} 
-                onCategorySelect={handleCategorySelect} 
-              />
+        <div className=" gap-4 my-5 grid grid-cols-1 lg:grid-cols-[300px_1fr] w-full">
+          <div className="bg-white p-5 px-3 rounded-md">            
+            <div className="flex flex-col">
+                <div className="w-[80px] h-[80px]">
+                  <img
+                    src="..\logo\ADLM Studio Logo PNG-07.png"
+                    alt="ADLM Logo"
+                    className="object-contain"
+                  />
+                </div>
+                <div className="w-full">
+                  {/* CATEGORY LIST SIDE BAR ITEM */}
+                  <SideBar 
+                    onSubCategorySelect={handleSubCategorySelect} 
+                    onCategorySelect={handleCategorySelect} 
+                  />
+                </div>
+
             </div>
           </div>
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md">
@@ -206,7 +158,10 @@ export default function Marketplace() {
                   ? <h2 className="text-center col-span-3  text-lg font-semibold text-slate-500">Loading...</h2>
                   : products.length == 0
                   ? <p className="text-center col-span-3 text-lg font-semibold text-slate-500">No product found</p>
-                  : products.map((product) => <ProductItem key={product._id} product={product} />)
+                  : products.map((product) => <ProductItem 
+                    key={product._id} 
+                    product={product}
+                  />)
             }
           </div>
 

@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import ProductItem from "../components/productItem";
 import CategorySelector from "../components/CategorySelector";
 import LocationSelector from "../components/LocationSelector";
+import useSearchParams from "../hooks/useSearchParams";
 
 export default function Marketplace() {
  
@@ -11,29 +11,23 @@ export default function Marketplace() {
 
   const [isloading, setIsLoading] = useState(true);
 
-  let [searchParams, setSearchParams] = useSearchParams();
-  const [queryParams, setQueryParams] = useState({});
-  const location = useLocation();
+  const [params, setParams, queryString] = useSearchParams();
 
 
-  const handleSearchWithQuery = useCallback(async() => {
+  const handleSearchWithQuery = async() => {
     try {
-      
-      let fetchUrl = '/api/product/search';
-
-      if(Object.keys(queryParams).length > 0) {
-        const queryString = new URLSearchParams(queryParams).toString();
-        fetchUrl = `/api/product/search?${queryString}`;
-      }
-
       setIsLoading(true)
+      const fetchUrl = queryString 
+                      ? `/api/product/search?${queryString}` 
+                      : `/api/product/search`;
+
       const response = await fetch(fetchUrl);
+      
       if(!response.ok) {
-        throw new Error("")
+        throw new Error("Unable to fetch products")
       }
 
       const {data} = await response.json();
-
       setSearchResults([...data.products]);
 
   } catch (error) {
@@ -41,73 +35,23 @@ export default function Marketplace() {
   } finally {
     setIsLoading(false)
   }
-  }, [queryParams])
+
+  }
 
     useEffect(() => {
-    handleSearchWithQuery()
-  }, [handleSearchWithQuery])
+      handleSearchWithQuery();
+  }, [queryString]);
 
 
-  const handleLocationInput = (event) => {
-    
-    const {name, value} = event.target;
-
-    // if(value) {
-    //   searchParams.set("location", value)
-    //   setSearchParams(searchParams, { replace: true })
-    // } else {
-    //   searchParams.delete("location");
-    //   setSearchParams(searchParams, { replace: true })
-    //   return;
-    // }
-    // setSelectedState(location);
+  const handleLocationInput = ({value}) => {
+    setParams({...params, value })
   };
 
-  const handleLocationSelected = (location) => {
+  const handleChange = (type, value) => {
+    if(type == "location") setParams({...params, "location": value})
+    if(type == "category") setParams({...params, "category": value})
+  }
 
-    if(location) {
-      searchParams.set("location", location)
-      setSearchParams(searchParams, { replace: true })
-    } else if(location == "City") {
-      searchParams.delete("location");
-      setSearchParams(searchParams)
-      return;
-    } else {
-      searchParams.delete("location");
-      setSearchParams(searchParams)
-      return;
-    }
-    setSelectedState(location);
-  };
-
-  const handleCategorySelect = useCallback((category) => {
-
-    if(category) {
-      searchParams.set("category", category)
-      setSearchParams(searchParams, { replace: true });
-
-    } else if(category == "Categories") {
-      searchParams.delete("category")
-      setSearchParams(searchParams)
-      return;
-
-    } else {
-      searchParams.delete("category")
-      setSearchParams(searchParams)
-      return;
-    }
-    setSelectedState(location);
-  }, []);
-
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const params = {};
-    for (let [key, value] of searchParams.entries()) {
-      params[key] = value;
-    }
-    setQueryParams(params);
-  }, [location.search]);
 
   return (
     <div className="w-full">
@@ -132,8 +76,8 @@ export default function Marketplace() {
                   focus:ring-blue-500"                  
                 />
                  <div className="grid grid-col-2 md:grid-cols-2 gap-4 ">
-                    <LocationSelector onStateSelected={handleLocationSelected} />
-                    <CategorySelector onCategorySelected={handleCategorySelect} />
+                    <LocationSelector onStateSelected={handleChange} />
+                    <CategorySelector onCategorySelected={handleChange} />
                  </div>
 
                  {/* Show Categories and Select Categories */}

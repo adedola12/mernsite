@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import { FaPhone, FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
+import StarRating from "../components/Rating";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -360,35 +361,25 @@ export default function SellerShop() {
                         </h2>
                         <div className="flex flex-col w-full gap-3 "></div>
                       </div>
+
+                    </div>         
+                  
+                  </>
+                )
+              }
+
+              {
+                selectedTab === 1 && (
+                  <>
+                    <div className="flex flex-col flex-wrap gap-2 my-6">
+                      <h2 className="text-base text-gray-500">Rating</h2>
+                      <div className="flex items-center flex-wrap gap-3 ">
+                        <StarRating />
+
                     </>
                   )}
 
-                  {selectedTab === 1 && (
-                    <>
-                      <div className="flex flex-col flex-wrap gap-2 my-6">
-                        <h2 className="text-base text-gray-500">Rating</h2>
-                        <div className="flex items-center flex-wrap gap-3 ">
-                          <FaStar
-                            onClick={() => {}}
-                            size={18}
-                            className="text-gray-300 cursor-pointer"
-                          />
-                          <FaStar
-                            onClick={() => {}}
-                            size={18}
-                            className="text-gray-300 cursor-pointer"
-                          />
-                          <FaStar
-                            onClick={() => {}}
-                            size={18}
-                            className="text-gray-300 cursor-pointer"
-                          />
-                          <FaStar
-                            onClick={() => {}}
-                            size={18}
-                            className="text-gray-300 cursor-pointer"
-                          />
-                        </div>
+
                       </div>
 
                       <form
