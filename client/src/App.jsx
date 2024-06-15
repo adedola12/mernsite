@@ -25,6 +25,9 @@ import SignInModal from "./pages/SignIn";
 import SignUpModal from "./pages/SignUp";
 import SellerShop from "./pages/SellerShop";
 import Header2 from "./components/Header2";
+import DashboardDefault from "./pages/DashboardDefault";
+import ShopDetails from "./pages/ShopDetails";
+import SellerReviews from "./pages/SellerReviews";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -65,10 +68,15 @@ export default function App() {
         <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/create-product" element={<CreateProduct />} />
-          <Route path="/update-listing/:listingId" element={<UpdateListing />} />
+          <Route  element={<DashboardDefault />} >
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/add-product" element={<CreateProduct />} />
+            <Route path="/create-listing" element={<CreateListing />} />
+            <Route path="/shop-details" element={<ShopDetails />} />
+            <Route path="/create-product" element={<CreateProduct />} />
+            <Route path="/seller-review" element={<SellerReviews />} />
+            <Route path="/update-listing/:listingId" element={<UpdateListing />} />
+          </Route>
         </Route>
         
       </Routes>

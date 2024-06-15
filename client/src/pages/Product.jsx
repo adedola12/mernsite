@@ -5,6 +5,7 @@ import { FaCar, FaPhone } from "react-icons/fa";
 import { MdAddLocation } from "react-icons/md";
 
 export default function Product() {
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [product, setProduct] = useState(null);
@@ -13,10 +14,12 @@ export default function Product() {
   const params = useParams();
 
   useEffect(() => {
+
     const fetchProductandUser = async () => {
       try {
         setLoading(true);
         const res = await fetch(`/api/product/get/${params.productId}`);
+        
         if (!res.ok) {
           throw new Error("Failed to fetch");
         }

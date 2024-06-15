@@ -29,9 +29,14 @@ const userSchema = new mongoose.Schema(
     storeAddress: {
       type: String,
     },
+    bio: {
+      type: String,
+      trim: true,
+    },
     mobileNumber: {
       type: Number,
     },
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   },
   { timestamps: true }
 );

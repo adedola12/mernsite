@@ -14,9 +14,10 @@ export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id)
     return next(errorHandler(401, "You can only update your own account"));
   try {
-    if (req.body.password) {
-      req.body.password = bcryptjs.hashSync(req.body.password, 10);
-    }
+
+    // if (req.body.password) {
+    //   req.body.password = bcryptjs.hashSync(req.body.password, 10);
+    // }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -26,8 +27,9 @@ export const updateUser = async (req, res, next) => {
           email: req.body.email,
           password: req.body.password,
           avatar: req.body.avatar,
-          storeAddress: req.body.storeAddress,
-          mobileNumber: req.body.mobileNumber,
+          bio: req.body.bio,
+          // storeAddress: req.body.storeAddress,
+          // mobileNumber: req.body.mobileNumber,
         },
       },
       { new: true }
@@ -65,6 +67,28 @@ export const getUserListings = async (req, res, next) => {
     }
   } else {
     return next(errorHandler(401, "You can only view your own listings!"));
+  }
+};
+
+export const getSellerProductAndReviews = async (req, res, next) => {
+  const { sellerId } = req.params;
+  try {
+
+    const user = await User.findById(sellerId).populate({
+      path: "reviews",
+      model: "Review",
+      select: "comment rating"
+    });
+
+    if (!user) {
+      return next(errorHandler(404, "User not found!"));
+    }
+
+    const { password: pass, ...rest } = user._doc;
+
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
   }
 };
 

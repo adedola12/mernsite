@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteUser,
+  getSellerProductAndReviews,
   getUser,
   getUserListings,
   getUserProduct,
@@ -18,6 +19,7 @@ router.delete("/delete/:id", verifyToken, deleteUser);
 router.get("/listings/:id", verifyToken, getUserListings);
 router.get("/products/:id", verifyToken, getUserProduct);
 router.get("/:id", verifyToken, getUser);
+router.get("/seller/:sellerId", verifyToken, getSellerProductAndReviews);
 
 router.get("user/:id", productUserDetails);
 

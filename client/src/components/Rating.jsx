@@ -2,8 +2,7 @@
 import React, { useState } from 'react'
 import { FaStar } from 'react-icons/fa';
 
-const StarRating = ({MAX_STARS = 5}) => {
-    const [rating, setRating] = useState(0);
+const StarRating = ({MAX_STARS = 5, rating, setRating = () => {} }) => {
     const [hover, setHover] = useState(0);
 
 
