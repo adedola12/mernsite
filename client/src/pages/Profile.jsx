@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -16,12 +15,7 @@ import {
 
 import toast from "react-hot-toast"
 
-const views = {
-  Personal_Details: "PersonalDetails",
-  Shop_Details: "ShopDetails",
-  Reviews: "Reviews",
-  Password: "Password",
-};
+
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -49,9 +43,9 @@ export default function Profile() {
   const [editListingError, setEditListingError] = useState(false);
   const [editProductError, setEditProductError] = useState(false);
 
-  const [activeView, setActiveView] = useState(views.Personal_Details);
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (file) {
@@ -290,15 +284,7 @@ export default function Profile() {
     } catch (error) {}
   };
 
-  const handleShowShopDetails = () => {
-    changeActiveView(views.Shop_Details);
-    handleShowProduct();
-    handleShowListing();
-  };
 
-  const changeActiveView = (newView) => {
-    setActiveView(newView);
-  };
 
   return (
     <>

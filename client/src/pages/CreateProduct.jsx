@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { app } from "../firebase";
 import CreateProductStageOne from "../components/CreateProductStageOne";
@@ -14,12 +14,6 @@ import CreateProductStageTwo from "../components/CreateProductStageTwo";
 import { CATEGORY_DATA } from "../constants/data";
 import toast from "react-hot-toast";
 
-const views = {
-  Personal_Details: "PersonalDetails",
-  Shop_Details: "ShopDetails",
-  Reviews: "Reviews",
-  Password: "Password",
-};
 
 export default function CreateProduct() {
   
@@ -56,56 +50,7 @@ export default function CreateProduct() {
     setSteps((prevState) => prevState + 1)
   }
 
-  const predefinedSubCategories = {
-    Concrete: ["Cement", "Sharp Sand", "Granite"],
-    Formwork: ["Hardwood", "Nails"],
-    Reinforcement: ["Reinforcement Bar", "Binding Wire"],
-    Finishes: [],
-    Openings: [],
-  };
 
-  // const NIGERIAN_STATES = [
-  //   "Abia",
-  //   "Adamawa",
-  //   "Akwa Ibom",
-  //   "Anambra",
-  //   "Bauchi",
-  //   "Bayelsa",
-  //   "Benue",
-  //   "Borno",
-  //   "Cross River",
-  //   "Delta",
-  //   "Ebonyi",
-  //   "Edo",
-  //   "Ekiti",
-  //   "Enugu",
-  //   "Gombe",
-  //   "Imo",
-  //   "Jigawa",
-  //   "Kaduna",
-  //   "Kano",
-  //   "Katsina",
-  //   "Kebbi",
-  //   "Kogi",
-  //   "Kwara",
-  //   "Lagos",
-  //   "Nasarawa",
-  //   "Niger",
-  //   "Ogun",
-  //   "Ondo",
-  //   "Osun",
-  //   "Oyo",
-  //   "Plateau",
-  //   "Rivers",
-  //   "Sokoto",
-  //   "Taraba",
-  //   "Yobe",
-  //   "Zamfara",
-  //   "Federal Capital Territory || FCT",
-  // ];
-
-  // const types = ["Material", "Labour"];
-  // const units = ["bags", "tonnes", "m", "m2", "m3"];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

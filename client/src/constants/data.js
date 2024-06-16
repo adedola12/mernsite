@@ -22,3 +22,12 @@ export const CATEGORY_DATA = {
       subCategories: ["Roof Covering", "Roof Members", "Roof Accessories"],
     }
   };
+
+
+  export const predefinedSubCategories = {
+    Concrete: ["Cement", "Sharp Sand", "Granite"],
+    Formwork: ["Hardwood", "Nails"],
+    Reinforcement: ["Reinforcement Bar", "Binding Wire"],
+    Finishes: [],
+    Openings: [],
+  };

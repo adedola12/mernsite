@@ -17,21 +17,6 @@ const CreateProductStageTwo = ({
   const units = ["nr", "bags", "tonnes", "m", "m2", "m3"];
   const types = ["Material", "Labour"];
   
-  
-  // const predefinedSubCategories = {
-  //   Concrete: ["Cement", "Sharp Sand", "Granite"],
-  //   Formwork: ["Hardwood", "Nails"],
-  //   Reinforcement: ["Reinforcement Bar", "Binding Wire"],
-  //   Blockwork: ["Sandcrtete Block", "Brickwall"],
-  //   Finishes: ["Floor", "Wall", "Ceiling"],
-  //   Openings: ["Windows", "Door", "Others"],
-  //   Roofing: ["Roof Covering", "Roof Members", "Roof Accessories"],
-  //   Others: [],
-  // };
-
-
-
-  
   const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -110,7 +95,7 @@ const CreateProductStageTwo = ({
               className="p-3 rounded-lg  flex-1 border"
               >
                 <option value="">--select a sub-category--</option>
-                {subCategories.map((subCategory) => (
+                {subCategories?.length && subCategories.map((subCategory) => (
                   <option key={subCategory} value={subCategory}>
                     {subCategory}
                   </option>
@@ -186,7 +171,7 @@ const CreateProductStageTwo = ({
       </div>
 
       <div className="border-t flex flex-col items-end p-5">
-        <div className="flex items-center self-end ml-auto gap-x-4 ">
+        <div className="flex items-center self-center md:self-end md:ml-auto gap-x-4 ">
           <button
             onClick={previousStep}
             className="px-12 py-3 ml-auto inline-block text-black/90 bg-gray-300 hover:bg-gray-200 duration-200 rounded-md "
@@ -201,7 +186,7 @@ const CreateProductStageTwo = ({
             {isLoading ? "Creating..." : "Create Product"}
           </button>
         </div>
-        {/* {error && <p className="text-red-900 text-center text-sm w-full">{error}</p>} */}
+        
       </div>
     </div>
   );
