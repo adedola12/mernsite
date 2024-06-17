@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import { FaPhone, FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
-
+import { useSelector } from "react-redux";
+import toast from 'react-hot-toast';
 const reviewTabs = [
   { id: 0, name: "Reviews" },
   { id: 1, name: "Add Review" },
@@ -58,8 +59,12 @@ export default function SellerShop() {
   const [allProduct, setAllProduct] = useState([]);
   const [showNumber, setShowNumber] = useState(false);
   const { userId } = useParams();
+  const [rating, setRating] = useState(0);
+
+  const { currentUser } = useSelector((state) => state.user);
 
   const [selectedTab, setSelectedTab] = useState(1);
+
 
   const [reviewForm, setReviewForm] = useState({
     name: "",
@@ -78,9 +83,60 @@ export default function SellerShop() {
     setCategory((prevState) => ({ ...prevState, [name]: value }));
   };
 
+
+
+  //const handleSubmitReview  = async (event) => {
+
   const handleSubmitReview = (event) => {
+
     event.preventDefault();
+
+    const reviewFormData = {
+      ...reviewForm,
+      rating,
+      seller:userId,
+    }
+
+    if(!currentUser?._id) {
+      alert("Please sign in");
+      return;
+    }
+
+
     try {
+
+        setLoading(true);
+        const response = await fetch("/api/review/create-review", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewFormData),
+       credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if(!response.ok) {
+        setError(data.message);
+      }
+
+      setReviewForm({ name: "", email: "", message: "", });
+      setRating(0)
+
+    } catch (error) {
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleReviewFormInputChange = (event) => {
+    const { name, value } = event.target;
+    setReviewForm((prevState) => ({...prevState, [name]: value}));
+  }
+
     } catch (error) {}
   };
 
@@ -89,6 +145,7 @@ export default function SellerShop() {
     setReviewForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
+
   const handleSubmitCategory = (event) => {
     event.preventDefault();
     try {
@@ -96,6 +153,7 @@ export default function SellerShop() {
   };
 
   useEffect(() => {
+    
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
@@ -118,10 +176,11 @@ export default function SellerShop() {
         setLoading(false);
       }
     };
+
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${userId}`);
+        const res = await fetch(`/api/user/seller/${userId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch user");
         }
@@ -131,6 +190,7 @@ export default function SellerShop() {
           setError(true);
           return;
         } else {
+          console.log(data)
           setUser(data);
         }
       } catch (error) {
@@ -374,6 +434,9 @@ export default function SellerShop() {
                     <div className="flex flex-col flex-wrap gap-2 my-6">
                       <h2 className="text-base text-gray-500">Rating</h2>
                       <div className="flex items-center flex-wrap gap-3 ">
+
+                        <StarRating rating={rating} setRating={setRating} />
+
                         <StarRating />
 
                     </>
@@ -382,10 +445,13 @@ export default function SellerShop() {
 
                       </div>
 
+                    <form className="w-full flex flex-col gap-y-4 my-10">
+
                       <form
                         onSubmit={handleSubmitReview}
                         className="w-full flex flex-col gap-y-4 my-10"
                       >
+
                         <div className="grid lg:grid-cols-2 gap-3">
                           <div className="flex flex-col gap-2">
                             <label htmlFor="name" className="text-base">
@@ -436,6 +502,14 @@ export default function SellerShop() {
                         </div>
 
                         <div className="w-full">
+
+                          <button 
+                          type="button" 
+                          disabled={loading} 
+                          onClick={ loading ? () => {} : handleSubmitReview }
+                          className="text-center disabled:cursor-not-allowed px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight">
+                            { loading ? "Please wait..." : "Submit Review" }
+
                           <button
                             type="button"
                             onClick={handleSubmitReview}
@@ -449,6 +523,7 @@ export default function SellerShop() {
                             className="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight"
                           >
                             Submit Reviews
+
                           </button>
                         </div>
                       </form>

@@ -32,8 +32,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-3 w-full">
-          <div className="flex flex-wrap justify-between md:px-10 py-8">
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+          <div className="flex flex-wrap gap-y-5 justify-between md:px-10 py-8">
+            <div className="w-full sm:w-1/2 lg:w-1/4 mb-6 md:mb-0">
               <h2 className="font-bold text-md mb-2">Product</h2>
               <ul className="list-none mb-0">
                 <li>
@@ -78,7 +78,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+            <div className="w-full sm:w-1/2 lg:w-1/4 mb-6 md:mb-0">
               <h2 className="font-bold text-md mb-2">Support</h2>
               <ul className="list-none mb-0">
                 <li>
@@ -123,7 +123,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+            <div className="w-full sm:w-1/2 lg:w-1/4 mb-6 md:mb-0">
               <h2 className="font-bold text-md mb-2">Legal</h2>
               <ul className="list-none mb-0">
                 <li>
@@ -152,7 +152,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+            <div className="w-full sm:w-1/2 lg:w-1/4 mb-6 md:mb-0">
               <h2 className="font-bold text-md mb-2">Contact</h2>
               <ul className="list-none mb-0">
                 <li>
@@ -185,7 +185,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border border-t border-x-0 ">
-        <div className="py-5 flex flex-col md:flex-row md:justify-between p-3 md:p-10">
+        <div className="py-5 flex flex-col md:flex-row md:justify-between p-4 md:p-10">
           <h3 className="font-semibold text-[18px]">Connect with us</h3>
           <div className="">
             <ul className="list-none mb-0 flex flex-col md:flex-row gap-5">

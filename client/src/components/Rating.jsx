@@ -1,9 +1,8 @@
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 
-const StarRating = ({MAX_STARS = 5}) => {
-    const [rating, setRating] = useState(0);
+const StarRating = ({MAX_STARS = 5, rating, setRating = () => {} }) => {
     const [hover, setHover] = useState(0);
 
 
@@ -12,15 +11,16 @@ const StarRating = ({MAX_STARS = 5}) => {
         setRating(updatedRating);
     }
 
-    const handleHover = (newRating) => {
+    const handleMouseHover = (newRating) => {
         setHover(newRating)
     }
+
     const handleMouseLeave = (newRating) => {
         setHover(newRating)
     }
 
 
-
+// (hover >= currentRating || rating >= currentRating)
   return (
     <>
     {
@@ -31,12 +31,12 @@ const StarRating = ({MAX_STARS = 5}) => {
                 key={currentRating}
                 size={18}
                 onClick={() => handleRating(currentRating)}
-                onMouseEnter={() => handleHover(currentRating)}
+                onMouseEnter={() => handleMouseHover(currentRating)}
                 onMouseLeave={() => handleMouseLeave(0)}
-                className={`cursor-pointer duration-300 ${ 
-                      (hover >= currentRating || rating >= currentRating)
-                        ? "text-yellow-500" 
-                        : "text-gray-300" 
+                className={`cursor-pointer duration-300 ${
+                        currentRating <= (hover || rating)
+                        ? "text-yellow-500"
+                        : "text-gray-300"
                 }`}
                 />
             )

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { CATEGORY_DATA } from "../constants/data";
 
 const CreateProductStageTwo = ({
   previousStep,
@@ -11,25 +12,34 @@ const CreateProductStageTwo = ({
   error,
   handleSubmit,
   handleCategoryChange,
+  onhandleSubCategoryChange
 }) => {
   const units = ["nr", "bags", "tonnes", "m", "m2", "m3"];
   const types = ["Material", "Labour"];
-  const predefinedSubCategories = {
-    Concrete: ["Cement", "Sharp Sand", "Granite"],
-    Formwork: ["Hardwood", "Nails"],
-    Reinforcement: ["Reinforcement Bar", "Binding Wire"],
-    Blockwork: ["Sandcrtete Block", "Brickwall"],
-    Finishes: ["Floor", "Wall", "Ceiling"],
-    Openings: ["Windows", "Door", "Others"],
-    Roofing: ["Roof Covering", "Roof Members", "Roof Accessories"],
-    Others: [],
+  
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+
+  const onHandleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+    handleCategoryChange(event.target.value)
+    setSelectedSubCategory('');
   };
+
+
+  const handleSubCategoryChange = (event) => {
+    setSelectedSubCategory(event.target.value);
+    onhandleSubCategoryChange(event.target.value);
+  };
+
+  const subCategories = selectedCategory ? CATEGORY_DATA[selectedCategory].subCategories : [];
 
   return (
     <div className="flex flex-col w-full gap-y-5 bg-white rounded-md">
-      <div className="border-b w-full">
-        <h2 className="text-2xl font-bold p-5 py-4">Create Product </h2>
-      </div>
+      <div className="border-b w-full ">
+            <h1 className="font-bold text-xl p-5 py-4 ">Create Product</h1>
+        </div>
 
       <div className="w-full md:max-w-2xl mx-auto flex flex-col p-5">
         <div className="w-full flex flex-col gap-y-3">
@@ -39,7 +49,7 @@ const CreateProductStageTwo = ({
             className="p-3 rounded-lg flex-1 border"
             onChange={handleChange}
           >
-            <option>--Please choose a unit option--</option>
+            <option>--select a unit--</option>
             {units.map((unit) => (
               <option key={unit} value={unit}>
                 {unit}
@@ -53,7 +63,7 @@ const CreateProductStageTwo = ({
             className="p-3 rounded-lg border  flex-1"
             onChange={handleChange}
           >
-            <option>--Please choose an option--</option>
+            <option>--select a type--</option>
             {types.map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -64,17 +74,35 @@ const CreateProductStageTwo = ({
           <select
             name="categories"
             id="category-select"
-            value={formData.categories}
+            value={selectedCategory}
             className="p-3 rounded-lg  flex-1 border"
-            onChange={handleCategoryChange}
+            onChange={onHandleCategoryChange}
           >
-            <option value="">--Please choose an option--</option>
-            {Object.keys(predefinedSubCategories).map((category) => (
+            <option value="">--select a category--</option>
+            {Object.keys(CATEGORY_DATA).map((category) => (
               <option key={category} value={category}>
-                {category}
+                 {category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
           </select>
+
+
+          {
+            selectedCategory && (
+              <select 
+              value={selectedSubCategory} 
+              onChange={handleSubCategoryChange}
+              className="p-3 rounded-lg  flex-1 border"
+              >
+                <option value="">--select a sub-category--</option>
+                {subCategories?.length && subCategories.map((subCategory) => (
+                  <option key={subCategory} value={subCategory}>
+                    {subCategory}
+                  </option>
+                ))}
+              </select>
+            )
+          }
 
           <input
             type="number"
@@ -120,7 +148,7 @@ const CreateProductStageTwo = ({
             >
               {uploading ? "Uploading" : "Upload"}
             </button>
-            {formData.imageUrls.length > 0 && (
+            {formData?.imageUrls?.length > 0 && (
               <>
                 {formData.imageUrls.map((url, index) => (
                   <div
@@ -142,8 +170,8 @@ const CreateProductStageTwo = ({
         </div>
       </div>
 
-      <div className="border-t flex items-end p-5">
-        <div className="flex items-center self-end ml-auto gap-x-4 ">
+      <div className="border-t flex flex-col items-end p-5">
+        <div className="flex items-center self-center md:self-end md:ml-auto gap-x-4 ">
           <button
             onClick={previousStep}
             className="px-12 py-3 ml-auto inline-block text-black/90 bg-gray-300 hover:bg-gray-200 duration-200 rounded-md "
@@ -158,7 +186,7 @@ const CreateProductStageTwo = ({
             {isLoading ? "Creating..." : "Create Product"}
           </button>
         </div>
-        {error && <p className="text-red-900 text-sm">{error}</p>}
+        
       </div>
     </div>
   );
