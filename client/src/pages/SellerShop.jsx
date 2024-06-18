@@ -1,11 +1,11 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import { FaPhone, FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
 import { useSelector } from "react-redux";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 const reviewTabs = [
   { id: 0, name: "Reviews" },
   { id: 1, name: "Add Review" },
@@ -65,7 +65,6 @@ export default function SellerShop() {
 
   const [selectedTab, setSelectedTab] = useState(1);
 
-
   const [reviewForm, setReviewForm] = useState({
     name: "",
     email: "",
@@ -83,61 +82,47 @@ export default function SellerShop() {
     setCategory((prevState) => ({ ...prevState, [name]: value }));
   };
 
-
-
-  //const handleSubmitReview  = async (event) => {
-
-  const handleSubmitReview = (event) => {
+  const handleSubmitReview = async (event) => {
+    //const handleSubmitReview = (event) => {
 
     event.preventDefault();
 
     const reviewFormData = {
       ...reviewForm,
       rating,
-      seller:userId,
-    }
+      seller: userId,
+    };
 
-    if(!currentUser?._id) {
+    if (!currentUser?._id) {
       alert("Please sign in");
       return;
     }
 
-
     try {
-
-        setLoading(true);
-        const response = await fetch("/api/review/create-review", {
+      setLoading(true);
+      const response = await fetch("/api/review/create-review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(reviewFormData),
-       credentials: 'include'
+        credentials: "include",
       });
 
       const data = await response.json();
 
-      if(!response.ok) {
+      if (!response.ok) {
         setError(data.message);
       }
 
-      setReviewForm({ name: "", email: "", message: "", });
-      setRating(0)
-
+      setReviewForm({ name: "", email: "", message: "" });
+      setRating(0);
     } catch (error) {
       setError(error.message);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
-  }
-
-  const handleReviewFormInputChange = (event) => {
-    const { name, value } = event.target;
-    setReviewForm((prevState) => ({...prevState, [name]: value}));
-  }
-
-    } catch (error) {}
   };
 
   const handleReviewFormInputChange = (event) => {
@@ -145,6 +130,10 @@ export default function SellerShop() {
     setReviewForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  // const handleReviewFormInputChange = (event) => {
+  //   const { name, value } = event.target;
+  //   setReviewForm((prevState) => ({ ...prevState, [name]: value }));
+  // };
 
   const handleSubmitCategory = (event) => {
     event.preventDefault();
@@ -153,7 +142,6 @@ export default function SellerShop() {
   };
 
   useEffect(() => {
-    
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
@@ -190,7 +178,7 @@ export default function SellerShop() {
           setError(true);
           return;
         } else {
-          console.log(data)
+          console.log(data);
           setUser(data);
         }
       } catch (error) {
@@ -422,113 +410,106 @@ export default function SellerShop() {
                         <div className="flex flex-col w-full gap-3 "></div>
                       </div>
 
-                    </div>         
-                  
-                  </>
-                )
-              }
-
-              {
-                selectedTab === 1 && (
-                  <>
-                    <div className="flex flex-col flex-wrap gap-2 my-6">
-                      <h2 className="text-base text-gray-500">Rating</h2>
-                      <div className="flex items-center flex-wrap gap-3 ">
-
-                        <StarRating rating={rating} setRating={setRating} />
-
-                        <StarRating />
-
+                      {/* </div>          */}
                     </>
                   )}
 
+                  {selectedTab === 1 && (
+                    <>
+                      <div className="flex flex-col flex-wrap gap-2 my-6">
+                        <h2 className="text-base text-gray-500">Rating</h2>
+                        <div className="flex items-center flex-wrap gap-3 ">
+                          <StarRating rating={rating} setRating={setRating} />
 
+                          <StarRating />
+                        </div>
                       </div>
-
-                    <form className="w-full flex flex-col gap-y-4 my-10">
-
-                      <form
-                        onSubmit={handleSubmitReview}
-                        className="w-full flex flex-col gap-y-4 my-10"
-                      >
-
-                        <div className="grid lg:grid-cols-2 gap-3">
-                          <div className="flex flex-col gap-2">
-                            <label htmlFor="name" className="text-base">
-                              Name
-                            </label>
-                            <input
-                              id="name"
-                              name="name"
-                              type="text"
-                              value={reviewForm.name}
-                              onChange={handleReviewFormInputChange}
-                              required
-                              placeholder="Name"
-                              className="border rounded-lg w-full px-3 py-3 text-base"
-                            />
-                          </div>
-                          <div className="flex flex-col gap-2">
-                            <label htmlFor="email" className="text-base">
-                              Email
-                            </label>
-                            <input
-                              id="email"
-                              name="email"
-                              type="email"
-                              value={reviewForm.email}
-                              onChange={handleReviewFormInputChange}
-                              required
-                              placeholder="Email"
-                              className="border rounded-lg w-full px-3 py-3 text-base"
-                            />
-                          </div>
-                        </div>
-                        <div className="w-full">
-                          <div className="flex flex-col gap-2">
-                            <label htmlFor="message" className="text-base">
-                              Your Review
-                            </label>
-                            <textarea
-                              rows={6}
-                              id="message"
-                              name="message"
-                              value={reviewForm.message}
-                              onChange={handleReviewFormInputChange}
-                              placeholder="Your review"
-                              className="border resize-y rounded-lg w-full px-3 py-3 text-base"
-                            ></textarea>
-                          </div>
-                        </div>
-
-                        <div className="w-full">
-
-                          <button 
-                          type="button" 
-                          disabled={loading} 
-                          onClick={ loading ? () => {} : handleSubmitReview }
-                          className="text-center disabled:cursor-not-allowed px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight">
-                            { loading ? "Please wait..." : "Submit Review" }
-
-                          <button
-                            type="button"
-                            onClick={handleSubmitReview}
-                            class="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block
-                           text-white text-base font-lg font-['DM Sans'] leading-tight"
-                          />
-
-                          <button
-                            type="button"
-                            onClick={handleSubmitReview}
-                            className="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight"
-                          >
-                            Submit Reviews
-
-                          </button>
-                        </div>
-                      </form>
                     </>
                   )}
+
+                  {/* </div> */}
+
+                  <form
+                    onSubmit={handleSubmitReview}
+                    className="w-full flex flex-col gap-y-4 my-10"
+                  >
+                    <div className="grid lg:grid-cols-2 gap-3">
+                      <div className="flex flex-col gap-2">
+                        <label htmlFor="name" className="text-base">
+                          Name
+                        </label>
+                        <input
+                          id="name"
+                          name="name"
+                          type="text"
+                          value={reviewForm.name}
+                          onChange={handleReviewFormInputChange}
+                          required
+                          placeholder="Name"
+                          className="border rounded-lg w-full px-3 py-3 text-base"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <label htmlFor="email" className="text-base">
+                          Email
+                        </label>
+                        <input
+                          id="email"
+                          name="email"
+                          type="email"
+                          value={reviewForm.email}
+                          onChange={handleReviewFormInputChange}
+                          required
+                          placeholder="Email"
+                          className="border rounded-lg w-full px-3 py-3 text-base"
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full">
+                      <div className="flex flex-col gap-2">
+                        <label htmlFor="message" className="text-base">
+                          Your Review
+                        </label>
+                        <textarea
+                          rows={6}
+                          id="message"
+                          name="message"
+                          value={reviewForm.message}
+                          onChange={handleReviewFormInputChange}
+                          placeholder="Your review"
+                          className="border resize-y rounded-lg w-full px-3 py-3 text-base"
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div className="w-full">
+                      <button
+                        type="button"
+                        disabled={loading}
+                        onClick={loading ? () => {} : handleSubmitReview}
+                        className="text-center disabled:cursor-not-allowed px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight"
+                      >
+                        {loading ? "Please wait..." : "Submit Review"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleSubmitReview}
+                        class="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block
+                           text-white text-base font-lg font-['DM Sans'] leading-tight"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={handleSubmitReview}
+                        className="text-center px-6 py-[14.50px] bg-cyan-950 rounded-lg inline-block text-white text-base font-lg font-['DM Sans'] leading-tight"
+                      >
+                        Submit Reviews
+                      </button>
+                    </div>
+                  </form>
+
+                  {/* )} */}
                 </div>
               </div>
             </div>
