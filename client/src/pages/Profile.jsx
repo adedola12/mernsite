@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -8,14 +9,24 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import {
+  deleteUserFaliure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutFaliure,
+  signOutSuccess,
+  signOutUser,
   updateUserFaliure,
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice";
+import ProfileSideBar from "../components/ProfileSideBar";
 
-import toast from "react-hot-toast"
-
-
+const views = {
+  Personal_Details: "PersonalDetails",
+  Shop_Details: "ShopDetails",
+  Reviews: "Reviews",
+  Password: "Password",
+};
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -23,13 +34,7 @@ export default function Profile() {
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileError, setFileError] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-    bio: "",
-  });
+  const [formData, setFormData] = useState({});
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [showListingError, setShowListingError] = useState(false);
@@ -43,27 +48,18 @@ export default function Profile() {
   const [editListingError, setEditListingError] = useState(false);
   const [editProductError, setEditProductError] = useState(false);
 
+  console.log(userListings);
+  console.log(userProduct);
 
+  const [activeView, setActiveView] = useState(views.Personal_Details);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (file) {
       handlefileUpload();
     }
   }, [file]);
-
-  useEffect(() => {
-    setFormData({
-      username: currentUser.username || "",
-      email: currentUser.email || "",
-      password: "",
-      password_confirmation: "",
-      bio: currentUser.bio || "",
-    });
-  }, []);
-
-
 
   const handlefileUpload = () => {
     const storage = getStorage(app);
@@ -98,12 +94,6 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
-      if(formData.password !== formData.password_confirmation) {
-        toast.error("Password mis-match");
-        return;
-      }
-
       dispatch(updateUserStart());
 
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
@@ -127,49 +117,48 @@ export default function Profile() {
     }
   };
 
-  // const handleDeleteUser = async () => {
-  //   try {
-  //     dispatch(deleteUserStart());
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
 
-  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-  //       method: "DELETE",
-  //     });
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
 
-  //     const data = await res.json();
+      const data = await res.json();
 
-  //     if (data.success === false) {
-  //       dispatch(deleteUserFaliure(data.message));
-  //       return;
-  //     }
+      if (data.success === false) {
+        dispatch(deleteUserFaliure(data.message));
+        return;
+      }
 
-  //     dispatch(deleteUserSuccess(data));
-  //     navigate("/");
-  //   } catch (error) {
-  //     dispatch(deleteUserFaliure(error.message));
-  //   }
-  // };
+      dispatch(deleteUserSuccess(data));
+      navigate("/");
+    } catch (error) {
+      dispatch(deleteUserFaliure(error.message));
+    }
+  };
 
-  // const handleSignOut = async () => {
-  //   try {
-      
-  //     dispatch(signOutUser());
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUser());
 
-  //     const res = await fetch("/api/auth/signout");
+      const res = await fetch("/api/auth/signout");
 
-  //     const data = await res.json();
+      const data = await res.json();
 
-  //     if (data.success === false) {
-  //       dispatch(signOutFaliure(data.message));
-  //       return;
-  //     }
+      if (data.success === false) {
+        dispatch(signOutFaliure(data.message));
+        return;
+      }
 
-  //     dispatch(signOutSuccess(data));
+      dispatch(signOutSuccess(data));
 
-  //     navigate("/", {replace:true });
-  //   } catch (error) {
-  //     dispatch(signOutFaliure(error.message));
-  //   }
-  // };
+      navigate("/");
+    } catch (error) {
+      dispatch(signOutFaliure(error.message));
+    }
+  };
 
   const handleShowListing = async () => {
     try {
@@ -192,6 +181,8 @@ export default function Profile() {
     try {
       setShowProductError(false);
 
+      console.log(`current user ID : ${currentUser._id}`);
+
       const res = await fetch(`/api/user/products/${currentUser._id}`);
       const data = await res.json();
 
@@ -200,6 +191,7 @@ export default function Profile() {
         return;
       }
 
+      console.log(data);
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);
@@ -284,137 +276,259 @@ export default function Profile() {
     } catch (error) {}
   };
 
+  const handleShowShopDetails = () => {
+    changeActiveView(views.Shop_Details);
+    handleShowProduct();
+    handleShowListing();
+  };
 
+  const changeActiveView = (newView) => {
+    setActiveView(newView);
+  };
+
+  console.log(userProduct);
 
   return (
-    <>
-    
-    <div className="border-b w-full p-5 py-4">
-        <h2 className="font-semibold ">Personal Details</h2>
+    <div className="flex justify-center w-full p-8 px-0  min-h-screen">
+      <div className="flex gap-6 shadow rounded-lg w-full p-5">
+        {/* SIDE BAR SECTION */}
+        <ProfileSideBar
+          activeView={activeView}
+          changeActiveView={changeActiveView}
+          handleSignOut={handleSignOut}
+          handleDeleteUser={handleDeleteUser}
+          handleShowShopDetails={handleShowShopDetails}
+        />
+        {/* DYNAMIC COMPONENT SECTION w-[800px] */}
+        <div className="bg-[#FFFFFF] rounded  w-full p-5 flex-grow">
+          {activeView === views.Personal_Details && (
+            <>
+              <h2 className="font-semibold ">Personal Details</h2>
+              <form
+                className="flex flex-col gap-4 md:p-10"
+                onSubmit={handleSubmit}
+              >
+                <input
+                  onChange={(e) => setFile(e.target.files[0])}
+                  type="file"
+                  ref={fileRef}
+                  hidden
+                  accept="image/.*"
+                />
+                <img
+                  onClick={() => fileRef.current.click()}
+                  src={formData?.avatar || currentUser?.avatar}
+                  alt="profileImage"
+                  className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
+                />
+                <p className="self-center text-sm">
+                  {fileError ? (
+                    <span className="text-red-700">
+                      Image Upload Error (Image must be less than 2MB)
+                    </span>
+                  ) : filePerc > 0 && filePerc < 100 ? (
+                    <span className="text-blue-700">{`Uploading ${filePerc}%`}</span>
+                  ) : filePerc === 100 ? (
+                    <span className="text-green-800">
+                      {" "}
+                      Image Upload Complete
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </p>
+
+                <input
+                  type="text"
+                  defaultValue={currentUser?.username}
+                  id="username"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+                <input
+                  type="email"
+                  defaultValue={currentUser?.email}
+                  id="email"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+
+                <input
+                  type="text"
+                  defaultValue={currentUser?.storeAddress}
+                  placeholder="Store Address"
+                  id="storeAddress"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+                <input
+                  type="tel"
+                  defaultValue={currentUser?.mobileNumber}
+                  placeholder="Mobile Number"
+                  id="mobileNumber"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+
+                <button
+                  className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "loading" : "update"}
+                </button>
+              </form>
+            </>
+          )}
+          {/* TODO: Value is Button Clicked Value */}
+          {activeView === views.Shop_Details && (
+            <>
+              <h2 className="">Shop Details</h2>
+              <div className="flex mt-5 gap-3 items-center">
+                <Link
+                  to={"/create-product"}
+                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
+                >
+                  CREATE PRODUCT
+                </Link>
+
+                <Link
+                  to={"/create-listing"}
+                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
+                >
+                  CREATE LISTING
+                </Link>
+              </div>
+              {userProduct && userProduct.length > 0 && (
+                <div className="flex flex-col gap-4">
+                  <h1 className="text-center mt-7 text-2xl font-semibold">
+                    Your Product
+                  </h1>
+                  {userProduct.map((product) => (
+                    <div
+                      key={product._id}
+                      className="border rounded-lg p-3 flex justify-between items-center gap-4"
+                    >
+                      <Link to={`/product/${product._id}`}>
+                        <img
+                          src={product.imageUrls[0]}
+                          alt="product cover"
+                          className="h-16 w-16 object-contain"
+                        />
+                      </Link>
+                      <Link
+                        to={`/product/${product._id}`}
+                        className="text-slate-700 font-semibold flex-1 truncate hover:underline"
+                      >
+                        <p>{product.name}</p>
+                      </Link>
+                      <div className="flex flex-col items-center">
+                        <Link>
+                          <button
+                            onClick={() => handleProductEdit(product._id)}
+                          >
+                            Edit
+                          </button>
+                        </Link>
+                        <button
+                          onClick={() => handleProductDelete(product._id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {userListings && userListings.length > 0 && (
+                <div className="flex flex-col gap-4">
+                  <h1 className="text-center mt-7 text-2xl font-semibold">
+                    Your Property Listing
+                  </h1>
+                  {userListings.map((listing) => (
+                    <div
+                      key={listing._id}
+                      className="border rounded-lg p-3 flex justify-between items-center gap-4"
+                    >
+                      <Link to={`/listing/${listing._id}`}>
+                        <img
+                          src={listing.imageUrls[0]}
+                          alt="Product Cover"
+                          className="h-16 w-16 object-contain"
+                        />
+                      </Link>
+                      <Link
+                        to={`/listing/${listing._id}`}
+                        className="text-slate-700 font-semibold flex-1 hover:underline truncate"
+                      >
+                        <p>{listing.name}</p>
+                      </Link>
+
+                      <div className="flex flex-col items-center">
+                        <button
+                          className="text-red-700 uppercase"
+                          onClick={() => handleListingDelete(listing._id)}
+                        >
+                          Delete
+                        </button>
+                        <Link to={`/update-listing/${listing._id}`}>
+                          <button
+                            className="text-green-700 uppercase"
+                            onClick={() => handleListingEdit(listing._id)}
+                          >
+                            Edit
+                          </button>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+          {activeView === views.Reviews && (
+            <>
+              <h2 className="">Reviews</h2>
+            </>
+          )}
+          {activeView === views.Password && (
+            <>
+              <h2 className="">Password</h2>
+              <form
+                className="flex flex-col gap-4 p-10"
+                onSubmit={handleSubmit}
+              >
+                <input
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+
+                <button
+                  className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? "loading" : "update"}
+                </button>
+              </form>
+            </>
+          )}
+
+          <div className="flex gap-5 justify-between my-3"></div>
+          <p className="text-red-700 mt-3">{error ? error : " "}</p>
+          <p className="text-green-700">
+            {updateSuccess ? "User is Updated successfully!!" : " "}
+          </p>
+
+          <p className="text-red-700 mt-5">
+            {showListingError ? "Error showing listings" : ""}
+          </p>
+        </div>
+      </div>
     </div>
-    <form
-      className="flex flex-col gap-4 lg:max-w-[70%] mx-auto p-3"
-      onSubmit={handleSubmit}
-    >
-      <input
-        onChange={(e) => setFile(e.target.files[0])}
-        type="file"
-        ref={fileRef}
-        hidden
-        accept="image/.*"
-      />
-      <img
-        onClick={() => fileRef.current.click()}
-        src={formData?.avatar || currentUser.avatar || "https://placehold.jp/150x150.png"}
-        alt="profileImage"
-        className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
-      />
-      <p className="self-center text-sm">
-        {fileError ? (
-          <span className="text-red-700">
-            Image Upload Error (Image must be less than 2MB)
-          </span>
-        ) : filePerc > 0 && filePerc < 100 ? (
-          <span className="text-blue-700">{`Uploading ${filePerc}%`}</span>
-        ) : filePerc === 100 ? (
-          <span className="text-green-800">
-            {" "}
-            Image Upload Complete
-          </span>
-        ) : (
-          ""
-        )}
-      </p>
-
-      <input
-        type="text"
-        defaultValue={formData.username}
-        id="username"
-        name="username"
-        placeholder="Username"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-      <input
-        type="email"
-        defaultValue={formData.email}
-        placeholder="Email"
-        id="email"
-        name="email"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-
-      {/* <input
-        type="text"
-        name="storeAddress"
-        defaultValue={currentUser.storeAddress}
-        placeholder="Store Address"
-        id="storeAddress"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      /> */}
-
-      {/* <input
-        type="tel"
-        name="mobileNumber"
-        defaultValue={currentUser.mobileNumber}
-        placeholder="Mobile Number"
-        id="mobileNumber"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      /> */}
-
-      {/* <input
-        type="tel"
-        defaultValue={currentUser.mobileNumber}
-        placeholder="Mobile Number"
-        id="mobileNumber"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      /> */}
-
-      <input
-        type="password"
-        value={formData.password}
-        placeholder="Password"
-        autoComplete="off"
-        id="password"
-        name="password"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-
-      <input
-        type="password"
-        value={formData.password_confirmation}
-        placeholder="Re-Password"
-        autoComplete="off"
-        name="password_confirmation"
-        id="password_confirmation"
-        className="border p-3 rounded-lg"
-        onChange={handleChange}
-      />
-
-      <textarea
-        defaultValue={formData.bio || ""}
-        placeholder="Bio"
-        id="bio"
-        name="bio"
-        className="border p-3 rounded-lg resize-none"
-        onChange={handleChange}
-        rows={5}      
-      >        
-      </textarea>
-
-      <button
-        className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
-        type="submit"
-        disabled={loading}
-      >
-        {loading ? "loading" : "Save Changes"}
-      </button>
-    </form>
-  </>
   );
 }

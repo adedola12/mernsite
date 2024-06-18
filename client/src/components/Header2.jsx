@@ -234,7 +234,8 @@ const Header2 = ({ toggleModal }) => {
                   <Link to="/profile" className="">
                     <img
                       src={
-                        currentUser.avatar || "https://placehold.jp/150x150.png"
+                        currentUser?.avatar ||
+                        "https://placehold.jp/150x150.png"
                       }
                       alt="pp"
                       className="rounded-full h-7 w-7 object-cover"
