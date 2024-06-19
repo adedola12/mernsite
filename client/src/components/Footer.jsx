@@ -16,7 +16,7 @@ export default function Footer() {
             valuable materials.
           </span>
           <div className="w-full">
-            <form action="" className="w-full">
+            <form  className="w-full">
               <div className="flex gap-2 flex-col md:flex-row">
                 <input
                   type="email"
@@ -24,7 +24,7 @@ export default function Footer() {
                   id="emailAddress"
                   className="border px-4 py-2 flex-1 w-full"
                 />
-                <button className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2">
+                <button type="button" className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2">
                   Subscribe
                 </button>
               </div>

@@ -55,11 +55,11 @@ export default function Profile() {
 
   useEffect(() => {
     setFormData({
-      username: currentUser.username || "",
-      email: currentUser.email || "",
+      username: currentUser?.username || "",
+      email: currentUser?.email || "",
       password: "",
       password_confirmation: "",
-      bio: currentUser.bio || "",
+      bio: currentUser?.bio || "",
     });
   }, []);
 
@@ -305,7 +305,7 @@ export default function Profile() {
       />
       <img
         onClick={() => fileRef.current.click()}
-        src={formData?.avatar || currentUser.avatar || "https://placehold.jp/150x150.png"}
+        src={formData?.avatar || currentUser?.avatar || "https://placehold.jp/150x150.png"}
         alt="profileImage"
         className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
       />

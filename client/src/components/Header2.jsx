@@ -1,13 +1,14 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 import { MdKeyboardArrowRight } from "react-icons/md";
-
-  import { Link, useNavigate } from "react-router-dom";
-  import { IoIosArrowForward } from "react-icons/io";
-  import { RxHamburgerMenu } from "react-icons/rx";
-  import { IoCloseSharp } from "react-icons/io5";
-  import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoCloseSharp } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
 import { deleteUserFaliure, deleteUserStart, deleteUserSuccess, signOutFaliure, signOutSuccess, signOutUser } from '../redux/user/userSlice';
+
+
 
 const Header2 = ({ toggleModal }) => {
 
@@ -204,7 +205,7 @@ const Header2 = ({ toggleModal }) => {
                                 <>
                                 <Link to="/profile" className="">
                                 <img
-                                    src={currentUser.avatar || "https://placehold.jp/150x150.png"}
+                                    src={currentUser?.avatar && currentUser?.avatar || "https://placehold.jp/150x150.png"}
                                     alt="pp"
                                     className="rounded-full h-7 w-7 object-cover"
                                 />
@@ -291,7 +292,7 @@ const Header2 = ({ toggleModal }) => {
                     </li>
 
                     {
-                         currentUser !== "User has been logged out!!" && (
+                       currentUser !== "User has been logged out!!" && (
                             <div className="w-full mt-6 flex flex-col gap-y-3 px-5 ">
                                 <button
                                     className="bg-red-500 hover:bg-red-400 duration-300 px-5 py-3 rounded-md text-white  text-center"

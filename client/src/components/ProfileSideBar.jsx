@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { deleteUserFaliure, deleteUserStart, deleteUserSuccess, signOutFaliure, signOutSuccess, signOutUser } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { LuPower } from "react-icons/lu";
+import { persistor } from "../redux/store";
 
 
 export default function ProfileSideBar() {
@@ -14,7 +15,7 @@ export default function ProfileSideBar() {
 
   const handleSignOut = async () => {
     try {
-      
+
       dispatch(signOutUser());
 
       const res = await fetch("/api/auth/signout");
@@ -27,10 +28,13 @@ export default function ProfileSideBar() {
       }
 
       dispatch(signOutSuccess(data));
-
+      // persistor.purge()
       navigate("/", {replace:true });
     } catch (error) {
       dispatch(signOutFaliure(error.message));
+    } finally {
+      // persistor.purge()
+      localStorage.removeItem("persist:root")
     }
   };
 
