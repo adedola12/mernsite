@@ -374,7 +374,6 @@ const Header2 = ({ toggleModal }) => {
           </ul>
         </nav>
       )}
-      =======
     </header>
   );
 };
