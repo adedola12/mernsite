@@ -292,13 +292,15 @@ export default function Profile() {
     <div className="flex justify-center w-full p-8 px-0  min-h-screen">
       <div className="flex gap-6 shadow rounded-lg w-full p-5">
         {/* SIDE BAR SECTION */}
-        <ProfileSideBar
+
+        {/* <ProfileSideBar
           activeView={activeView}
           changeActiveView={changeActiveView}
           handleSignOut={handleSignOut}
           handleDeleteUser={handleDeleteUser}
           handleShowShopDetails={handleShowShopDetails}
-        />
+        /> */}
+
         {/* DYNAMIC COMPONENT SECTION w-[800px] */}
         <div className="bg-[#FFFFFF] rounded  w-full p-5 flex-grow">
           {activeView === views.Personal_Details && (
