@@ -38,8 +38,8 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchCategory = async () => {
       const fetchUrl = queryString
-        ? `https://adlmmarketplace.onrender.com/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
-        : `https://adlmmarketplace.onrender.com/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+        ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+        : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
 
       try {
         setIsLoadingProduct(true);
@@ -72,7 +72,7 @@ export default function Marketplace() {
     try {
       setIsLoadingProduct(true);
 
-      const fetchUrl = `https://adlmmarketplace.onrender.com/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+      const fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
       const res = await fetch(fetchUrl);
 
       if (!res.ok) {
