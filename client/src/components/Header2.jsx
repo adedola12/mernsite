@@ -106,7 +106,6 @@ const Header2 = ({ toggleModal }) => {
        }, [smallScreen])
 
   return (
-<
     <header className='bg-white relative'>        
         <div className="contain mx-auto px-4 flex items-center justify-between ">
             
@@ -322,8 +321,7 @@ const Header2 = ({ toggleModal }) => {
             )
         }
 
-=======
-             
+
     </header>
   )
 }
