@@ -11,7 +11,6 @@ import useSearchParams from "../hooks/useSearchParams";
 const MAX_LIMIT = 10;
 
 export default function Marketplace() {
-
   const [products, setProducts] = useState([]);
 
   const [isProductLoading, setIsLoadingProduct] = useState(false);
@@ -21,34 +20,29 @@ export default function Marketplace() {
   const [params, setParams, queryString] = useSearchParams();
 
   const handleCategorySelect = (category) => {
-    setParams({...params, category })
+    setParams({ ...params, category });
   };
 
   const handleSubCategorySelect = (subCategory) => {
-      setParams({...params, subCategory })
+    setParams({ ...params, subCategory });
   };
 
   const handleStateSelected = (location) => {
-    setParams({...params, location })
+    setParams({ ...params, location });
   };
 
   const handleTypeSelected = (type) => {
-    setParams({...params, type })
+    setParams({ ...params, type });
   };
 
-
-
   useEffect(() => {
-
     const fetchCategory = async () => {
-
       const fetchUrl = queryString
-                   ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
-                   : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
-  
-      try {
+        ? `https://adlmmarketplace.onrender.com/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+        : `https://adlmmarketplace.onrender.com/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
 
-        setIsLoadingProduct(true)
+      try {
+        setIsLoadingProduct(true);
 
         const res = await fetch(fetchUrl);
 
@@ -59,30 +53,26 @@ export default function Marketplace() {
         const data = await res.json();
         setProducts(data?.products);
 
-        if (page  >= data.pagination.pages) {
-          setHasMore(false)
+        if (page >= data.pagination.pages) {
+          setHasMore(false);
         }
-
       } catch (error) {
         console.error("There is an error fetching products:", error);
       } finally {
-        setIsLoadingProduct(false)
+        setIsLoadingProduct(false);
       }
     };
 
     fetchCategory();
   }, [queryString]);
 
-
   const loadMore = async () => {
-  
-    if(!hasMore) return;
-    
+    if (!hasMore) return;
+
     try {
-      
       setIsLoadingProduct(true);
 
-      const fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+      const fetchUrl = `https://adlmmarketplace.onrender.com/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
       const res = await fetch(fetchUrl);
 
       if (!res.ok) {
@@ -90,26 +80,25 @@ export default function Marketplace() {
       }
 
       const data = await res.json();
- 
-      setProducts((prevData) => ([...prevData, ...data?.products]));
+
+      setProducts((prevData) => [...prevData, ...data?.products]);
 
       if (page >= data.pagination.pages) {
         setHasMore(false);
       }
-
     } catch (error) {
       console.error("There is an error fetching products:", error);
     } finally {
-      setIsLoadingProduct(false)
+      setIsLoadingProduct(false);
     }
-  }
+  };
 
   const handleLoadMoreButton = () => {
     setPage((prevPage) => prevPage + 1);
-  }
+  };
 
   useEffect(() => {
-    if(page > 1) {
+    if (page > 1) {
       loadMore();
     }
   }, [page]);
@@ -121,23 +110,22 @@ export default function Marketplace() {
           Explore Marketplace
         </h2>
         <div className=" gap-4 my-5 grid grid-cols-1 lg:grid-cols-[300px_1fr] w-full">
-          <div className="bg-white p-5 px-3 rounded-md">            
+          <div className="bg-white p-5 px-3 rounded-md">
             <div className="flex flex-col">
-                <div className="w-[80px] h-[80px]">
-                  <img
-                    src="..\logo\ADLM Studio Logo PNG-07.png"
-                    alt="ADLM Logo"
-                    className="object-contain"
-                  />
-                </div>
-                <div className="w-full">
-                  {/* CATEGORY LIST SIDE BAR ITEM */}
-                  <SideBar 
-                    onSubCategorySelect={handleSubCategorySelect} 
-                    onCategorySelect={handleCategorySelect} 
-                  />
-                </div>
-
+              <div className="w-[80px] h-[80px]">
+                <img
+                  src="..\logo\ADLM Studio Logo PNG-07.png"
+                  alt="ADLM Logo"
+                  className="object-contain"
+                />
+              </div>
+              <div className="w-full">
+                {/* CATEGORY LIST SIDE BAR ITEM */}
+                <SideBar
+                  onSubCategorySelect={handleSubCategorySelect}
+                  onCategorySelect={handleCategorySelect}
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md">
@@ -153,31 +141,37 @@ export default function Marketplace() {
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5  w-full">
-            {
-                  isProductLoading
-                  ? <h2 className="text-center col-span-3  text-lg font-semibold text-slate-500">Loading...</h2>
-                  : products.length == 0
-                  ? <p className="text-center col-span-3 text-lg font-semibold text-slate-500">No product found</p>
-                  : products.map((product) => <ProductItem 
-                    key={product._id} 
-                    product={product}
-                  />)
-            }
-          </div>
+              {isProductLoading ? (
+                <h2 className="text-center col-span-3  text-lg font-semibold text-slate-500">
+                  Loading...
+                </h2>
+              ) : products.length == 0 ? (
+                <p className="text-center col-span-3 text-lg font-semibold text-slate-500">
+                  No product found
+                </p>
+              ) : (
+                products.map((product) => (
+                  <ProductItem key={product._id} product={product} />
+                ))
+              )}
+            </div>
 
-          {
-            hasMore && (
-                <div className="w-full text-center py-10">
-                  <button disabled={isProductLoading} type="button" onClick={handleLoadMoreButton} className="disabled:cursor-not-allowed px-4 py-3 duration-300 rounded-md bg-black text-white/90 hover:bg-black/80 hover:text-white/80">
-                    { isProductLoading 
-                    ? <PiSpinnerBold size={18} />
-                    :"Explore Marketplace"
-                    }
-                  </button>
-                </div>
-            )
-          }
-
+            {hasMore && (
+              <div className="w-full text-center py-10">
+                <button
+                  disabled={isProductLoading}
+                  type="button"
+                  onClick={handleLoadMoreButton}
+                  className="disabled:cursor-not-allowed px-4 py-3 duration-300 rounded-md bg-black text-white/90 hover:bg-black/80 hover:text-white/80"
+                >
+                  {isProductLoading ? (
+                    <PiSpinnerBold size={18} />
+                  ) : (
+                    "Explore Marketplace"
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -7,11 +7,14 @@ import productRouter from "./routes/product.route.js";
 import reviewRouter from "./routes/review.route.js";
 import connectDb from "./utils/database.js";
 import appConstants from "./constants/index.js";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
