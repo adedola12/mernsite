@@ -1,9 +1,16 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { deleteUserFaliure, deleteUserStart, deleteUserSuccess, signOutFaliure, signOutSuccess, signOutUser } from "../redux/user/userSlice";
+import {
+  deleteUserFaliure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutFaliure,
+  signOutSuccess,
+  signOutUser,
+} from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { LuPower } from "react-icons/lu";
-
+import { config } from "../../config";
 
 export default function ProfileSideBar() {
   const location = useLocation();
@@ -14,10 +21,9 @@ export default function ProfileSideBar() {
 
   const handleSignOut = async () => {
     try {
-      
       dispatch(signOutUser());
 
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
@@ -28,7 +34,7 @@ export default function ProfileSideBar() {
 
       dispatch(signOutSuccess(data));
 
-      navigate("/", {replace:true });
+      navigate("/", { replace: true });
     } catch (error) {
       dispatch(signOutFaliure(error.message));
     }
@@ -38,9 +44,12 @@ export default function ProfileSideBar() {
     try {
       dispatch(deleteUserStart());
 
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await res.json();
 
@@ -60,35 +69,48 @@ export default function ProfileSideBar() {
     <div className="hidden rounded w-64 flex-shrink-0 md:flex flex-col bg-[#FFFFFF]">
       <h1 className="font-bold text-xl mb-4 border-b  p-5 py-4 ">Profile</h1>
       <div className="flex flex-col gap-2 px-3">
-        
         <Link
-        to={"/add-product"}
-        className={`${currentPath === "/add-product" ? "bg-blue-100 text-black" : "text-gray-500"}  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          to={"/add-product"}
+          className={`${
+            currentPath === "/add-product"
+              ? "bg-blue-100 text-black"
+              : "text-gray-500"
+          }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
         >
           Add Product
         </Link>
-        
-        
+
         <Link
-        to={"/profile"}
-        className={`${currentPath === "/profile" ? "bg-blue-100 text-black" : "text-gray-500"}  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          to={"/profile"}
+          className={`${
+            currentPath === "/profile"
+              ? "bg-blue-100 text-black"
+              : "text-gray-500"
+          }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
         >
           Personal Details
         </Link>
-        
-        <Link
-        to={"/shop-details"}
-        className={`${currentPath === "/shop-details" ? "bg-blue-100 text-black" : "text-gray-500"} text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
-        >
-         Shop details
-        </Link>
-        
 
         <Link
-        to={"/seller-review"}
-        className={`${currentPath === "/seller-review" ? "bg-blue-100 text-black" : "text-gray-500"} text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          to={"/shop-details"}
+          className={`${
+            currentPath === "/shop-details"
+              ? "bg-blue-100 text-black"
+              : "text-gray-500"
+          } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
         >
-         Reviews
+          Shop details
+        </Link>
+
+        <Link
+          to={"/seller-review"}
+          className={`${
+            currentPath === "/seller-review"
+              ? "bg-blue-100 text-black"
+              : "text-gray-500"
+          } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+        >
+          Reviews
         </Link>
       </div>
       <div className="p-3 py-4 mt-auto flex flex-col gap-3 ">

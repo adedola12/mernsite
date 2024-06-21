@@ -14,6 +14,7 @@ import {
   signOutSuccess,
   signOutUser,
 } from "../redux/user/userSlice";
+import { config } from "../../config";
 
 const Header2 = ({ toggleModal }) => {
   const { currentUser } = useSelector((state) => state.user);
@@ -58,7 +59,7 @@ const Header2 = ({ toggleModal }) => {
     try {
       dispatch(signOutUser());
 
-      const res = await fetch("/api/auth/signout");
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
@@ -79,9 +80,12 @@ const Header2 = ({ toggleModal }) => {
     try {
       dispatch(deleteUserStart());
 
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await res.json();
 

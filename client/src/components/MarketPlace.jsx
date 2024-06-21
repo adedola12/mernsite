@@ -7,6 +7,7 @@ import TypeSelector from "../components/TypeSelector";
 import ProductItem from "./productItem";
 import { PiSpinnerBold } from "react-icons/pi";
 import useSearchParams from "../hooks/useSearchParams";
+import { config } from "../../config";
 
 const MAX_LIMIT = 10;
 
@@ -38,8 +39,8 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchCategory = async () => {
       const fetchUrl = queryString
-        ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
-        : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+        ? `${config.baseUrl}/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+        : `${config.baseUrl}/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
 
       try {
         setIsLoadingProduct(true);
