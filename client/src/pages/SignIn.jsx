@@ -39,7 +39,7 @@ export default function SignInModal({ onClose }) {
     try {
       dispatch(signInStart());
 
-      const res = await fetch("/api/auth/sign-in", {
+      const res = await fetch(`${config.baseUrl}/api/auth/sign-in`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,15 +69,25 @@ export default function SignInModal({ onClose }) {
   };
 
   const handleShowModal = (event) => {
-    if(event.target.id === 'signin-modal') {
-      onClose()
+    if (event.target.id === "signin-modal") {
+      onClose();
     }
-  }
+  };
 
   return (
-    <div id="signin-modal" onClick={handleShowModal} className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full">
-      <div onClick={event => event.stopPropagation()} className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <button onClick={onClose} className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300">
+    <div
+      id="signin-modal"
+      onClick={handleShowModal}
+      className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full"
+    >
+      <div
+        onClick={(event) => event.stopPropagation()}
+        className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+      >
+        <button
+          onClick={onClose}
+          className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300"
+        >
           <MdClose className="text-gray-500 group-hover:text-gray-600" />
         </button>
         <div className="flex flex-col items-center justify-center">
