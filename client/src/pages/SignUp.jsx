@@ -28,13 +28,18 @@ export default function SignUpModal({ onClose }) {
 
       console.log(config.baseUrl);
 
-      const res = await fetch(`${config.baseUrl}/api/auth/sign-up`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // ${config.baseUrl}
+
+      const res = await fetch(
+        `https://adlmmarketplace.onrender.com/api/auth/sign-up`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
 
