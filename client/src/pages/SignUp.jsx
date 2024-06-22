@@ -25,6 +25,9 @@ export default function SignUpModal({ onClose }) {
     e.preventDefault();
     try {
       setLoading(true);
+
+      console.log(config.baseUrl);
+
       const res = await fetch(`${config.baseUrl}/api/auth/sign-up`, {
         method: "POST",
         headers: {
@@ -34,6 +37,8 @@ export default function SignUpModal({ onClose }) {
       });
 
       const data = await res.json();
+
+      console.log(data);
 
       if (data.success === false) {
         // setLoading(false);
