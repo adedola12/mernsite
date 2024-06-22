@@ -168,6 +168,7 @@ export default function SellerShop() {
           throw new Error("Failed to fetch user");
         }
         const data = await res.json();
+        console.log(data);
 
         if (data.success === false) {
           setError(true);
