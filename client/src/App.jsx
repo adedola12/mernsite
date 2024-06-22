@@ -47,7 +47,7 @@ export default function App() {
   return (
     <BrowserRouter>
       {/* <Header toggleModal={toggleModal} /> */}
-      <Header2  toggleModal={toggleModal} />
+      <Header2 toggleModal={toggleModal} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/homeA" element={<HomeA />} />
@@ -59,10 +59,7 @@ export default function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/newsletter" element={<Newsletter />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/sellerShop/:userId" element={<SellerShop />} />        
-        </Route>
-
+        <Route path="/sellerShop/:userId" element={<SellerShop />} />
 
         <Route path="/listing/:listingId" element={<Listing />} />
 
@@ -71,17 +68,19 @@ export default function App() {
         <Route path="/search" element={<Search />} />
 
         <Route element={<PrivateRoute />}>
-          <Route  element={<DashboardDefault />} >
+          <Route element={<DashboardDefault />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/add-product" element={<CreateProduct />} />
             <Route path="/create-listing" element={<CreateListing />} />
             <Route path="/shop-details" element={<ShopDetails />} />
             <Route path="/create-product" element={<CreateProduct />} />
             <Route path="/seller-review" element={<SellerReviews />} />
-            <Route path="/update-listing/:listingId" element={<UpdateListing />} />
+            <Route
+              path="/update-listing/:listingId"
+              element={<UpdateListing />}
+            />
           </Route>
         </Route>
-        
       </Routes>
       {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
       {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
