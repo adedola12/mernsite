@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { config } from "../../config";
 
 export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [activeCategory, setActiveCategory] = useState([]);
-  const [subCategory, setSubCategories] = useState([])
+  const [subCategory, setSubCategories] = useState([]);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -14,7 +15,7 @@ export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
         setLoading(true);
         setError(false);
 
-        const res = await fetch(`/api/product/getCategories`);
+        const res = await fetch(`${config.baseUrl}/api/product/getCategories`);
 
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -40,26 +41,26 @@ export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
   };
 
   const handleSubCategoryClick = (subCategoryName) => {
-    const tempItem = subCategory?.includes(subCategoryName) ? [] : [subCategoryName];
+    const tempItem = subCategory?.includes(subCategoryName)
+      ? []
+      : [subCategoryName];
     onSubCategorySelect(tempItem[0]);
     setSubCategories(tempItem[0]);
   };
 
-
-
   return (
     <aside className="w-full">
-      {loading && <p className="text-center my-7 text-base font-semibold">Loading...</p>}
+      {loading && (
+        <p className="text-center my-7 text-base font-semibold">Loading...</p>
+      )}
       {error && (
         <p className="text-center my-7 text-base font-semibold">No data</p>
       )}
       {categories?.length > 0 && !error && (
         <div className="flex flex-col gap-y-2">
-          
           {categories?.map((item) => (
-
             <div className="w-full" key={item.id}>
-              <div    
+              <div
                 onClick={() => handleClick(item.category)}
                 className={`px-4 py-2 flex items-center justify-between rounded-lg ${
                   activeCategory.includes(item.category)
@@ -70,27 +71,28 @@ export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
                 <p className="mr-20">{item.category}</p>
                 <FaArrowRight className="font-normal ml-auto" />
               </div>
-                  
+
               <div
-                className={`overflow-hidden duration-300 flex flex-col gap-1 transition-all max-h-0 ${activeCategory.includes(item.category) ? "transition-all duration-300 py-2 max-h-max " : "" } `}
+                className={`overflow-hidden duration-300 flex flex-col gap-1 transition-all max-h-0 ${
+                  activeCategory.includes(item.category)
+                    ? "transition-all duration-300 py-2 max-h-max "
+                    : ""
+                } `}
               >
-                {
-                activeCategory &&
-                activeCategory.includes(item.category) &&
-                item?.subCategories?.map((sub, index) => (
-                    <div                    
-                    onClick={() => handleSubCategoryClick(sub)}
-                    key={index} className="px-2 py-1 cursor-pointer duration-300 hover:bg-gray-200 rounded-md ">
+                {activeCategory &&
+                  activeCategory.includes(item.category) &&
+                  item?.subCategories?.map((sub, index) => (
+                    <div
+                      onClick={() => handleSubCategoryClick(sub)}
+                      key={index}
+                      className="px-2 py-1 cursor-pointer duration-300 hover:bg-gray-200 rounded-md "
+                    >
                       {sub}
                     </div>
-                  ))
-                }
+                  ))}
               </div>
             </div>
           ))}
-
-
-
         </div>
       )}
     </aside>

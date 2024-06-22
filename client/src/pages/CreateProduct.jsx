@@ -13,10 +13,9 @@ import CreateProductStageTwo from "../components/CreateProductStageTwo";
 
 import { CATEGORY_DATA } from "../constants/data";
 import toast from "react-hot-toast";
-
+import { config } from "../../config";
 
 export default function CreateProduct() {
-  
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -43,14 +42,12 @@ export default function CreateProduct() {
   const [steps, setSteps] = useState(1);
 
   const previousStep = () => {
-    setSteps((prevState) => prevState - 1)
-  }
+    setSteps((prevState) => prevState - 1);
+  };
 
   const nextStep = () => {
-    setSteps((prevState) => prevState + 1)
-  }
-
-
+    setSteps((prevState) => prevState + 1);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -61,7 +58,6 @@ export default function CreateProduct() {
   };
 
   const handleCategoryChange = (value) => {
-   
     setFormData((prev) => ({
       ...prev,
       categories: value,
@@ -118,7 +114,6 @@ export default function CreateProduct() {
   };
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     setLoading(true);
 
@@ -132,19 +127,21 @@ export default function CreateProduct() {
       },
       userRef: currentUser._id,
     };
- 
 
     try {
-      const response = await fetch("/api/product/create-product", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(submissionData),
-      });
+      const response = await fetch(
+        `${config.baseUrl}/api/product/create-product`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submissionData),
+        }
+      );
 
       const data = await response.json();
       if (!response.ok)
         throw new Error(data.message || "Failed to create product");
-        navigate(`/product/${data._id}`);
+      navigate(`/product/${data._id}`);
     } catch (error) {
       toast.error(error.message);
       setError(error.message);
@@ -153,40 +150,42 @@ export default function CreateProduct() {
     }
   };
 
-
- 
-
   const showMultipleStepForm = () => {
-    switch(steps) {
+    switch (steps) {
       case 1:
-        return <CreateProductStageOne nextStep={nextStep} formData={formData} handleChange={handleChange} />
+        return (
+          <CreateProductStageOne
+            nextStep={nextStep}
+            formData={formData}
+            handleChange={handleChange}
+          />
+        );
       case 2:
-        return <CreateProductStageTwo 
-              handleCategoryChange={handleCategoryChange}
-              onhandleSubCategoryChange={handleSubCategoryChange}
-              handleSubmit={handleSubmit} 
-              previousStep={previousStep} 
-              formData={formData}
-              setFiles={setFiles}
-              handleChange={handleChange}
-              isLoading={loading}
-              error={error}
-              handleImageSubmit={handleImageSubmit}
-              uploading={uploading}
-        />
-        default:
-          return null;
+        return (
+          <CreateProductStageTwo
+            handleCategoryChange={handleCategoryChange}
+            onhandleSubCategoryChange={handleSubCategoryChange}
+            handleSubmit={handleSubmit}
+            previousStep={previousStep}
+            formData={formData}
+            setFiles={setFiles}
+            handleChange={handleChange}
+            isLoading={loading}
+            error={error}
+            handleImageSubmit={handleImageSubmit}
+            uploading={uploading}
+          />
+        );
+      default:
+        return null;
     }
-  }
-
-
+  };
 
   return (
-
     <>
-    <form className='w-full flex flex-col gap-y-3'>
-          {showMultipleStepForm()}
-     </form>
+      <form className="w-full flex flex-col gap-y-3">
+        {showMultipleStepForm()}
+      </form>
     </>
 
     // <main className="w-full mx-auto pt-10 px-5 ">
@@ -207,7 +206,7 @@ export default function CreateProduct() {
     //         className="grid grid-cols-1 lg:grid-cols-2 gap-4"
     //         onSubmit={handleSubmit}
     //       >
-            
+
     //         <div className="flex flex-col gap-4 w-full p-2">
     //           <input
     //             type="text"
@@ -363,7 +362,7 @@ export default function CreateProduct() {
     //           </div>
 
     //         </div>
-            
+
     //         <div className="flex flex-col flex-1 gap-4px-2">
     //           <div className="flex items-center">
     //             <p className="font-semibold">Images:</p>

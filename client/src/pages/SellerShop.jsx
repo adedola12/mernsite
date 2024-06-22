@@ -5,6 +5,7 @@ import { FaPhone, FaStar } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
 import { useSelector } from "react-redux";
+import { config } from "../../config";
 
 const reviewTabs = [
   { id: 0, name: "Reviews"},
@@ -102,7 +103,7 @@ export default function SellerShop() {
     try {
 
         setLoading(true);
-        const response = await fetch("/api/review/create-review", {
+        const response = await fetch(`${config.baseUrl}/api/review/create-review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +148,7 @@ export default function SellerShop() {
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/product/user/${userId}`);
+        const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch products");
         }
@@ -169,7 +170,7 @@ export default function SellerShop() {
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${userId}`);
+        const res = await fetch(`${config.baseUrl}/api/user/${userId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch user");
         }

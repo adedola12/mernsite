@@ -3,55 +3,49 @@ import ProductItem from "../components/productItem";
 import CategorySelector from "../components/CategorySelector";
 import LocationSelector from "../components/LocationSelector";
 import useSearchParams from "../hooks/useSearchParams";
+import { config } from "../../config";
 
 export default function Marketplace() {
- 
-
   const [searchResults, setSearchResults] = useState([]);
 
   const [isloading, setIsLoading] = useState(true);
 
   const [params, setParams, queryString] = useSearchParams();
 
-
-  const handleSearchWithQuery = async() => {
+  const handleSearchWithQuery = async () => {
     try {
-      setIsLoading(true)
-      const fetchUrl = queryString 
-                      ? `/api/product/search?${queryString}` 
-                      : `/api/product/search`;
+      setIsLoading(true);
+      const fetchUrl = queryString
+        ? `${config.baseUrl}/api/product/search?${queryString}`
+        : `${config.baseUrl}/api/product/search`;
 
       const response = await fetch(fetchUrl);
-      
-      if(!response.ok) {
-        throw new Error("Unable to fetch products")
+
+      if (!response.ok) {
+        throw new Error("Unable to fetch products");
       }
 
-      const {data} = await response.json();
+      const { data } = await response.json();
       setSearchResults([...data.products]);
+    } catch (error) {
+      console.error("Failed to fetch subCategories:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  } catch (error) {
-    console.error("Failed to fetch subCategories:", error);
-  } finally {
-    setIsLoading(false)
-  }
-
-  }
-
-    useEffect(() => {
-      handleSearchWithQuery();
+  useEffect(() => {
+    handleSearchWithQuery();
   }, [queryString]);
 
-
-  const handleLocationInput = ({value}) => {
-    setParams({...params, value })
+  const handleLocationInput = ({ value }) => {
+    setParams({ ...params, value });
   };
 
   const handleChange = (type, value) => {
-    if(type == "location") setParams({...params, "location": value})
-    if(type == "category") setParams({...params, "category": value})
-  }
-
+    if (type == "location") setParams({ ...params, location: value });
+    if (type == "category") setParams({ ...params, category: value });
+  };
 
   return (
     <div className="w-full">
@@ -73,14 +67,14 @@ export default function Marketplace() {
                   placeholder="Location"
                   onChange={handleLocationInput}
                   className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
-                  focus:ring-blue-500"                  
+                  focus:ring-blue-500"
                 />
-                 <div className="grid grid-col-2 md:grid-cols-2 gap-4 ">
-                    <LocationSelector onStateSelected={handleChange} />
-                    <CategorySelector onCategorySelected={handleChange} />
-                 </div>
+                <div className="grid grid-col-2 md:grid-cols-2 gap-4 ">
+                  <LocationSelector onStateSelected={handleChange} />
+                  <CategorySelector onCategorySelected={handleChange} />
+                </div>
 
-                 {/* Show Categories and Select Categories */}
+                {/* Show Categories and Select Categories */}
                 <button
                   type="button"
                   className="bg-[#212121] place-self-end w-full md:w-[129px] place-items-end-end px-0 hover:bg-blue-700 text-white font-bold py-2 rounded-lg"
@@ -97,18 +91,23 @@ export default function Marketplace() {
         {/* TODO: ADD SIDEBAR FUNCTIONALITY AND CODE FUNCIONALITY */}
         <div className="bg-white flex-1 rounded-lg lg:p-6 mt-4">
           <div className="p-3">
-            <h2 className="text-2xl font-semibold mb-4 inline-block">ADLM Marketplace</h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5  w-full">           
-                {
-                  isloading 
-                  ? <h2 className="text-center col-span-4  text-lg font-semibold text-slate-500">Loading...</h2>
-                  : searchResults.length == 0
-                  ?  <p className="text-center col-span-4 text-lg font-semibold text-slate-500">No product found</p>
-                  :  searchResults?.map((product) => (
-                    <ProductItem key={product._id} product={product} />
-                  ))
-                }
-
+            <h2 className="text-2xl font-semibold mb-4 inline-block">
+              ADLM Marketplace
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5  w-full">
+              {isloading ? (
+                <h2 className="text-center col-span-4  text-lg font-semibold text-slate-500">
+                  Loading...
+                </h2>
+              ) : searchResults.length == 0 ? (
+                <p className="text-center col-span-4 text-lg font-semibold text-slate-500">
+                  No product found
+                </p>
+              ) : (
+                searchResults?.map((product) => (
+                  <ProductItem key={product._id} product={product} />
+                ))
+              )}
             </div>
           </div>
         </div>
