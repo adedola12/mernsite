@@ -9,6 +9,7 @@ import {
 import OAuth from "../components/OAuth.jsx";
 import SignUpModal from "./SignUp.jsx";
 import { MdClose } from "react-icons/md";
+import { config } from "../../config/index.js";
 
 export default function SignInModal({ onClose }) {
   const [formData, setFormData] = useState({});
