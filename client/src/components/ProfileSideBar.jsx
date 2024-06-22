@@ -10,6 +10,8 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { LuPower } from "react-icons/lu";
+
+import { persistor } from "../redux/store";
 import { config } from "../../config";
 
 export default function ProfileSideBar() {
@@ -34,9 +36,15 @@ export default function ProfileSideBar() {
 
       dispatch(signOutSuccess(data));
 
+      // persistor.purge()
+      navigate("/", {replace:true });
       navigate("/", { replace: true });
+
     } catch (error) {
       dispatch(signOutFaliure(error.message));
+    } finally {
+      // persistor.purge()
+      localStorage.removeItem("persist:root")
     }
   };
 

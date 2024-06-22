@@ -61,7 +61,20 @@ export default function Profile() {
       handlefileUpload();
     }
   }, [file]);
+  
+  useEffect(() => {
+    setFormData({
+      username: currentUser?.username || "",
+      email: currentUser?.email || "",
+      password: "",
+      password_confirmation: "",
+      bio: currentUser?.bio || "",
+    });
+  }, []);
 
+
+
+  
   const handlefileUpload = () => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
@@ -552,5 +565,130 @@ export default function Profile() {
         </div>
       </div>
     </div>
+
+    <form
+      className="flex flex-col gap-4 lg:max-w-[70%] mx-auto p-3"
+      onSubmit={handleSubmit}
+    >
+      <input
+        onChange={(e) => setFile(e.target.files[0])}
+        type="file"
+        ref={fileRef}
+        hidden
+        accept="image/.*"
+      />
+      <img
+        onClick={() => fileRef.current.click()}
+        src={formData?.avatar || currentUser?.avatar || "https://placehold.jp/150x150.png"}
+        alt="profileImage"
+        className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
+      />
+      <p className="self-center text-sm">
+        {fileError ? (
+          <span className="text-red-700">
+            Image Upload Error (Image must be less than 2MB)
+          </span>
+        ) : filePerc > 0 && filePerc < 100 ? (
+          <span className="text-blue-700">{`Uploading ${filePerc}%`}</span>
+        ) : filePerc === 100 ? (
+          <span className="text-green-800">
+            {" "}
+            Image Upload Complete
+          </span>
+        ) : (
+          ""
+        )}
+      </p>
+
+      <input
+        type="text"
+        defaultValue={formData.username}
+        id="username"
+        name="username"
+        placeholder="Username"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      />
+      <input
+        type="email"
+        defaultValue={formData.email}
+        placeholder="Email"
+        id="email"
+        name="email"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      />
+
+      {/* <input
+        type="text"
+        name="storeAddress"
+        defaultValue={currentUser.storeAddress}
+        placeholder="Store Address"
+        id="storeAddress"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      /> */}
+
+      {/* <input
+        type="tel"
+        name="mobileNumber"
+        defaultValue={currentUser.mobileNumber}
+        placeholder="Mobile Number"
+        id="mobileNumber"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      /> */}
+
+      {/* <input
+        type="tel"
+        defaultValue={currentUser.mobileNumber}
+        placeholder="Mobile Number"
+        id="mobileNumber"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      /> */}
+
+      <input
+        type="password"
+        value={formData.password}
+        placeholder="Password"
+        autoComplete="off"
+        id="password"
+        name="password"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      />
+
+      <input
+        type="password"
+        value={formData.password_confirmation}
+        placeholder="Re-Password"
+        autoComplete="off"
+        name="password_confirmation"
+        id="password_confirmation"
+        className="border p-3 rounded-lg"
+        onChange={handleChange}
+      />
+
+      <textarea
+        defaultValue={formData.bio || ""}
+        placeholder="Bio"
+        id="bio"
+        name="bio"
+        className="border p-3 rounded-lg resize-none"
+        onChange={handleChange}
+        rows={5}      
+      >        
+      </textarea>
+
+      <button
+        className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+        type="submit"
+        disabled={loading}
+      >
+        {loading ? "loading" : "Save Changes"}
+      </button>
+    </form>
+  </>
   );
 }

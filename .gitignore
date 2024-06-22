@@ -23,5 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 .env
-.env.production
+
+api/node_modules
+api/.env
+
+client/node_modules
+client/.env
 client/.env.production
