@@ -5,7 +5,6 @@ const StarRating = ({MAX_STARS = 5, rating, setRating = () => {} }) => {
 
     const [hover, setHover] = useState(0);
 
-
     const handleRating = (newRating) => {
         const updatedRating = newRating === rating ? 0 : newRating;
         setRating(updatedRating);

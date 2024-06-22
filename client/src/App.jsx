@@ -59,7 +59,10 @@ export default function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/newsletter" element={<Newsletter />} />
 
-        <Route path="/sellerShop/:userId" element={<SellerShop />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/sellerShop/:userId" element={<SellerShop />} />        
+        </Route>
+
 
         <Route path="/listing/:listingId" element={<Listing />} />
 
