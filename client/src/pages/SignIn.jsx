@@ -32,7 +32,7 @@ export default function SignInModal({ onClose }) {
   const handleForgotPassword = (e) => {
     e.preventDefault();
 
-    console.log("Forgotr Password for: ", formData.email);
+    console.log("Forgot Password for: ", formData.email);
   };
 
   const handleSubmit = async (e) => {

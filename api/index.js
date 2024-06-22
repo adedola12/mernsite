@@ -12,7 +12,17 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors({ origins: ["https://adlmmarketplace.vercel.app"] }));
+app.use(
+  cors({
+    origins: function (origin, callback) {
+      if (!origin || "https://adlmmarketplace.vercel.app") {
+        callback(null, true);
+      } else {
+        callback(new Error("Not aloowed by CORS"));
+      }
+    },
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
