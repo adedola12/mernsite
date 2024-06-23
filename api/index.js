@@ -8,6 +8,7 @@ import reviewRouter from "./routes/review.route.js";
 import cors from "cors";
 import connectDb from "./utils/database.js";
 import appConstants from "./constants/index.js";
+import cors from "cors";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({origin: ["https://adlmmarketplace.onrender.com", "http://localhost
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(cors());
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
@@ -36,8 +38,8 @@ app.use((err, req, res, next) => {
 // START APPLICATION
 connectDb()
   .then(() => {
-    app.listen(appConstants.PORT, () => {
+    app.listen(process.env.PORT || appConstants.PORT, () => {
       console.log(`Server Running on port: ${appConstants.PORT}`);
     });
   })
-  .catch((error) => console.log(error))
+  .catch((error) => console.log(error));

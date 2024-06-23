@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { config } from "../../config";
 
 export default function Contact({ listing }) {
   const [seller, setSeller] = useState(null);
@@ -12,7 +13,9 @@ export default function Contact({ listing }) {
   useEffect(() => {
     const fetchSeller = async () => {
       try {
-        const res = await fetch(`/api/user/${listing.userRef}`);
+        const res = await fetch(
+          `${config.baseUrl}/api/user/${listing.userRef}`
+        );
         const data = await res.json();
         setSeller(data);
       } catch (error) {
