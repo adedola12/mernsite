@@ -7,7 +7,6 @@ import { config } from "../../config/index.js";
 
 export default function SignUpModal({ onClose }) {
   const [formData, setFormData] = useState({});
-
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -28,37 +27,28 @@ export default function SignUpModal({ onClose }) {
 
       console.log(config.baseUrl);
 
-      // ${config.baseUrl}
-
-      const res = await fetch(
-        `https://adlmmarketplace.onrender.com/api/auth/sign-up`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${config.baseUrl}/api/auth/sign-up`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
       console.log(data);
 
       if (data.success === false) {
-        // setLoading(false);
         setError(data.message);
-
         setShowSignInModal(false);
         return;
       }
 
-      // setLoading(false);
       setError(null);
       onClose();
       navigate("/");
     } catch (error) {
-      // setLoading(false);
       setError(error.message);
     } finally {
       setLoading(false);
@@ -68,6 +58,7 @@ export default function SignUpModal({ onClose }) {
   const toggleSignInModal = () => {
     setShowSignInModal(!showSignInModal);
   };
+
   const handleShowModal = (event) => {
     if (event.target.id === "signup-modal") {
       onClose();
