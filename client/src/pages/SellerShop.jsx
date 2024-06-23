@@ -170,14 +170,14 @@ export default function SellerShop() {
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${userId}`);
-        console.log({sellershop:  res})
+        const res = await fetch(`${config.baseUrl}/api/user/${userId}`, {
+          credentials: "include"
+        });
+
         if (!res.ok) {
           throw new Error("Failed to fetch user");
         }
         const data = await res.json();
-
-        console.log({sellershop:  data})
 
         if (data.success === false) {
           setError(true);

@@ -12,10 +12,13 @@ import appConstants from "./constants/index.js";
 const app = express();
 
 app.use(cors({origin: [
-  "https://adlmmarketplace.onrender.com",
-  "https://mernsite-k2ky.onrender.com",
+  "http://localhost:5173",
   "http://localhost:5174",
-  "http://localhost:3000"]}))
+  "http://localhost:3000",
+  "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app"
+],
+    credentials: true
+}))
 app.use(express.json());
 app.use(cookieParser());
 
