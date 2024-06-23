@@ -4,6 +4,7 @@ const prod = {
 
   // http://localhost:3000
   // "https://adlmmarketplace.onrender.com
+  // https://mernsite-k2ky.onrender.com
   const dev = {
     baseUrl: "https://mernsite-k2ky.onrender.com",
   };

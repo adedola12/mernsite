@@ -59,7 +59,8 @@ export const signin = async (req, res, next) => {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "none",  
+      sameSite: "strict",
+      domain: "onrender.com",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
@@ -67,7 +68,8 @@ export const signin = async (req, res, next) => {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "none",  
+      sameSite: "strict",
+      domain: "onrender.com",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
@@ -193,7 +195,8 @@ export const refresh = async (req, res, next) => {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "none",   
+      sameSite: "strict",
+      domain: "onrender.com",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
@@ -201,7 +204,8 @@ export const refresh = async (req, res, next) => {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "none",  
+      sameSite: "strict",
+      domain: "onrender.com",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
