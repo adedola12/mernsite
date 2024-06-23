@@ -3,7 +3,7 @@ const prod = {
   };
   
   const dev = {
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://mernsite-k2ky.onrender.com",
   };
   
   export const config = process.env.NODE_ENV === "development" ? dev : prod;
