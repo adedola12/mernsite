@@ -11,19 +11,6 @@ export const verifyToken = async (req, res, next) => {
     return next(errorHandler(401, "Unauthorized Request"));
   }
 
-  // jwt.verify(access_token, process.env.JWT_SECRET, (err, user) => {
-  //   if (err) {
-  //     if(err instanceof jwt.TokenExpiredError) {
-  //       return next(errorHandler(401, " jwt expired"));
-  //     } else if(err instanceof jwt.JsonWebTokenError) {
-  //       return next(errorHandler(401, "jwt expired"));
-  //     }
-  //     return next(errorHandler(404, "Forbidden Request"));
-  //   }
-
-  //   req.user = user;
-  //   next();
-  // });
 
   try {
 
