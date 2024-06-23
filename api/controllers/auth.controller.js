@@ -57,11 +57,15 @@ export const signin = async (req, res, next) => {
     
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
+      secure: false,
+      sameSite: "lax",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
     res.cookie("access_token", access_token, {
       httpOnly: true,
+      secure: false,
+      sameSite: "lax",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
@@ -95,11 +99,15 @@ export const google = async (req, res, next) => {
 
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
+        secure: false,
+        sameSite: "lax",
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
       res.cookie("access_token", access_token, {
         httpOnly: true,
+        secure: false,
+        sameSite: "lax",
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
       })
       .status(200)
@@ -130,11 +138,15 @@ export const google = async (req, res, next) => {
 
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
+        secure: false,
+        sameSite: "lax",
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
       res.cookie("access_token", access_token, {
         httpOnly: true,
+        secure: false,
+        sameSite: "lax",
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
       })
       .status(200)
@@ -173,11 +185,15 @@ export const refresh = async (req, res, next) => {
 
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
+      secure: false,
+      sameSite: "lax",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
     res.cookie("access_token", access_token, {
       httpOnly: true,
+      secure: false,
+      sameSite: "lax",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
