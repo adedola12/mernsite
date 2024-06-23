@@ -148,9 +148,7 @@ export default function SellerShop() {
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`,{
-          credentials: "include"
-        });
+        const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`,);
         if (!res.ok) {
           throw new Error("Failed to fetch products");
         }
@@ -172,9 +170,7 @@ export default function SellerShop() {
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/user/${userId}`, {
-          credentials: "include"
-        });
+        const res = await fetch(`/api/user/${userId}`);
         console.log({sellershop:  res})
         if (!res.ok) {
           throw new Error("Failed to fetch user");
