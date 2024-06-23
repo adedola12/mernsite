@@ -53,6 +53,7 @@ export const signin = async (req, res, next) => {
     const sessionExp = new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT);
     const { password: pass, ...rest } = validUser._doc;
     
+
     
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
@@ -91,7 +92,7 @@ export const google = async (req, res, next) => {
       const { password: pass, ...rest } = user._doc;
 
       const sessionExp = new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT);
-      
+
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),

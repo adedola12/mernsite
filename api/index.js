@@ -11,7 +11,7 @@ import appConstants from "./constants/index.js";
 
 const app = express();
 
-app.use(cors())
+app.use(cors({origin: ["https://adlmmarketplace.onrender.com", "http://localhost:3000"]}))
 app.use(express.json());
 app.use(cookieParser());
 
