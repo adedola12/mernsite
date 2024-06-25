@@ -20,19 +20,36 @@ const allowedOrigins = [
 ];
 
 
+// const corsOptions = {
+//   origin: (origin, callback) => {
+
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// };
+
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: allowedOrigins,
   credentials: true,
 };
 
 
-app.use(cors(corsOptions))
+app.use(cors({
+  origin: [
+    'http://127.0.0.1:5173', 
+    'http://127.0.0.1:3000',
+    'https://mernsite-k2ky.onrender.com',
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
+  credentials: true,
+  optionSuccessStatus:200,
+}))
+
 app.use(express.json());
 app.use(cookieParser());
 

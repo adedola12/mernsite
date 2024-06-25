@@ -5,25 +5,27 @@ import User from "../models/user.model.js";
 
 export const verifyToken = async (req, res, next) => {
   
-  const access_token = req.cookies.access_token;
+  const access_token = req.cookies["access_token"];
+  console.log({REQ: req.cookies})
 
-  console.log({access_token})
+  // console.log({access_token})
  
   if (!access_token) {
+    console.log("Unauthorized")
     return next(errorHandler(401, "Unauthorized Request"));
   }
 
 
   try {
 
-    const decoded = jwt.verify(access_token, appConstants.JWT_SECRET);
-  
+    const decoded =  jwt.verify(access_token, appConstants.JWT_SECRET);
+
     if(!decoded) {
       return next(errorHandler(401, "Unauthorized token"));
     }
 
     const user = await User.findById(decoded?.id);
-
+   
     if(!user) {
       return next(errorHandler(401, "Unauthorized user"));
     }

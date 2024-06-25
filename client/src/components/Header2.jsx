@@ -52,7 +52,9 @@ const Header2 = ({ toggleModal }) => {
         try {
           dispatch(signOutUser());
     
-          const res = await fetch("/api/auth/signout");
+          const res = await fetch("/api/auth/signout", {
+            credentials: "include"
+          });
     
           const data = await res.json();
     

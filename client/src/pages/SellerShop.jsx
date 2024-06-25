@@ -170,9 +170,11 @@ export default function SellerShop() {
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/user/${userId}`, {
+        const res = await fetch(`/api/user/${userId}`, {
           credentials: "include"
         });
+
+        console.log(res)
 
         if (!res.ok) {
           throw new Error("Failed to fetch user");

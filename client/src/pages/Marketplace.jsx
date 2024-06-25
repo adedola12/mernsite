@@ -16,8 +16,8 @@ export default function Marketplace() {
     try {
       setIsLoading(true);
       const fetchUrl = queryString
-        ? `${config.baseUrl}/api/product/search?${queryString}`
-        : `${config.baseUrl}/api/product/search`;
+        ? `/api/product/search?${queryString}`
+        : `/api/product/search`;
 
       const response = await fetch(fetchUrl);
 

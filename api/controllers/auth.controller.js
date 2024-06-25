@@ -56,20 +56,18 @@ export const signin = async (req, res, next) => {
 
     
     res.cookie("refresh_token", refresh_token, {
-      path: "/",
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "strict",
-      domain: "onrender.com",
+      path: "/",
+      secure: false,
+      sameSite: "none",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
     res.cookie("access_token", access_token, {
-      path: "/",
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "strict",
-      domain: "onrender.com",
+      path: "/",
+      secure: false,
+      sameSite: "none",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
@@ -102,24 +100,26 @@ export const google = async (req, res, next) => {
       const sessionExp = new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT);
 
       res.cookie("refresh_token", refresh_token, {
-        path: "/",
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
+        path: "/",
+        secure: false,
         sameSite: "none",  
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
+
+      req.cookies.access_token = '';
+
       res.cookie("access_token", access_token, {
         path: "/",
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
-        sameSite: "none",  
+        httpOnly: false,
+        secure: false,
+        sameSite: "lax",  
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
       })
-      .status(200)
-      .json({...rest, sessionExp });
+      
 
-
+      res.status(200).json({...rest, sessionExp });
 
     } else {
 
@@ -143,17 +143,19 @@ export const google = async (req, res, next) => {
       const sessionExp = new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT);
 
       res.cookie("refresh_token", refresh_token, {
-        path: "/",
+
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
+        path: "/",
+        secure: false,
         sameSite: "none",  
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
       res.cookie("access_token", access_token, {
-        path: "/",
+
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
+        path: "/",
+        secure: false,
         sameSite: "none",  
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
       })
@@ -167,9 +169,22 @@ export const google = async (req, res, next) => {
 };
 
 export const signOut = async (req, res, next) => {
+  const { access_token, refresh_token } = req.cookies
+  console.log("LOGOUT")
+  console.log({cookies: req.cookies})
   try {
-    res.clearCookie("access_token");
-    res.clearCookie("refresh_token");
+
+    if(access_token) {
+      console.log("CLEAR ID TOKEN")
+      res.clearCookie("access_token", "", {expires: new Date(0)});
+    }
+
+    if(refresh_token) {
+      console.log("CLEAR REFRESH TOKEN")
+      res.clearCookie("refresh_token", "", {expires: new Date(0)});
+    }
+    res.clearCookie("access_token", "", {expires: new Date(0)});
+    // res.status(200);
     res.status(200).json("User has been logged out!!");
   } catch (error) {
     next(error);
@@ -192,20 +207,18 @@ export const refresh = async (req, res, next) => {
 
 
     res.cookie("refresh_token", refresh_token, {
-      path: "/",
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "strict",
-      domain: "onrender.com",
+      path: "/",
+      secure: false,
+      sameSite: "none",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
     res.cookie("access_token", access_token, {
-      path: "/",
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: "strict",
-      domain: "onrender.com",
+      path: "/",
+      secure: false,
+      sameSite: "none",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })
     .status(200)
