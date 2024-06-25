@@ -8,10 +8,8 @@ export const verifyToken = async (req, res, next) => {
   const access_token = req.cookies["access_token"];
   console.log({REQ: req.cookies})
 
-  // console.log({access_token})
  
   if (!access_token) {
-    console.log("Unauthorized")
     return next(errorHandler(401, "Unauthorized Request"));
   }
 

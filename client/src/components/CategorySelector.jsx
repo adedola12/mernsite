@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { config } from "../../config";
+
 
 export default function CategorySelector({ onCategorySelected }) {
   const [error, setError] = useState(false);

@@ -18,7 +18,7 @@ export default function Product() {
       try {
         setLoading(true);
         const res = await fetch(
-          `${config.baseUrl}/api/product/get/${params.productId}`
+          `/api/product/get/${params.productId}`
         );
 
         if (!res.ok) {

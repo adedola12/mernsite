@@ -14,7 +14,7 @@ export default function Contact({ listing }) {
     const fetchSeller = async () => {
       try {
         const res = await fetch(
-          `${config.baseUrl}/api/user/${listing.userRef}`
+          `/api/user/${listing.userRef}`
         );
         const data = await res.json();
         setSeller(data);
