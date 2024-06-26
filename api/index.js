@@ -43,6 +43,7 @@ app.use(cors({
     'http://127.0.0.1:5173', 
     'http://127.0.0.1:3000',
     'https://mernsite-k2ky.onrender.com',
+    'https://mernsite-frontend.onrender.com',
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
