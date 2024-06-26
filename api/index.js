@@ -49,7 +49,10 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
   credentials: true,
   optionSuccessStatus:200,
-}))
+}));
+
+
+app.use(express.static(path.join(__dirname, "./../client/dist")));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -69,6 +72,10 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./../client/dist/index.html"));
 });
 
 // START APPLICATION
