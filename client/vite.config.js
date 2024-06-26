@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://mernsite-k2ky.onrender.com",
+        target: "https://adlmmarketplace.onrender.com",
         changeOrigin: true,
         secure: true,
       },
@@ -15,4 +15,3 @@ export default defineConfig({
   },
   plugins: [react()],
 });
-
