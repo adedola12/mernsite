@@ -18,6 +18,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app",
   "https://www.adlmstudio.net",
+  "https://accounts.google.com",
+  "https://mernsite.firebaseapp.com",
 ];
 
 // const corsOptions = {
@@ -44,6 +46,8 @@ app.use(
       "http://127.0.0.1:3000",
       "https://adlmmarketplace.vercel.app",
       "https://www.adlmstudio.net",
+      "https://accounts.google.com",
+      "https://mernsite.firebaseapp.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
     allowedHeaders: [
