@@ -1,12 +1,12 @@
 const prod = {
-    baseUrl: "https://adlmmarketplace.onrender.com",
-  };
+  baseUrl: "https://adlmmarketplace.onrender.com",
+};
 
-  // http://localhost:3000
-  // "https://adlmmarketplace.onrender.com
-  // https://mernsite-k2ky.onrender.com
-  const dev = {
-    baseUrl: "http://localhost:3000",
-  };
-  
-  export const config = process.env.NODE_ENV === "development" ? dev : prod;
+// http://localhost:3000
+// "https://adlmmarketplace.onrender.com
+// https://mernsite-k2ky.onrender.com
+const dev = {
+  baseUrl: "https://adlmmarketplace.onrender.com",
+};
+
+export const config = process.env.NODE_ENV === "development" ? dev : prod;
