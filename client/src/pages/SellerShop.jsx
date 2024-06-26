@@ -133,14 +133,17 @@ export default function SellerShop() {
 
     try {
       setLoading(true);
-      const response = await fetch(`/api/review/create-review`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewFormData),
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${config.baseUrl}/api/review/create-review`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reviewFormData),
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 
@@ -178,7 +181,10 @@ export default function SellerShop() {
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`);
+        const res = await fetch(
+          `${config.baseUrl}/api/product/user/${userId}`,
+          { credentials: "include" }
+        );
         if (!res.ok) {
           throw new Error("Failed to fetch products");
         }
