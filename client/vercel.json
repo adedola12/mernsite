@@ -11,6 +11,10 @@
         {
             "src": "/marketplace",
             "dest":"/"
+        },
+        {
+            "src": "/product",
+            "dest":"/"
         }
     ]
 }
