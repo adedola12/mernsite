@@ -96,8 +96,8 @@ export default function SellerShop() {
     try {
       setLoading(true);
       const fetchUrl = queryString
-        ? `/api/product/search?${queryString}`
-        : `/api/product/search`;
+        ? `${config.baseUrl}/api/product/search?${queryString}`
+        : `${config.baseUrl}/api/product/search`;
 
       const response = await fetch(fetchUrl);
 

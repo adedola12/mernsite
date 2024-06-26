@@ -8,6 +8,7 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { config } from "../../config";
 
 export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -36,7 +37,7 @@ export default function UpdateListing() {
   useEffect(() => {
     const fetchListing = async () => {
       const listingId = params.listingId;
-      const res = await fetch(`/api/listing/get/${listingId}`);
+      const res = await fetch(`${config.baseUrl}/api/listing/get/${listingId}`);
 
       const data = await res.json();
       //   console.log("fetched Data", data);

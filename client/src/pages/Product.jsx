@@ -18,7 +18,7 @@ export default function Product() {
       try {
         setLoading(true);
         const res = await fetch(
-          `/api/product/get/${params.productId}`
+          `${config.baseUrl}/api/product/get/${params.productId}`
         );
 
         if (!res.ok) {
@@ -50,7 +50,7 @@ export default function Product() {
 
       try {
         const response = await fetch(
-          `/api/product/getProduct/category/${product._id}`, {
+          `${config.baseUrl}/api/product/getProduct/category/${product._id}`, {
             credentials: "include"
           }
         );

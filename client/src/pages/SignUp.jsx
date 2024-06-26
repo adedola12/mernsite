@@ -24,9 +24,6 @@ export default function SignUpModal({ onClose }) {
     e.preventDefault();
     try {
       setLoading(true);
-
-      console.log(config.baseUrl);
-
       const res = await fetch(`${config.baseUrl}/api/auth/sign-up`, {
         method: "POST",
         headers: {

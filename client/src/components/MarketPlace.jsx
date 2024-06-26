@@ -39,13 +39,15 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchCategory = async () => {
       const fetchUrl = queryString
-        ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
-        : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+        ? `${config.baseUrl}/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+        : `${config.baseUrl}/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
 
       try {
         setIsLoadingProduct(true);
 
-        const res = await fetch(fetchUrl);
+        const res = await fetch(fetchUrl, {
+          credentials: "include"
+        });
 
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -73,8 +75,8 @@ export default function Marketplace() {
     try {
       setIsLoadingProduct(true);
 
-      const fetchUrl = `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
-      const res = await fetch(fetchUrl);
+      const fetchUrl = `${config.baseUrl}/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+      const res = await fetch(fetchUrl, { credentials: "include"});
 
       if (!res.ok) {
         throw new Error("Network response was not ok");

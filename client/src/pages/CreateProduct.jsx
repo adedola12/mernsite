@@ -130,7 +130,7 @@ export default function CreateProduct() {
 
     try {
       const response = await fetch(
-        `/api/product/create-product`,
+        `${config.baseUrl}/api/product/create-product`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

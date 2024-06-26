@@ -96,14 +96,39 @@ const Header2 = ({ toggleModal }) => {
       dispatch(signOutFaliure(error.message));
     }
   };
+  // const handleSignOut = async () => {
+  //   try {
+  //     dispatch(signOutUser());
+
+  //     const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
+  //       credentials: "include",
+  //     });
+
+  //     const data = await res.json();
+
+  //     if (data.success === false) {
+  //       dispatch(signOutFaliure(data.message));
+  //       return;
+  //     }
+
+  //     dispatch(signOutSuccess(data));
+
+  //     navigate("/");
+  //   } catch (error) {
+  //     dispatch(signOutFaliure(error.message));
+  //   }
+  // };
 
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
 
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await res.json();
 

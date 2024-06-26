@@ -40,16 +40,13 @@ export default function SignInModal({ onClose }) {
     try {
       dispatch(signInStart());
 
-      const res = await fetch(
-        `https://adlmmarketplace.onrender.com/api/auth/sign-in`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const res = await fetch(`${config.baseUrl}/api/auth/sign-in`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
       console.log(data);
