@@ -39,8 +39,8 @@ export default function Marketplace() {
   useEffect(() => {
     const fetchCategory = async () => {
       const fetchUrl = queryString
-        ? `${config.baseUrl}/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
-        : `${config.baseUrl}/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+        ? `/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
+        : `/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
 
       try {
         setIsLoadingProduct(true);

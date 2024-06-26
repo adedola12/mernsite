@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { config } from "../../config";
+
 
 export default function CategorySelector({ onCategorySelected }) {
   const [error, setError] = useState(false);
@@ -9,7 +9,7 @@ export default function CategorySelector({ onCategorySelected }) {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await fetch(`${config.baseUrl}/api/product/getCategories`);
+        const res = await fetch(`/api/product/getCategories`);
 
         const data = await res.json();
         setCategoryList(data);

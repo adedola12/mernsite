@@ -18,7 +18,7 @@ export default function Product() {
       try {
         setLoading(true);
         const res = await fetch(
-          `${config.baseUrl}/api/product/get/${params.productId}`
+          `/api/product/get/${params.productId}`
         );
 
         if (!res.ok) {
@@ -50,7 +50,9 @@ export default function Product() {
 
       try {
         const response = await fetch(
-          `${config.baseUrl}/api/product/getProduct/category/${product._id}`
+          `/api/product/getProduct/category/${product._id}`, {
+            credentials: "include"
+          }
         );
         if (!response.ok) {
           throw new Error("Related Categories cannot be fetched");

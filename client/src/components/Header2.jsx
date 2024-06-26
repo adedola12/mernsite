@@ -54,11 +54,33 @@ const Header2 = ({ toggleModal }) => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
+  // const handleSignOut = async () => {
+  //   try {
+  //     dispatch(signOutUser());
+
+  //     const res = await fetch(`${config.baseUrl}/api/auth/signout`);
+
+  //     const data = await res.json();
+
+  //     if (data.success === false) {
+  //       dispatch(signOutFaliure(data.message));
+  //       return;
+  //     }
+
+  //     dispatch(signOutSuccess(data));
+
+  //     navigate("/");
+  //   } catch (error) {
+  //     dispatch(signOutFaliure(error.message));
+  //   }
+  // };
   const handleSignOut = async () => {
     try {
       dispatch(signOutUser());
 
-      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
+      const res = await fetch("/api/auth/signout", {
+        credentials: "include",
+      });
 
       const data = await res.json();
 

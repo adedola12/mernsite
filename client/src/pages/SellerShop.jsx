@@ -6,6 +6,9 @@ import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
 import { useSelector } from "react-redux";
 import { config } from "../../config";
+import useSearchParams from "../hooks/useSearchParams";
+import CategorySelector from "../components/CategorySelector";
+import LocationSelector from "../components/LocationSelector";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -64,6 +67,8 @@ export default function SellerShop() {
   const [selectedTab, setSelectedTab] = useState(1);
   const [rating, setRating] = useState(0);
 
+  const [params, setParams, queryString] = useSearchParams();
+
   const [reviewForm, setReviewForm] = useState({
     name: "",
     email: "",
@@ -75,12 +80,42 @@ export default function SellerShop() {
     city: "",
     category: "",
   });
+
   const currentUser = useSelector((state) => state.user.currentUser);
 
   const handleCategoryFormInputChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type } = event.target;
     setCategory((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  const handleLocationInput = ({ value }) => {
+    setParams({ ...params, value });
+  };
+
+  const handleSearchWithQuery = async () => {
+    try {
+      setLoading(true);
+      const fetchUrl = queryString
+        ? `/api/product/search?${queryString}`
+        : `/api/product/search`;
+
+      const response = await fetch(fetchUrl);
+
+      if (!response.ok) {
+        throw new Error("Unable to fetch products");
+      }
+
+      const { data } = await response.json();
+      setProducts([...data.products]);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleSearchWithQuery();
+  }, [queryString]);
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -98,17 +133,14 @@ export default function SellerShop() {
 
     try {
       setLoading(true);
-      const response = await fetch(
-        `${config.baseUrl}/api/review/create-review`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(reviewFormData),
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`/api/review/create-review`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewFormData),
+        credentials: "include",
+      });
 
       const data = await response.json();
 
@@ -137,11 +169,16 @@ export default function SellerShop() {
     } catch (error) {}
   };
 
+  const handleChange = (type, value) => {
+    if (type == "location") setParams({ ...params, location: value });
+    if (type == "category") setParams({ ...params, category: value });
+  };
+
   useEffect(() => {
     const fetchProductsByUser = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`);
+        const res = await fetch(`/api/product/user/${userId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch products");
         }
@@ -151,7 +188,6 @@ export default function SellerShop() {
           setError(true);
           return;
         } else {
-          console.log(data.products);
           setProducts(data.products);
         }
       } catch (error) {
@@ -163,7 +199,10 @@ export default function SellerShop() {
     const fetchUserInfo = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/user/${userId}`);
+        const res = await fetch(`/api/user/${userId}`, {
+          credentials: "include",
+        });
+
         if (!res.ok) {
           throw new Error("Failed to fetch user");
         }
@@ -214,14 +253,18 @@ export default function SellerShop() {
                     {user?.username ?? "Store Owner"}
                   </p>
                   <span className="bg-green-100 text-green-700 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-                    Verified
+                    verified
                   </span>
                 </div>
               </div>
 
               <div className="flex gap-2 flex-col mt-10 px-3">
                 <Link
-                  to={`https://wa.me/+2340${user?.mobileNumber}?text=I am intrested in your product in your store ${user?.username} listed on the ADLM Marketplace`}
+                  to={
+                    user?.mobileNumber
+                      ? `https://wa.me/+2340${user?.mobileNumber}?text=I am intrested in your product in your store ${user?.username} listed on the ADLM Marketplace`
+                      : "#"
+                  }
                   className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-lg rounded-lg font-medium"
                 >
                   Text on Whatsapp
@@ -254,54 +297,65 @@ export default function SellerShop() {
                 </h2>
               </div>
               <form onSubmit={handleSubmitCategory} className="w-full">
-                <div className="p-4 grid md:grid-cols-2 gap-4">
-                  <div className="relative">
+                <div className="w-full max-w-[959px] px-2">
+                  <div className="grid md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
                     <input
                       type="text"
-                      value={category.location}
-                      onChange={handleCategoryFormInputChange}
                       name="location"
-                      placeholder="location"
-                      className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri'] w-full px-4 pr-10 "
+                      placeholder="Location"
+                      onChange={handleLocationInput}
+                      className="border-2 col-span-12 md:col-span-4 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
+                          focus:ring-blue-500"
                     />
-                    <MdLocationOn
-                      size={15}
-                      className="absolute text-gray-400 top-2/4 right-4 -translate-y-2/4 "
-                    />
-                  </div>
-                  <div className="relative">
-                    <select
-                      name="city"
-                      value={category.city}
-                      className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                      onChange={handleCategoryFormInputChange}
-                    >
-                      <option className="text-gray-400">select a city</option>
-                      {NIGERIAN_STATES.map((state) => (
-                        <option key={state} value={state}>
-                          {state}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="relative">
-                    <select
-                      name="category"
-                      value={category.category}
-                      className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                      onChange={handleCategoryFormInputChange}
-                    >
-                      <option className="text-gray-400">
-                        select a category
-                      </option>
-                      {NIGERIAN_STATES.map((state) => (
-                        <option key={state} value={state}>
-                          {state}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="col-span-12 md:col-span-8 grid grid-col-2 md:grid-cols-2 gap-4 ">
+                      <LocationSelector onStateSelected={handleChange} />
+                      <CategorySelector onCategorySelected={handleChange} />
+                    </div>
+
+                    {/* Show Categories and Select Categories */}
                   </div>
                 </div>
+                {/* <div className="p-4 grid md:grid-cols-2 gap-4">
+                      <div className="relative">
+                          <input type="text" value={category.location} onChange={handleCategoryFormInputChange} name="location" placeholder="location" className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri'] w-full px-4 pr-10 " />
+                          <MdLocationOn size={15} className="absolute text-gray-400 top-2/4 right-4 -translate-y-2/4 " />
+                      </div>
+                      <div className="relative">
+                          
+                          <select
+                              name="city"
+                              value={category.city}
+                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
+                              onChange={handleCategoryFormInputChange}
+                            >
+                              <option className="text-gray-400">select a city</option>
+                              {NIGERIAN_STATES.map((state) => (
+                                <option key={state} value={state}>
+                                  {state}
+                                </option>
+                              ))}
+                          </select>
+                      </div>
+                      <div className="relative">
+
+                         <CategorySelector onCategorySelected={handleChange} />
+                          <select
+                              name="category"
+                              value={category.category}
+                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
+                              onChange={handleCategoryFormInputChange}
+                            >
+                              <option className="text-gray-400">select a category</option>
+                              {categoryList?.length &&
+                                categoryList?.map((category) => (
+                              <option key={category.category} value={category.category}>
+                                {category.category}
+                              </option>
+                            ))}
+                          </select>
+                      </div>
+
+                    </div> */}
 
                 {/* <div className="p-4">
                       <button type="button" className="py-2 rounded-md text-white cursor-pointer text-base px-6 bg-black/90">Search</button>
@@ -318,10 +372,15 @@ export default function SellerShop() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
-              {products &&
+              {products && products.length > 0 ? (
                 products.map((product) => (
                   <ProductItem key={product._id} product={product} />
-                ))}
+                ))
+              ) : (
+                <p className="text-center col-span-12 text-lg font-semibold text-slate-500">
+                  No product found
+                </p>
+              )}
             </div>
 
             <div className="border-t p-5 text-base text-gray-400 gap-2 gap-y-4 flex flex-wrap items-center justify-center mt-5 ">
