@@ -9,6 +9,7 @@ import {
 import OAuth from "../components/OAuth.jsx";
 import SignUpModal from "./SignUp.jsx";
 import { MdClose } from "react-icons/md";
+import { config } from "../../config/index.js";
 
 export default function SignInModal({ onClose }) {
   const [formData, setFormData] = useState({});
@@ -39,7 +40,7 @@ export default function SignInModal({ onClose }) {
     try {
       dispatch(signInStart());
 
-      const res = await fetch("/api/auth/sign-in", {
+      const res = await fetch(`${config.baseUrl}/api/auth/sign-in`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

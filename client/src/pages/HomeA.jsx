@@ -69,7 +69,6 @@ export default function HomeA() {
       <div className="w-full flex flex-col">
         {/* Use Marketplace component */}
         <Marketplace /> 
-
       </div>
 
 

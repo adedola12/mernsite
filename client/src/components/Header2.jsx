@@ -52,7 +52,7 @@ const Header2 = ({ toggleModal }) => {
         try {
           dispatch(signOutUser());
     
-          const res = await fetch("/api/auth/signout", {
+          const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
             credentials: "include"
           });
     
@@ -75,7 +75,7 @@ const Header2 = ({ toggleModal }) => {
         try {
           dispatch(deleteUserStart());
     
-          const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+          const res = await fetch(`${config.baseUrl}/api/user/delete/${currentUser._id}`, {
             method: "DELETE",
           });
     

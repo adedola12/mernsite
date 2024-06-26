@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth.jsx";
 import SignInModal from "./SignIn.jsx";
 import { MdClose } from "react-icons/md";
+import { config } from "../../config/index.js";
 
 export default function SignUpModal({ onClose }) {
   const [formData, setFormData] = useState({});
@@ -24,7 +25,7 @@ export default function SignUpModal({ onClose }) {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch("/api/auth/sign-up", {
+      const res = await fetch(`${config.baseUrl}/api/auth/sign-up`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

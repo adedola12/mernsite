@@ -33,7 +33,7 @@ export default function Listing() {
       try {
         setLoading(true);
         const res = await fetch(
-          `/api/listing/get/${params.listingId}`
+          `${config.baseUrl}/api/listing/get/${params.listingId}`
         );
 
         const data = await res.json();

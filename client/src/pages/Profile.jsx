@@ -108,7 +108,7 @@ export default function Profile() {
       dispatch(updateUserStart());
 
       const res = await fetch(
-        `/api/user/update/${currentUser._id}`,
+        `${config.baseUrl}/api/user/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {
@@ -136,7 +136,7 @@ export default function Profile() {
       dispatch(deleteUserStart());
 
       const res = await fetch(
-        `/api/user/delete/${currentUser._id}`,
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
         }
@@ -160,7 +160,7 @@ export default function Profile() {
     try {
       dispatch(signOutUser());
 
-      const res = await fetch(`/api/auth/signout`);
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
@@ -181,7 +181,7 @@ export default function Profile() {
     try {
       setShowListingError(false);
       const res = await fetch(
-        `/api/user/listings/${currentUser._id}`
+        `${config.baseUrl}/api/user/listings/${currentUser._id}`
       );
       const data = await res.json();
 
@@ -203,7 +203,7 @@ export default function Profile() {
       console.log(`current user ID : ${currentUser._id}`);
 
       const res = await fetch(
-        `/api/user/products/${currentUser._id}`
+        `${config.baseUrl}/api/user/products/${currentUser._id}`
       );
       const data = await res.json();
 
@@ -224,7 +224,7 @@ export default function Profile() {
       setDeleteListingError(false);
 
       const res = await fetch(
-        `/api/listing/delete/${listingId}`,
+        `${config.baseUrl}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
         }
@@ -249,7 +249,7 @@ export default function Profile() {
       setDeleteProductError(false);
 
       const res = await fetch(
-        `/api/product/delete/${productId}`,
+        `${config.baseUrl}/api/product/delete/${productId}`,
         {
           method: "DELETE",
         }
@@ -274,7 +274,7 @@ export default function Profile() {
       setEditListingError(false);
 
       const res = await fetch(
-        `/api/listing/update/${listingId}`,
+        `${config.baseUrl}/api/listing/update/${listingId}`,
         {
           method: "POST",
         }
@@ -295,7 +295,7 @@ export default function Profile() {
       setEditProductError(false);
 
       const res = await fetch(
-        `/api/product/update/${productId}`,
+        `${config.baseUrl}/api/product/update/${productId}`,
         {
           method: "POST",
         }
