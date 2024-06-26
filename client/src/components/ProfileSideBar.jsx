@@ -25,7 +25,7 @@ export default function ProfileSideBar() {
     try {
       dispatch(signOutUser());
 
-      const res = await fetch(`/api/auth/signout`);
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
@@ -37,14 +37,13 @@ export default function ProfileSideBar() {
       dispatch(signOutSuccess(data));
 
       // persistor.purge()
-      navigate("/", {replace:true });
       navigate("/", { replace: true });
-
+      navigate("/", { replace: true });
     } catch (error) {
       dispatch(signOutFaliure(error.message));
     } finally {
       // persistor.purge()
-      localStorage.removeItem("persist:root")
+      localStorage.removeItem("persist:root");
     }
   };
 
@@ -53,7 +52,7 @@ export default function ProfileSideBar() {
       dispatch(deleteUserStart());
 
       const res = await fetch(
-        `/api/user/delete/${currentUser._id}`,
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
         }

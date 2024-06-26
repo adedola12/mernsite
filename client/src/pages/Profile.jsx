@@ -107,13 +107,16 @@ export default function Profile() {
     try {
       dispatch(updateUserStart());
 
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/user/update/${currentUser._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await res.json();
       if (data.success === false) {
@@ -132,9 +135,12 @@ export default function Profile() {
     try {
       dispatch(deleteUserStart());
 
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/user/delete/${currentUser._id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const data = await res.json();
 
@@ -154,7 +160,7 @@ export default function Profile() {
     try {
       dispatch(signOutUser());
 
-      const res = await fetch(`/api/auth/signout`);
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
@@ -174,7 +180,9 @@ export default function Profile() {
   const handleShowListing = async () => {
     try {
       setShowListingError(false);
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(
+        `${config.baseUrl}/api/user/listings/${currentUser._id}`
+      );
       const data = await res.json();
 
       if (data.success === false) {
@@ -194,7 +202,9 @@ export default function Profile() {
 
       console.log(`current user ID : ${currentUser._id}`);
 
-      const res = await fetch(`/api/user/products/${currentUser._id}`);
+      const res = await fetch(
+        `${config.baseUrl}/api/user/products/${currentUser._id}`
+      );
       const data = await res.json();
 
       if (data.success === false) {
@@ -213,9 +223,12 @@ export default function Profile() {
     try {
       setDeleteListingError(false);
 
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
 
       if (data.success === false) {
@@ -235,9 +248,12 @@ export default function Profile() {
     try {
       setDeleteProductError(false);
 
-      const res = await fetch(`/api/product/delete/${productId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/product/delete/${productId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
 
       if (data.success === false) {
@@ -257,9 +273,12 @@ export default function Profile() {
     try {
       setEditListingError(false);
 
-      const res = await fetch(`/api/listing/update/${listingId}`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/listing/update/${listingId}`,
+        {
+          method: "POST",
+        }
+      );
       const data = await res.json();
 
       if (data.success === false) {
@@ -275,9 +294,12 @@ export default function Profile() {
     try {
       setEditProductError(false);
 
-      const res = await fetch(`/api/product/update/${productId}`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `${config.baseUrl}/api/product/update/${productId}`,
+        {
+          method: "POST",
+        }
+      );
       const data = await res.json();
 
       if (data.success === false) {

@@ -15,7 +15,7 @@ export default function SideBar({ onCategorySelect, onSubCategorySelect }) {
         setLoading(true);
         setError(false);
 
-        const res = await fetch(`/api/product/getCategories`);
+        const res = await fetch(`${config.baseUrl}/api/product/getCategories`);
 
         if (!res.ok) {
           throw new Error("Network response was not ok");
