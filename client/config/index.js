@@ -1,5 +1,5 @@
 const prod = {
-    baseUrl: "https://adlmmarketplace.onrender.com",
+    baseUrl: "https://mernsite-frontend.onrender.com",
   };
 
   // http://localhost:3000
