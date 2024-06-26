@@ -17,6 +17,7 @@ const allowedOrigins = [
   "http://localhost:5174",
   "http://localhost:3000",
   "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app",
+  "https://www.adlmstudio.net",
 ];
 
 // const corsOptions = {
@@ -42,6 +43,7 @@ app.use(
       "http://127.0.0.1:5173",
       "http://127.0.0.1:3000",
       "https://adlmmarketplace.vercel.app",
+      "https://www.adlmstudio.net",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
     allowedHeaders: [
