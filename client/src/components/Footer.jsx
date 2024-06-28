@@ -22,7 +22,7 @@ export default function Footer() {
                   type="email"
                   placeholder="Email address"
                   id="emailAddress"
-                  className="border px-4 py-2 flex-1 w-full"
+                  className="border px-4 py-2 flex-1 w-full rounded-lg"
                 />
                 <button type="button" className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2">
                   Subscribe

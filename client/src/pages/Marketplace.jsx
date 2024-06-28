@@ -87,10 +87,10 @@ export default function Marketplace() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-4 items-center max-w-6xl mx-auto ">
+      <div className="flex flex-col md:flex-row gap-4 items-center w-full lg:max-w-6xl mx-auto  px-3">
         {/* TODO: ADD SIDEBAR FUNCTIONALITY AND CODE FUNCIONALITY */}
-        <div className="bg-white flex-1 rounded-lg lg:p-6 mt-4">
-          <div className="p-3">
+        <div className="bg-white  w-full flex-1 rounded-lg lg:p-6 mt-4">
+          <div className="p-3 w-full">
             <h2 className="text-2xl font-semibold mb-4 inline-block">
               ADLM Marketplace
             </h2>

@@ -14,15 +14,14 @@ export default function ProductItem({ product}) {
   return (
 
     <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full ">
-      
-      <div className=" flex flex-col ">
+      <div className=" flex flex-col">
         <Link to={`/product/${product._id}`}>
           <img
             src={product.imageUrls[0]}
             alt="imageUrl"
-            className="h-[320px] sm:max-h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
+            className="h-[200px] md:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
           />
-          <div className="px-4 pt-2">
+          <div className="px-4 pt-4 flex flex-col gap-y-1">
             <p className="text-lg font-semibold truncate text-slate-700">
               {product.name}
             </p>
@@ -37,6 +36,7 @@ export default function ProductItem({ product}) {
             <StarRating />
             <span className="text-base text-gray-800">(91)</span>
         </div>
+        
       </div>
     </div>
   );

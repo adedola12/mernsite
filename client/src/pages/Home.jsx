@@ -66,9 +66,9 @@ export default function Home() {
         </div>
         <Link
           to={"/search"}
-          className="text-xs sm:text-sm text-blue-800 font-bold hover:underline"
+          className="text-xs sm:text-sm text-blue-800 font-bold hover:underline w-max"
         >
-          Lets Start now...
+          Let{"'"}s Start now...
         </Link>
       </div>
 

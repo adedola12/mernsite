@@ -34,6 +34,10 @@ export const signin = async (req, res, next) => {
   
   const { email, password } = req.body;
 
+  if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
+    return res.status(400).json({message: "Kindly provide env variables"});
+  }
+
   try {
     
     const validUser = await User.findOne({ email });
@@ -81,6 +85,10 @@ export const google = async (req, res, next) => {
 
     const { email } = req.body;
 
+    if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
+      return res.status(400).json({message: "Kindly provide env variables"});
+    }
+
     if(!email.trim()) {
       return res.status(400).json({message: "Email is required"});
     }
@@ -89,8 +97,8 @@ export const google = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
-    req.cookies.access_token = '';
-    req.cookies.refresh_token = '';
+    req.cookies["access_token"] = '';
+    req.cookies["refresh_token"] = '';
 
     if (user) {
 
@@ -166,6 +174,7 @@ export const google = async (req, res, next) => {
 };
 
 export const signOut = async (req, res, next) => {
+
   const { access_token, refresh_token } = req.cookies
 
   try {
@@ -187,6 +196,10 @@ export const signOut = async (req, res, next) => {
 };
 
 export const refresh = async (req, res, next) => {
+
+  if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
+    return res.status(400).json({message: "Kindly provide env variables"});
+  }
   
   const user = req.user;
 
@@ -194,8 +207,8 @@ export const refresh = async (req, res, next) => {
     return next(errorHandler(401, "Unauthorized user"));
   }
 
-  req.cookies.access_token = '';
-  req.cookies.refresh_token = '';
+  req.cookies["access_token"] = '';
+  req.cookies["refresh_token"] = '';
 
   try {
 

@@ -122,11 +122,11 @@ const Header2 = ({ toggleModal }) => {
                     </li>
 
                     <li onClick={closeNavMenu} className='relative group px-3 py-2'> 
-                        <div className='flex items-center cursor-pointer h-full'>
+                        <Link to={"#"} className='flex items-center cursor-pointer h-full'>
                             <span className="flex items-center hover:opacity-50 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                                 Product <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                             </span>                        
-                        </div>  
+                        </Link>  
                         <div className="absolute top-0 -left-12 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                             group-hover:transform z-50 min-w-max transform ">
                                 <div className="relative  top-6 p-6 bg-white rounded-xl border shadow w-full">
@@ -241,7 +241,7 @@ const Header2 = ({ toggleModal }) => {
                         <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Services</Link>
                     </li>
 
-                    <li onClick={closeNavMenu} className='relative group px-3 py-2 bg-white'> 
+                    <li className='relative group px-3 py-2 bg-white'> 
                         <div className='flex items-center cursor-pointer h-full'>
                             <span className="flex items-center hover:opacity-80 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                                 Product <IoIosArrowForward className="ml-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
@@ -253,32 +253,32 @@ const Header2 = ({ toggleModal }) => {
                                 
                                     <div className="relative z-10">                               
                                         <ul className='text-[15px]r'>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/planswift-plugin"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Planswift Plugin
                                                         </Link>
                                                     </li>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/rate-gen"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Rate Generator
                                                         </Link>
                                                     </li>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/bim-course"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             BIM Course
                                                         </Link>
                                                     </li>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/ms-project"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Microsoft Project Course
                                                         </Link>
                                                     </li>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/mat-lab-gen"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Material and Labour Generator
                                                         </Link>
                                                     </li>
-                                                    <li>
+                                                    <li onClick={closeNavMenu}>
                                                         <Link to={"/revit-plugin"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Revit Plugin
                                                         </Link>
@@ -294,7 +294,7 @@ const Header2 = ({ toggleModal }) => {
                        currentUser && currentUser?._id  && (
                             <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
                                 <button
-                                    className="duration-300 px-5 py-3 rounded-md hover:bg-gray-200 text-gray-400  text-center"
+                                    className="duration-300 px-5 py-3 hover:bg-gray-200 text-gray-400  text-center"
                                     onClick={() => {
                                         handleSignOut(),
                                         closeNavMenu()
@@ -302,8 +302,9 @@ const Header2 = ({ toggleModal }) => {
                                 >
                                 Profesional
                                 </button>
+                                <div className="w-px h-full bg-gray-200" />
                                 <button
-                                    className="text-center duration-300 hover:bg-gray-200 px-5 py-3 rounded-md text-gray-400"
+                                    className="text-center duration-300 hover:bg-gray-200 px-5 py-3 text-gray-400"
                                     onClick={handleDeleteUser}
                                     >
                                     Sell on ADLM

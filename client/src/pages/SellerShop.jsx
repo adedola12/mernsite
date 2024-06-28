@@ -293,7 +293,7 @@ export default function SellerShop() {
                   </div>
                   <form onSubmit={handleSubmitCategory} className="w-full">
                     
-                  <div className="w-full max-w-[959px] px-2">
+                  <div className="w-full md:max-w-[959px] px-2">
                       <div className="grid md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
                         <input
                           type="text"

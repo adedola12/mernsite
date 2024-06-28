@@ -131,7 +131,7 @@ export default function Marketplace() {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-6 bg-white p-5 rounded-md">
+          <div className="flex flex-col gap-6 bg-white p-5 rounded-md ">
             <h2 className="font-semibold text-3xl ">ADLM Marketplace</h2>
             <div className="flex flex-col md:flex-row gap-4 w-full">
               <div className="border p-2 bg-[#F1F1F1] rounded-lg flex gap-6 items-center md:w-[205px] justify-between">
@@ -143,7 +143,7 @@ export default function Marketplace() {
               <TypeSelector onTypeSelected={handleTypeSelected} />
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5  w-full">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5 w-full">
               {isProductLoading ? (
                 <h2 className="text-center col-span-3  text-lg font-semibold text-slate-500">
                   Loading...
