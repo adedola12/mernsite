@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import React, { useCallback, useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
