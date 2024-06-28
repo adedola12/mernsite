@@ -11,7 +11,6 @@ import {
 import { useDispatch } from "react-redux";
 import { LuPower } from "react-icons/lu";
 
-import { persistor } from "../redux/store";
 import { config } from "../../config";
 
 export default function ProfileSideBar() {
@@ -23,16 +22,12 @@ export default function ProfileSideBar() {
 
   const handleSignOut = async () => {
     try {
+      
       dispatch(signOutUser());
 
       const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
-
-      if (data.success === false) {
-        dispatch(signOutFaliure(data.message));
-        return;
-      }
 
       dispatch(signOutSuccess(data));
 
@@ -41,7 +36,7 @@ export default function ProfileSideBar() {
       navigate("/", { replace: true });
 
     } catch (error) {
-      dispatch(signOutFaliure(error.message));
+      dispatch(signOutFaliure("Error signing out"));
     } finally {
       // persistor.purge()
       localStorage.removeItem("persist:root")

@@ -177,6 +177,7 @@ export const signOut = async (req, res, next) => {
     if(refresh_token) {
       res.clearCookie("refresh_token", "", {expires: new Date(0)});
     }
+    
     res.clearCookie("access_token", "", {expires: new Date(0)});
 
     res.status(200).json(null);

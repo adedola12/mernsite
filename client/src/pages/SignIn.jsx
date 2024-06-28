@@ -91,24 +91,8 @@ export default function SignInModal({ onClose }) {
           </h3>
           <p className="text-sm text-gray-500">Welcome Back</p>
 
-          <form className="mt-2" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              placeholder="Email"
-              className="mt-2 p-3 w-full border rounded"
-              id="email"
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              autoComplete="off"
-              className="mt-2 p-3 w-full border rounded"
-              id="password"
-              onChange={handleChange}
-            />
-            {showForgotPassword ? (
-              <form onSubmit={handleForgotPassword}>
+          {showForgotPassword ? (
+              <form id="forgot-password" onSubmit={handleForgotPassword}>
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -117,6 +101,13 @@ export default function SignInModal({ onClose }) {
                   onChange={handleChange}
                   required
                 />
+                  <button
+                  type="button"
+                  className="text-sm text-blue-600 my-3 hover:underline"
+                  onClick={() => setShowForgotPassword(false)}
+                >
+                  Login with email and password?
+              </button>
                 <button
                   type="submit"
                   className="mt-2 p-3 w-full bg-red-600 text-white rounded"
@@ -124,30 +115,57 @@ export default function SignInModal({ onClose }) {
                   Reset Password
                 </button>
               </form>
-            ) : (
+            ) 
+            : (
+              <form className="mt-2" onSubmit={handleSubmit}>
+              <input
+                type="email"
+                placeholder="Email"
+                className="mt-2 p-3 w-full border rounded"
+                id="email"
+                onChange={handleChange}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                autoComplete="off"
+                className="mt-2 p-3 w-full border rounded"
+                id="password"
+                onChange={handleChange}
+              />
+              
               <button
-                type="button"
-                className="text-sm text-blue-600 mt-3 hover:underline"
-                onClick={() => setShowForgotPassword(true)}
+                  type="button"
+                  className="text-sm text-blue-600 mt-3 hover:underline"
+                  onClick={() => setShowForgotPassword(true)}
+                >
+                  Forgot Password?
+              </button>
+  
+  
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
               >
-                Forgot Password?
+                {loading ? "LOADING..." : "SIGN IN"}
               </button>
-            )}
+              <OAuth onClose={onClose} />
+              <div className="mt-3 text-center">
+                <button onClick={toggleSignUpModal} className="text-[#828282]">
+                  Create account
+                </button>
+              </div>
+            </form>
+            )
+          
+          }
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
-            >
-              {loading ? "LOADING..." : "SIGN IN"}
-            </button>
-            <OAuth onClose={onClose} />
-            <div className="mt-3 text-center">
-              <button onClick={toggleSignUpModal} className="text-[#828282]">
-                Create account
-              </button>
-            </div>
-          </form>
+
+
+
+
+
           {showSignUpModal && <SignUpModal onClose={toggleSignUpModal} />}
         </div>
         {error && <p className="text-red-500 mt-5">{error}</p>}

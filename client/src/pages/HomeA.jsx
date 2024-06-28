@@ -9,17 +9,12 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import ImageSlider from "../components/ImageSlider";
 import Marketplace from "../components/MarketPlace";
-// Import Marketplace component
+
 
 export default function HomeA() {
-
-
 
   return (
     <main className="min-h-screen">
