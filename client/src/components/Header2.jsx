@@ -5,7 +5,6 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { config } from "../../config";
 import {
   deleteUserFaliure,
   deleteUserStart,
