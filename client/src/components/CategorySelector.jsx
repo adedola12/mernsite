@@ -9,7 +9,7 @@ export default function CategorySelector({ onCategorySelected }) {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await fetch(`/api/product/getCategories`);
+        const res = await fetch(`${config.baseUrl}/api/product/getCategories`);
 
         const data = await res.json();
         setCategoryList(data);

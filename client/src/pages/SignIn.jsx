@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInFaliure,
@@ -49,7 +49,6 @@ export default function SignInModal({ onClose }) {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.success === false) {
         dispatch(signInFaliure(data.message));
@@ -83,7 +82,7 @@ export default function SignInModal({ onClose }) {
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        className="relative top-20 mx-auto p-5 border w-full md:max-w-96 shadow-lg rounded-md bg-white"
       >
         <button
           onClick={onClose}
@@ -102,40 +101,49 @@ export default function SignInModal({ onClose }) {
           </h3>
           <p className="text-sm text-gray-500">Welcome Back</p>
 
-          <form className="mt-2" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              placeholder="Email"
-              className="mt-2 p-3 w-full border rounded"
-              id="email"
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              autoComplete="off"
-              className="mt-2 p-3 w-full border rounded"
-              id="password"
-              onChange={handleChange}
-            />
-            {showForgotPassword ? (
-              <form onSubmit={handleForgotPassword}>
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="mt-2 p-3 w-full border rounded"
-                  id="email"
-                  onChange={handleChange}
-                  required
-                />
-                <button
-                  type="submit"
-                  className="mt-2 p-3 w-full bg-red-600 text-white rounded"
-                >
-                  Reset Password
-                </button>
-              </form>
-            ) : (
+          {showForgotPassword ? (
+            <form id="forgot-password" onSubmit={handleForgotPassword}>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="mt-2 p-3 w-full border rounded"
+                id="email"
+                onChange={handleChange}
+                required
+              />
+              <button
+                type="button"
+                className="text-sm text-blue-600 my-3 hover:underline"
+                onClick={() => setShowForgotPassword(false)}
+              >
+                Login with email and password?
+              </button>
+              <button
+                type="submit"
+                className="mt-2 p-3 w-full bg-red-600 text-white rounded"
+              >
+                Reset Password
+              </button>
+            </form>
+          ) : (
+            <form className="mt-2" onSubmit={handleSubmit}>
+              <input
+                type="email"
+                placeholder="Email"
+                className="mt-2 p-3 w-full border rounded"
+                id="email"
+                autoComplete="off"
+                onChange={handleChange}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                autoComplete="off"
+                className="mt-2 p-3 w-full border rounded"
+                id="password"
+                onChange={handleChange}
+              />
+
               <button
                 type="button"
                 className="text-sm text-blue-600 mt-3 hover:underline"
@@ -143,22 +151,23 @@ export default function SignInModal({ onClose }) {
               >
                 Forgot Password?
               </button>
-            )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
-            >
-              {loading ? "LOADING..." : "SIGN IN"}
-            </button>
-            <OAuth onClose={onClose} />
-            <div className="mt-3 text-center">
-              <button onClick={toggleSignUpModal} className="text-[#828282]">
-                Create account
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
+              >
+                {loading ? "Please wait..." : "SIGN IN"}
               </button>
-            </div>
-          </form>
+              <OAuth onClose={onClose} />
+              <div className="mt-3 text-center">
+                <button onClick={toggleSignUpModal} className="text-[#828282]">
+                  Create account
+                </button>
+              </div>
+            </form>
+          )}
+
           {showSignUpModal && <SignUpModal onClose={toggleSignUpModal} />}
         </div>
         {error && <p className="text-red-500 mt-5">{error}</p>}

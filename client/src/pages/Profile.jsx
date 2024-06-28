@@ -19,7 +19,6 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice";
-import ProfileSideBar from "../components/ProfileSideBar";
 import { config } from "../../config";
 
 const views = {
@@ -49,8 +48,7 @@ export default function Profile() {
   const [editListingError, setEditListingError] = useState(false);
   const [editProductError, setEditProductError] = useState(false);
 
-  console.log(userListings);
-  console.log(userProduct);
+
 
   const [activeView, setActiveView] = useState(views.Personal_Details);
   const dispatch = useDispatch();
@@ -105,10 +103,10 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       dispatch(updateUserStart());
 
-      const res = await fetch(
-        `${config.baseUrl}/api/user/update/${currentUser._id}`,
+      const res = await fetch(`${config.baseUrl}/api/user/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {
@@ -120,10 +118,7 @@ export default function Profile() {
       );
 
       const data = await res.json();
-      if (data.success === false) {
-        dispatch(updateUserFaliure(data.message));
-        return;
-      }
+
 
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
@@ -159,14 +154,17 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     try {
+      
       dispatch(signOutUser());
 
       const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
+   
+
       if (data.success === false) {
-        dispatch(signOutFaliure(data.message));
+        dispatch(signOutFaliure("Unable to signout"));
         return;
       }
 
@@ -310,32 +308,20 @@ export default function Profile() {
     } catch (error) {}
   };
 
-  const handleShowShopDetails = () => {
-    changeActiveView(views.Shop_Details);
-    handleShowProduct();
-    handleShowListing();
-  };
+  // const handleShowShopDetails = () => {
+  //   changeActiveView(views.Shop_Details);
+  //   handleShowProduct();
+  //   handleShowListing();
+  // };
 
   const changeActiveView = (newView) => {
     setActiveView(newView);
   };
 
-  console.log(userProduct);
-
   return (
-    <div className="flex justify-center w-full p-8 px-0  min-h-screen">
+    <div className="flex justify-center w-full p-0 px-0  min-h-screen">
       <div className="flex gap-6 shadow rounded-lg w-full p-5">
-        {/* SIDE BAR SECTION */}
 
-        {/* <ProfileSideBar
-          activeView={activeView}
-          changeActiveView={changeActiveView}
-          handleSignOut={handleSignOut}
-          handleDeleteUser={handleDeleteUser}
-          handleShowShopDetails={handleShowShopDetails}
-        /> */}
-
-        {/* DYNAMIC COMPONENT SECTION w-[800px] */}
         <div className="bg-[#FFFFFF] rounded  w-full p-5 flex-grow">
           {activeView === views.Personal_Details && (
             <>
@@ -411,7 +397,7 @@ export default function Profile() {
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "loading" : "update"}
+                  {loading ? "Please wait" : "Update"}
                 </button>
               </form>
             </>
@@ -548,7 +534,7 @@ export default function Profile() {
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "loading" : "update"}
+                  {loading ? "Please wait" : "Update"}
                 </button>
               </form>
             </>

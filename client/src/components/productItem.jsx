@@ -29,9 +29,6 @@ export default function ProductItem({ product}) {
             <p className="font-semibold flex items-center gap-2 text-base text-gray-500">
               NGN {product.regularPrice}/ {product.unit}
             </p>
-
-    
-
           </div>
         </Link>
         {/* Add RATING */}

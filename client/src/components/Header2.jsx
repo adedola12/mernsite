@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
@@ -14,11 +15,18 @@ import {
   signOutUser,
 } from "../redux/user/userSlice";
 import { config } from "../../config";
+import {
+  deleteUserFaliure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutFaliure,
+  signOutSuccess,
+  signOutUser,
+} from "../redux/user/userSlice";
+import { config } from "../../config";
 
 const Header2 = ({ toggleModal }) => {
   const { currentUser } = useSelector((state) => state.user);
-  const [searchTerm, setSearchTerm] = useState(" ");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,6 +62,15 @@ const Header2 = ({ toggleModal }) => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(location.search);
+  //   const searchTermFromUrl = urlParams.get("searchTerm");
+
+  //   if (searchTermFromUrl) {
+  //     setSearchTerm(searchTermFromUrl);
+  //   }
+  // }, [location.search]);
+
   // const handleSignOut = async () => {
   //   try {
   //     dispatch(signOutUser());
@@ -74,28 +91,28 @@ const Header2 = ({ toggleModal }) => {
   //     dispatch(signOutFaliure(error.message));
   //   }
   // };
-  const handleSignOut = async () => {
-    try {
-      dispatch(signOutUser());
+  // const handleSignOut = async () => {
+  //   try {
+  //     dispatch(signOutUser());
 
-      const res = await fetch(`/api/auth/signout`, {
-        credentials: "include",
-      });
+  //     const res = await fetch(`/api/auth/signout`, {
+  //       credentials: "include",
+  //     });
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      if (data.success === false) {
-        dispatch(signOutFaliure(data.message));
-        return;
-      }
+  //     if (data.success === false) {
+  //       dispatch(signOutFaliure(data.message));
+  //       return;
+  //     }
 
-      dispatch(signOutSuccess(data));
+  //     dispatch(signOutSuccess(data));
 
-      navigate("/");
-    } catch (error) {
-      dispatch(signOutFaliure(error.message));
-    }
-  };
+  //     navigate("/");
+  //   } catch (error) {
+  //     dispatch(signOutFaliure(error.message));
+  //   }
+  // };
   // const handleSignOut = async () => {
   //   try {
   //     dispatch(signOutUser());
@@ -118,6 +135,23 @@ const Header2 = ({ toggleModal }) => {
   //     dispatch(signOutFaliure(error.message));
   //   }
   // };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUser());
+
+      const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      dispatch(signOutSuccess(data));
+
+      navigate("/");
+    } catch (error) {
+      dispatch(signOutFaliure(error.message));
+    }
+  };
 
   const handleDeleteUser = async () => {
     try {
@@ -188,11 +222,29 @@ const Header2 = ({ toggleModal }) => {
               </Link>
             </li>
 
+            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+              <Link
+                to="/"
+                className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
+              >
+                Pricing
+              </Link>
+            </li>
+
+            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+              <Link
+                to="/"
+                className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
+              >
+                Services
+              </Link>
+            </li>
+
             <li onClick={closeNavMenu} className="relative group px-3 py-2">
               <div className="flex items-center cursor-pointer h-full">
                 <span className="flex items-center hover:opacity-50 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                   Product{" "}
-                  <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
+                  <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                 </span>
               </div>
               <div
@@ -255,13 +307,22 @@ const Header2 = ({ toggleModal }) => {
                 </div>
               </div>
             </li>
+
+            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+              <Link
+                to="/"
+                className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
+              >
+                Newsletters
+              </Link>
+            </li>
           </ul>
         </nav>
 
         <div className="flex items-center gap-3">
           <div className="">
             <ul className="flex items-center justify-between gap-2">
-              {currentUser == "User has been logged out!!" && (
+              {!currentUser && (
                 <>
                   <li onClick={() => toggleModal("signIn")}>
                     <Link className="rounded-full px-1 py-2 font-semibold text-[#00263D] hover:text-opacity-70 duration-300 bg-opacity-10 flex items-center group">
@@ -276,7 +337,7 @@ const Header2 = ({ toggleModal }) => {
                   </li>
                 </>
               )}
-              {currentUser !== "User has been logged out!!" && (
+              {currentUser && currentUser?._id && (
                 <>
                   <Link to="/profile" className="">
                     <img
@@ -308,7 +369,7 @@ const Header2 = ({ toggleModal }) => {
       {/* MOBILE */}
       {isMenuOpen && (
         <nav className="absolute h-screen w-full top-16 z-50  bg-white left-0 flex flex-col md:hidden ">
-          <ul className="flex flex-col items-start text-white font-semibold ">
+          <ul className="flex flex-col items-center gap-y-4 text-white font-semibold ">
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/HomeA"
@@ -326,6 +387,22 @@ const Header2 = ({ toggleModal }) => {
                 Marketplace
               </Link>
             </li>
+            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+              <Link
+                to="/"
+                className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
+              >
+                Pricing
+              </Link>
+            </li>
+            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+              <Link
+                to="/"
+                className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
+              >
+                Services
+              </Link>
+            </li>
 
             <li
               onClick={closeNavMenu}
@@ -334,16 +411,16 @@ const Header2 = ({ toggleModal }) => {
               <div className="flex items-center cursor-pointer h-full">
                 <span className="flex items-center hover:opacity-80 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                   Product{" "}
-                  <IoIosArrowForward className="ml-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
+                  <IoIosArrowForward className="ml-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                 </span>
               </div>
               <div
                 className="absolute top-0 left-0 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                             group-hover:transform z-50 min-w-max h-auto transform "
               >
-                <div className="relative  top-5 p-6 py-2 bg-white ml-2 border-l-2 border-l-blue-950 w-full h-full">
+                <div className="relative  top-5 p-6 py-2 bg-gray-100 -ml-10 border-l-2 border-l-blue-950 w-full h-full">
                   <div className="relative z-10">
-                    <ul className="text-[15px]">
+                    <ul className="text-[15px]r">
                       <li>
                         <Link
                           to={"/planswift-plugin"}
@@ -398,21 +475,21 @@ const Header2 = ({ toggleModal }) => {
               </div>
             </li>
 
-            {currentUser !== "User has been logged out!!" && (
-              <div className="w-full mt-6 flex flex-col gap-y-3 px-5 ">
+            {currentUser && currentUser?._id && (
+              <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
                 <button
-                  className="bg-red-500 hover:bg-red-400 duration-300 px-5 py-3 rounded-md text-white  text-center"
+                  className="duration-300 px-5 py-3 rounded-md hover:bg-gray-200 text-gray-400  text-center"
                   onClick={() => {
                     handleSignOut(), closeNavMenu();
                   }}
                 >
-                  Log Out
+                  Profesional
                 </button>
                 <button
-                  className="border-red-500 hover:bg-red-200 text-center duration-300 bg-red-100 border-2  px-5 py-3 rounded-md text-black"
+                  className="text-center duration-300 hover:bg-gray-200 px-5 py-3 rounded-md text-gray-400"
                   onClick={handleDeleteUser}
                 >
-                  Delete Account
+                  Sell on ADLM
                 </button>
               </div>
             )}

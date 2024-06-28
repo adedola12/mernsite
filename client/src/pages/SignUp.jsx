@@ -70,7 +70,7 @@ export default function SignUpModal({ onClose }) {
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="relative top-10 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        className="relative top-10 mx-auto p-5 border w-full md:max-w-96 shadow-lg rounded-md bg-white"
       >
         <button
           onClick={onClose}
@@ -99,6 +99,7 @@ export default function SignUpModal({ onClose }) {
               type="email"
               placeholder="Email"
               className="mt-2 p-3 w-full border rounded"
+              autoComplete="off"
               id="email"
               onChange={handleChange}
             />
@@ -115,7 +116,7 @@ export default function SignUpModal({ onClose }) {
               disabled={loading}
               className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
             >
-              {loading ? "LOADING..." : "SIGN UP"}
+              {loading ? "Please wait..." : "SIGN UP"}
             </button>
             <OAuth />
           </form>

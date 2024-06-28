@@ -1,3 +1,6 @@
+// http://localhost:5173
+// https://mernsite-k2ky.onrender.com
+
 const prod = {
   baseUrl: "https://adlmmarketplace.onrender.com",
 };

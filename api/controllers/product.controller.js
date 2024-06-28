@@ -2,6 +2,7 @@ import Product from "../models/product.model.js";
 import errorHandler from "../utils/error.js";
 
 import { productCategories } from "../constants/data.js";
+import User from "../models/user.model.js";
 
 
 export const createProduct = async (req, res, next) => {
@@ -146,8 +147,12 @@ export const getAllProductInSubCategory = async (req, res, next) => {
 
 export const getAllUserProduct = async (req, res, next) => {
   try {
-    const products = await Product.find({ userRef: req.params.userId });
-    res.json({ success: true, products });
+    const productPromise = Product.find({ userRef: req.params.userId });
+    const userPromise = User.findById(req.params.userId).select("-password");
+
+    const [products, user] = await Promise.all([productPromise, userPromise]);
+
+    res.json({ success: true, products, user });
   } catch (error) {
     next(error);
   }
