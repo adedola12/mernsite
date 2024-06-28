@@ -19,7 +19,6 @@ import {
   updateUserStart,
   updateUserSuccess,
 } from "../redux/user/userSlice";
-import ProfileSideBar from "../components/ProfileSideBar";
 import { config } from "../../config";
 
 const views = {
@@ -104,10 +103,10 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+
       dispatch(updateUserStart());
 
-      const res = await fetch(
-        `${config.baseUrl}/api/user/update/${currentUser._id}`,
+      const res = await fetch(`${config.baseUrl}/api/user/update/${currentUser._id}`,
         {
           method: "POST",
           headers: {
@@ -118,10 +117,7 @@ export default function Profile() {
       );
 
       const data = await res.json();
-      if (data.success === false) {
-        dispatch(updateUserFaliure(data.message));
-        return;
-      }
+
 
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
@@ -322,7 +318,7 @@ export default function Profile() {
   };
 
 
-
+console.log({error})
   return (
     <div className="flex justify-center w-full p-0 px-0  min-h-screen">
       <div className="flex gap-6 shadow rounded-lg w-full p-5">

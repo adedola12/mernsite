@@ -7,6 +7,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteUserFaliure, deleteUserStart, deleteUserSuccess, signOutFaliure, signOutSuccess, signOutUser } from '../redux/user/userSlice';
+import { config } from '../../config';
 
 
 
@@ -45,11 +46,6 @@ const Header2 = ({ toggleModal }) => {
           });
     
           const data = await res.json();
-    
-          if (data.success === false) {
-            dispatch(signOutFaliure(data.message));
-            return;
-          }
     
           dispatch(signOutSuccess(data));
     
@@ -118,10 +114,18 @@ const Header2 = ({ toggleModal }) => {
                         <Link to="/marketplace" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Marketplace</Link>
                     </li>
 
+                    <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
+                        <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Pricing</Link>
+                    </li>
+
+                    <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
+                        <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Services</Link>
+                    </li>
+
                     <li onClick={closeNavMenu} className='relative group px-3 py-2'> 
                         <div className='flex items-center cursor-pointer h-full'>
                             <span className="flex items-center hover:opacity-50 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
-                                Product <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
+                                Product <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                             </span>                        
                         </div>  
                         <div className="absolute top-0 -left-12 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
@@ -164,6 +168,10 @@ const Header2 = ({ toggleModal }) => {
                                     </div>
                                 </div>
                         </div>
+                    </li>
+
+                    <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
+                        <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Newsletters</Link>
                     </li>
                 </ul>
             </nav>
@@ -219,13 +227,19 @@ const Header2 = ({ toggleModal }) => {
         {
             isMenuOpen && (
             <nav className='absolute h-screen w-full top-16 z-50  bg-white left-0 flex flex-col md:hidden '>
-                <ul className='flex flex-col items-start text-white font-semibold '>
+                <ul className='flex flex-col items-center gap-y-4 text-white font-semibold '>
                     <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
                         <Link to="/HomeA" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Home</Link>
                     </li>
                     
                     <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
                         <Link to="/marketplace" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Marketplace</Link>
+                    </li>
+                    <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
+                        <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Pricing</Link>
+                    </li>
+                    <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
+                        <Link to="/" className='hover:opacity-50 duration-300 text-[#00263D] px-2 py-2'>Services</Link>
                     </li>
 
                     <li onClick={closeNavMenu} className='relative group px-3 py-2 bg-white'> 
@@ -236,10 +250,10 @@ const Header2 = ({ toggleModal }) => {
                         </div>  
                         <div className="absolute top-0 left-0 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                             group-hover:transform z-50 min-w-max h-auto transform ">
-                                <div className="relative  top-5 p-6 py-2 bg-white ml-2 border-l-2 border-l-blue-950 w-full h-full">
+                                <div className="relative  top-5 p-6 py-2 bg-gray-100 -ml-10 border-l-2 border-l-blue-950 w-full h-full">
                                 
                                     <div className="relative z-10">                               
-                                        <ul className='text-[15px]'>
+                                        <ul className='text-[15px]r'>
                                                     <li>
                                                         <Link to={"/planswift-plugin"} className='text-gray-600 hover:text-gray-800 py-1 block font-normal'>
                                                             Planswift Plugin
@@ -279,21 +293,21 @@ const Header2 = ({ toggleModal }) => {
 
                     {
                        currentUser && currentUser?._id  && (
-                            <div className="w-full mt-6 flex flex-col gap-y-3 px-5 ">
+                            <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
                                 <button
-                                    className="bg-red-500 hover:bg-red-400 duration-300 px-5 py-3 rounded-md text-white  text-center"
+                                    className="duration-300 px-5 py-3 rounded-md hover:bg-gray-200 text-gray-400  text-center"
                                     onClick={() => {
                                         handleSignOut(),
                                         closeNavMenu()
                                     }}
                                 >
-                                Log Out
+                                Profesional
                                 </button>
                                 <button
-                                    className="border-red-500 hover:bg-red-200 text-center duration-300 bg-red-100 border-2  px-5 py-3 rounded-md text-black"
+                                    className="text-center duration-300 hover:bg-gray-200 px-5 py-3 rounded-md text-gray-400"
                                     onClick={handleDeleteUser}
                                     >
-                                    Delete Account
+                                    Sell on ADLM
                                 </button>
 
                             </div>

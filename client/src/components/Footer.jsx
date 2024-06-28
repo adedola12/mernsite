@@ -232,29 +232,20 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between my-5 px-5 md:px-10 items-center">
-          <ul className="list-none  flex gap-6">
+        <div className="flex flex-col md:flex-row items-start flex-wrap md:justify-between my-3 gap-5 px-5 md:px-10 md:items-center">
+          <ul className="list-none flex flex-col md:flex-row gap-4">
             <li>
-              <Link
-                to="/terms-of-service"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
+              <Link to="/terms-of-service"  className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
                 Terms of service
               </Link>
             </li>
             <li>
-              <Link
-                to="/privacy-policy"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
+              <Link to="/privacy-policy" className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link
-                to="/why-adlm"
-                className="text-gray-600 hover:text-gray-800 text-sm"
-              >
+              <Link to="/why-adlm" className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
                 Why ADLM Studio
               </Link>
             </li>

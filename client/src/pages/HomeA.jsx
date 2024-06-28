@@ -20,7 +20,7 @@ export default function HomeA() {
     <main className="min-h-screen">
       {/* Top Section */}
       <div className="w-full text-center md:text-start">
-        <div className="flex flex-col lg:flex-row lg:justify-between py-16 px-4 sm:px-0 lg:pl-10  gap-5">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:py-16 px-4 sm:px-0 lg:pl-10  gap-5">
           <div className="flex flex-col items-center lg:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 lg:w-[280px]">
               <Link to={"/product"} className=" font-[Inter] text-[14px]">
@@ -43,13 +43,13 @@ export default function HomeA() {
             <div className="flex flex-col md:flex-row gap-3 mt-3 w-full">
               <Link
                 to={"https://wa.me/message/HS7PK467KV53I1"}
-                className="bg-black duration-300 border-2 w-full text-white text-center p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"
+                className="bg-black duration-300 border-2 w-full lg:w-auto text-white text-center p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"
               >
                 Request a demo
               </Link>
               <Link
                 to={"https://youtube.com/@ADLMStudio?si=Ul6dJx4YRVu-IR79"}
-                className="rounded-lg p-4 flex gap-3 items-center justify-center border-2  text-center  w-full border-black duration-300  hover:bg-black  hover:text-white"
+                className="rounded-lg p-4 flex gap-3 items-center justify-center border-2 text-center w-full lg:w-auto border-black duration-300  hover:bg-black  hover:text-white"
               >
                 <FaPlay className="bg-transparent" /> Watch Video
               </Link>
@@ -108,12 +108,12 @@ export default function HomeA() {
       {/* Integration */}
 
     <div className="bg-[#F5F5F5] ">
-        <div className="lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between px-8 py-16">
-          <div className="flex flex-col space-y-5 md:space-y-7 lg:w-[510px] lg:mt-[89px]">
+        <div className="w-full lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between px-8 py-16">
+          <div className="flex flex-col space-y-5 md:space-y-7 w-ful lg:max-w-[510px] lg:mt-[89px]">
             <h2 className="font-bold text-5xl md:text-6xl text-[#1D1D1D]">
               Integration with other Product
             </h2>
-            <p className="text-[#1D1D1D] w-[405px] md:text-2xl">
+            <p className="text-[#1D1D1D] w-full lg:max-w-[405px] md:text-2xl">
               Learn how teams of all sizes are using ADLM integrate with other
               products to create value.
             </p>
