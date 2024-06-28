@@ -69,7 +69,7 @@ export default function Marketplace() {
                   className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
                   focus:ring-blue-500"
                 />
-                <div className="grid grid-col-2 md:grid-cols-2 gap-4 ">
+                <div className="grid grid-col-1 md:grid-cols-2 gap-4 w-full">
                   <LocationSelector onStateSelected={handleChange} />
                   <CategorySelector onCategorySelected={handleChange} />
                 </div>
