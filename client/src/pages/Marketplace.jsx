@@ -59,7 +59,7 @@ export default function Marketplace() {
             <h1 className="font-semibold text-4xl items-center text-white text-center mb-4">
               Explore Marketplace
             </h1>
-            <div className="w-full max-w-[959px] px-2">
+            <div className="w-full max-w-[959px]">
               <div className="grid md:grid-cols-[auto_1fr_auto] w-full gap-3 bg-white p-4 rounded-lg shadow-md">
                 <input
                   type="text"
