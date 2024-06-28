@@ -294,7 +294,7 @@ export default function SellerShop() {
                   <form onSubmit={handleSubmitCategory} className="w-full">
                     
                   <div className="w-full md:max-w-[959px] px-2">
-                      <div className="grid grid-cols-1 md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
+                      <div className="grid grid-cols-1 text-base md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
                         <input
                           type="text"
                           name="location"
