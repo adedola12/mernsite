@@ -55,7 +55,7 @@ export default function LocationSelector({ onStateSelected }) {
         id="state-selector"
         value={selectedState}
         onChange={handleStateChanged}
-        className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
+        className="w-full border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
         focus:ring-blue-500"
       >
         <option value="" className="text-gray-600 text-sm">

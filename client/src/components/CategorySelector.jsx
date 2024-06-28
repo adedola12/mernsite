@@ -34,7 +34,7 @@ export default function CategorySelector({ onCategorySelected }) {
         id="type-selector"
         value={selectedCategory}
         onChange={handleCategoryChange}
-        className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
+        className="w-full border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
           focus:ring-blue-500"
       >
         <option value="">Categories</option>
