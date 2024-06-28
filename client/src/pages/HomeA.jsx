@@ -45,7 +45,7 @@ export default function HomeA() {
                 reach of Nigeria and Africa construction industry as a whole.
               </p>
             </div>
-            <div className="flex gap-3 mt-3">
+            <div className="flex flex-col md:flex-row gap-3 mt-3">
               <Link
                 to={"https://wa.me/message/HS7PK467KV53I1"}
                 className="bg-black duration-300 border-2 text-white p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"

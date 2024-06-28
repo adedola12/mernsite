@@ -58,21 +58,20 @@ export const signin = async (req, res, next) => {
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
       path: "/",
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: "none",
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
-    })
+    });
 
     res.cookie("access_token", access_token, {
       httpOnly: true,
       path: "/",
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: "none",
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
-    })
-    .status(200)
-    .json({...rest, sessionExp});
+    });
 
+    return res.status(200).json({...rest, sessionExp });
   } catch (error) {
     next(error);
   }
@@ -105,18 +104,18 @@ export const google = async (req, res, next) => {
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
         path: "/",
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: "none",  
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
       res.cookie("access_token", access_token, {
         path: "/",
-        httpOnly: false,
-        secure: false,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: "lax",  
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
-      })
+      });
       
 
       return res.status(200).json({...rest, sessionExp });
@@ -145,15 +144,15 @@ export const google = async (req, res, next) => {
       res.cookie("refresh_token", refresh_token, {
         httpOnly: true,
         path: "/",
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: "none",  
         expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
       })
 
       res.cookie("access_token", access_token, {
         path: "/",
-        httpOnly: false,
-        secure: false,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: "lax",  
         expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
       })
@@ -180,7 +179,7 @@ export const signOut = async (req, res, next) => {
     }
     res.clearCookie("access_token", "", {expires: new Date(0)});
 
-    res.status(200).json("User has been logged out!!");
+    res.status(200).json(null);
   } catch (error) {
     next(error);
   }
@@ -207,15 +206,15 @@ export const refresh = async (req, res, next) => {
     res.cookie("refresh_token", refresh_token, {
       httpOnly: true,
       path: "/",
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: "none",  
       expires: new Date(Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT),
     })
 
     res.cookie("access_token", access_token, {
       path: "/",
-      httpOnly: false,
-      secure: false,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: "lax",  
       expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
     })

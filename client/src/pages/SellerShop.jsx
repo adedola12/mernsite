@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductItem from "../components/productItem";
 import { FaPhone, FaStar } from "react-icons/fa";
-import { MdLocationOn } from "react-icons/md";
 import StarRating from "../components/Rating";
 import { useSelector } from "react-redux";
 import { config } from "../../config";
@@ -61,12 +60,8 @@ export default function SellerShop() {
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState(null);
-  const [allProduct, setAllProduct] = useState([]);
   const [showNumber, setShowNumber] = useState(false);
   const { userId } = useParams();
-
-
-
   const [selectedTab, setSelectedTab] = useState(1);
   const [rating, setRating] = useState(0);
   
@@ -78,18 +73,8 @@ export default function SellerShop() {
     message: "",
   });
 
-  const [category, setCategory] = useState({
-    location: "",
-    city: "",
-    category: "",
-  });
-
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleCategoryFormInputChange = (event) => {
-    const {name, value, type} = event.target;
-    setCategory((prevState) => ({...prevState, [name]: value}));
-  }
 
   const handleLocationInput = ({ value }) => {
     setParams({ ...params, value });
@@ -202,6 +187,7 @@ export default function SellerShop() {
           return;
         } else {
           setProducts(data.products);
+          setUser(data.user);
         }
       } catch (error) {
         setError(true)
@@ -209,33 +195,34 @@ export default function SellerShop() {
         setLoading(false);
       }
     };
-    const fetchUserInfo = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(`${config.baseUrl}/api/user/${userId}`, {
-          credentials: "include"
-        });
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch user");
-        }
-        const data = await res.json();
+    // const fetchUserInfo = async () => {
+    //   try {
+    //     setLoading(true);
+    //     const res = await fetch(`${config.baseUrl}/api/user/${userId}`, {
+    //       credentials: "include"
+    //     });
 
-        if (data.success === false) {
-          setError(true);
-          return;
-        } else {
-          setUser(data);
-        }
-      } catch (error) {
-        setError(true)
-      } finally {
-        setLoading(false);
-      }
-    };
+    //     if (!res.ok) {
+    //       throw new Error("Failed to fetch user");
+    //     }
+    //     const data = await res.json();
+
+    //     if (data.success === false) {
+    //       setError(true);
+    //       return;
+    //     } else {
+    //       setUser(data);
+    //     }
+    //   } catch (error) {
+    //     setError(true)
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
     fetchProductsByUser();
-    fetchUserInfo();
+    // fetchUserInfo();
   }, [userId]);
 
 

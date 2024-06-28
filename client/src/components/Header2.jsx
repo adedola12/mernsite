@@ -13,8 +13,6 @@ import { deleteUserFaliure, deleteUserStart, deleteUserSuccess, signOutFaliure, 
 const Header2 = ({ toggleModal }) => {
 
     const { currentUser } = useSelector((state) => state.user);
-    const [searchTerm, setSearchTerm] = useState(" ");
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -27,26 +25,16 @@ const Header2 = ({ toggleModal }) => {
 
     const smallScreen = ()  => windowSize < 1024;
   
-    useEffect(() => {
-      const urlParams = new URLSearchParams(location.search);
-      const searchTermFromUrl = urlParams.get("searchTerm");
+    // useEffect(() => {
+    //   const urlParams = new URLSearchParams(location.search);
+    //   const searchTermFromUrl = urlParams.get("searchTerm");
   
-      if (searchTermFromUrl) {
-        setSearchTerm(searchTermFromUrl);
-      }
-    }, [location.search]);
+    //   if (searchTermFromUrl) {
+    //     setSearchTerm(searchTermFromUrl);
+    //   }
+    // }, [location.search]);
   
-    const handleMouseEnter = () => {
-      setIsDropdownOpen(!isDropdownOpen);
-    };
-  
-    const handleMouseLeave = () => {
-      setIsDropdownOpen(isDropdownOpen);
-    };
-  
-    const handleToggleMenu = () => {
-      setIsMenuOpen((prevState) => !prevState);
-    };
+
 
     const handleSignOut = async () => {
         try {
@@ -184,7 +172,7 @@ const Header2 = ({ toggleModal }) => {
                 <div className="">
                     <ul className='flex items-center justify-between gap-2'>
                         {
-                            currentUser == "User has been logged out!!" && (
+                            !currentUser && (
                                 <>
                                     <li onClick={() => toggleModal("signIn")}> 
                                         <Link className='rounded-full px-1 py-2 font-semibold text-[#00263D] hover:text-opacity-70 duration-300 bg-opacity-10 flex items-center group'>
@@ -202,14 +190,11 @@ const Header2 = ({ toggleModal }) => {
                             )
                         }
                         {
-                            currentUser !== "User has been logged out!!" && (
+                            currentUser && currentUser?._id && (
                                 <>
                                 <Link to="/profile" className="">
-                                <img
-                                    src={currentUser?.avatar && currentUser?.avatar || "https://placehold.jp/150x150.png"}
-                                    alt="pp"
-                                    className="rounded-full h-7 w-7 object-cover"
-                                />
+                                    <img src={currentUser?.avatar && currentUser?.avatar || "https://placehold.jp/150x150.png"}
+                                    alt="pp" className="rounded-full h-7 w-7 object-cover" />
                                 </Link>
                             </>
                             )
@@ -293,7 +278,7 @@ const Header2 = ({ toggleModal }) => {
                     </li>
 
                     {
-                       currentUser !== "User has been logged out!!" && (
+                       currentUser && currentUser?._id  && (
                             <div className="w-full mt-6 flex flex-col gap-y-3 px-5 ">
                                 <button
                                     className="bg-red-500 hover:bg-red-400 duration-300 px-5 py-3 rounded-md text-white  text-center"

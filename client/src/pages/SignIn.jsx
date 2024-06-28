@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   signInFaliure,
@@ -49,7 +49,6 @@ export default function SignInModal({ onClose }) {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.success === false) {
         dispatch(signInFaliure(data.message));

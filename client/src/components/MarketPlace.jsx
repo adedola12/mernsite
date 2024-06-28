@@ -108,12 +108,12 @@ export default function Marketplace() {
 
   return (
     <div className="bg-[#F5F5F5]">
-      <div className="w-full lg:max-w-[90%] mx-auto p-5">
+      <div className="w-full lg:max-w-[90%] mx-auto px-2 md:p-5">
         <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
           Explore Marketplace
         </h2>
         <div className=" gap-4 my-5 grid grid-cols-1 lg:grid-cols-[300px_1fr] w-full">
-          <div className="bg-white p-5 px-3 rounded-md">
+          <div className="bg-white py-5 px-2 rounded-md">
             <div className="flex flex-col">
               <div className="w-[80px] h-[80px]">
                 <img
@@ -134,7 +134,7 @@ export default function Marketplace() {
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md">
             <h2 className="font-semibold text-3xl ">ADLM Marketplace</h2>
             <div className="flex flex-col md:flex-row gap-4 w-full">
-              <div className="border p-4 bg-[#F1F1F1] rounded-lg flex gap-6 items-center md:w-[205px] justify-between">
+              <div className="border p-2 bg-[#F1F1F1] rounded-lg flex gap-6 items-center md:w-[205px] justify-between">
                 <p className="text-[#CFCFCF] font-semibold">Location</p>
                 <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
               </div>
