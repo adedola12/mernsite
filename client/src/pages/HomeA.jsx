@@ -108,8 +108,8 @@ export default function HomeA() {
       {/* Integration */}
 
     <div className="bg-[#F5F5F5] ">
-        <div className="w-full lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between px-8 py-16">
-          <div className="flex flex-col space-y-5 md:space-y-7 w-ful lg:max-w-[510px] lg:mt-[89px]">
+        <div className="w-full lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between p-5 py-16">
+          <div className="flex flex-col space-y-5 md:space-y-7 w-full lg:max-w-[510px] lg:mt-[89px]">
             <h2 className="font-bold text-5xl md:text-6xl text-[#1D1D1D]">
               Integration with other Product
             </h2>

@@ -123,6 +123,7 @@ export default function SignInModal({ onClose }) {
                 placeholder="Email"
                 className="mt-2 p-3 w-full border rounded"
                 id="email"
+                autoComplete="off"
                 onChange={handleChange}
               />
               <input
@@ -148,7 +149,7 @@ export default function SignInModal({ onClose }) {
                 disabled={loading}
                 className="mt-2 p-3 w-full bg-[#00263D] text-white rounded"
               >
-                {loading ? "LOADING..." : "SIGN IN"}
+                {loading ? "Please wait..." : "SIGN IN"}
               </button>
               <OAuth onClose={onClose} />
               <div className="mt-3 text-center">

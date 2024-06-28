@@ -244,7 +244,7 @@ const Header2 = ({ toggleModal }) => {
                     <li onClick={closeNavMenu} className='relative group px-3 py-2 bg-white'> 
                         <div className='flex items-center cursor-pointer h-full'>
                             <span className="flex items-center hover:opacity-80 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
-                                Product <IoIosArrowForward className="ml-1 text-sm text-[#00263D] group-hover:rotate-90 group-hover:duration-300 " />
+                                Product <IoIosArrowForward className="ml-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                             </span>                        
                         </div>  
                         <div className="absolute top-0 left-0 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 

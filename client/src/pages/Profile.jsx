@@ -398,7 +398,7 @@ console.log({error})
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "loading" : "update"}
+                  {loading ? "Please wait" : "Update"}
                 </button>
               </form>
             </>
@@ -535,7 +535,7 @@ console.log({error})
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "loading" : "update"}
+                  {loading ? "Please wait" : "Update"}
                 </button>
               </form>
             </>
