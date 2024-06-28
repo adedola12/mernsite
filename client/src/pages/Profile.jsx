@@ -317,8 +317,6 @@ export default function Profile() {
     setActiveView(newView);
   };
 
-
-console.log({error})
   return (
     <div className="flex justify-center w-full p-0 px-0  min-h-screen">
       <div className="flex gap-6 shadow rounded-lg w-full p-5">
