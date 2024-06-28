@@ -28,7 +28,7 @@ export default function HomeA() {
               </Link>
               <FaArrowRight className="items-center w-[16px] h-[16px]" />
             </div>
-            <h1 className="text-4xl text-center lg:text-start font-bold md:text-6xl font-[DMSans] w-full">
+            <h1 className="text-5xl text-center lg:text-start font-bold md:text-6xl font-[DMSans] w-full">
               Quantity
               <span className="text-[#9747FF]"> takeoff</span> <br /> just got
               easier <br /> and faster
@@ -40,16 +40,16 @@ export default function HomeA() {
                 reach of Nigeria and Africa construction industry as a whole.
               </p>
             </div>
-            <div className="flex flex-col md:flex-row gap-3 mt-3">
+            <div className="flex flex-col md:flex-row gap-3 mt-3 w-full">
               <Link
                 to={"https://wa.me/message/HS7PK467KV53I1"}
-                className="bg-black duration-300 border-2 text-white p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"
+                className="bg-black duration-300 border-2 w-full text-white text-center p-4 rounded-lg  hover:bg-transparent border-black hover:text-black"
               >
                 Request a demo
               </Link>
               <Link
                 to={"https://youtube.com/@ADLMStudio?si=Ul6dJx4YRVu-IR79"}
-                className="rounded-lg p-4 flex gap-3 items-center border-2  border-black duration-300  hover:bg-black  hover:text-white"
+                className="rounded-lg p-4 flex gap-3 items-center justify-center border-2  text-center  w-full border-black duration-300  hover:bg-black  hover:text-white"
               >
                 <FaPlay className="bg-transparent" /> Watch Video
               </Link>

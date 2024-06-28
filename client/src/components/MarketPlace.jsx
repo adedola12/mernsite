@@ -109,7 +109,7 @@ export default function Marketplace() {
   return (
     <div className="bg-[#F5F5F5]">
       <div className="w-full lg:max-w-[90%] mx-auto px-2 md:p-5">
-        <h2 className="font-semibold text-6xl pt-4 font-[DMSans]">
+        <h2 className="font-semibold text-4xl md:text-5xl px-2 pt-4 font-[DMSans]">
           Explore Marketplace
         </h2>
         <div className=" gap-4 my-5 grid grid-cols-1 lg:grid-cols-[300px_1fr] w-full">
