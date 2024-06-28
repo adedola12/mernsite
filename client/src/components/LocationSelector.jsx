@@ -49,7 +49,7 @@ export default function LocationSelector({ onStateSelected }) {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <select
         name="stateSelector"
         id="state-selector"

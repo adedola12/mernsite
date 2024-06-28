@@ -28,7 +28,7 @@ export default function CategorySelector({ onCategorySelected }) {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <select
         name="categorySelector"
         id="type-selector"
