@@ -76,7 +76,7 @@ export default function SignInModal({ onClose }) {
 
   return (
     <div id="signin-modal" onClick={handleShowModal} className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full">
-      <div onClick={event => event.stopPropagation()} className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div onClick={event => event.stopPropagation()} className="relative top-20 mx-auto p-5 border w-full md:max-w-96 shadow-lg rounded-md bg-white">
         <button onClick={onClose} className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300">
           <MdClose className="text-gray-500 group-hover:text-gray-600" />
         </button>
