@@ -49,6 +49,7 @@ export default function LocationSelector({ onStateSelected }) {
   };
 
   return (
+    <div className="">
       <select
         name="stateSelector"
         id="state-selector"
@@ -66,5 +67,7 @@ export default function LocationSelector({ onStateSelected }) {
           </option>
         ))}
       </select>
+
+    </div>
   );
 }
