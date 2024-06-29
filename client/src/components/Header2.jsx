@@ -382,21 +382,16 @@ const Header2 = ({ toggleModal }) => {
 
             {currentUser && currentUser?._id && (
               <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
-                <button
-                  className="duration-300 px-5 py-3 hover:bg-gray-200 text-gray-400  text-center"
-                  onClick={() => {
-                    handleSignOut(), closeNavMenu();
-                  }}
-                >
+                <button className="duration-300 px-5 py-3 hover:bg-gray-200 text-gray-400  text-center">
                   Profesional
                 </button>
                 <div className="w-px h-full bg-gray-200" />
-                <button
+                <Link
                   className="text-center duration-300 hover:bg-gray-200 px-5 py-3 text-gray-400"
-                  onClick={handleDeleteUser}
+                  to={"/CreateProduct"}
                 >
                   Sell on ADLM
-                </button>
+                </Link>
               </div>
             )}
 
