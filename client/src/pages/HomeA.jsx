@@ -13,9 +13,7 @@ import "swiper/css/bundle";
 import ImageSlider from "../components/ImageSlider";
 import Marketplace from "../components/MarketPlace";
 
-
 export default function HomeA() {
-
   return (
     <main className="min-h-screen">
       {/* Top Section */}
@@ -63,9 +61,8 @@ export default function HomeA() {
       {/* Explore Market Place */}
       <div className="w-full flex flex-col">
         {/* Use Marketplace component */}
-        <Marketplace /> 
+        <Marketplace />
       </div>
-
 
       {/* Unlock Features */}
       <div className="flex lg:flex-row flex-col items-start justify-between px-10">
@@ -107,7 +104,7 @@ export default function HomeA() {
       </div>
       {/* Integration */}
 
-    <div className="bg-[#F5F5F5] ">
+      <div className="bg-[#F5F5F5] ">
         <div className="w-full lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between p-5 py-16">
           <div className="flex flex-col space-y-5 md:space-y-7 w-full lg:max-w-[510px] lg:mt-[89px]">
             <h2 className="font-bold text-5xl md:text-6xl text-[#1D1D1D]">
@@ -119,13 +116,17 @@ export default function HomeA() {
             </p>
             <div className="flex space-x-5 ">
               <div className="w-[246px] border-t-2 border-black">
-                <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">10,000</h3>
+                <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">
+                  10,000
+                </h3>
                 <p className="text-[#828282]">
                   Vendors from all over the country
                 </p>
               </div>
               <div className="w-[246px] border-t-2 border-black">
-                <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">50,000</h3>
+                <h3 className="text-3xl font-bold text-[#1D1D1D] pt-3">
+                  50,000
+                </h3>
                 <p className="text-[#828282]">Users Uses ADLM Plugins</p>
               </div>
             </div>
@@ -205,7 +206,7 @@ export default function HomeA() {
             </div>
           </div>
         </div>
-    </div>
+      </div>
       {/* Ready to serve */}
       <div className=" my-10 lg:my-[160px] p-5 lg:mx-[190px] ">
         <div className="flex flex-col gap-3">
@@ -218,7 +219,10 @@ export default function HomeA() {
           </p>
         </div>
         <div className="flex md:flex-row flex-col mt-6  gap-8 justify-center">
-          <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
+          <Link
+            className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2"
+            to={"/services"}
+          >
             <div className="flex flex-col">
               <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center">
                 <img src="icon/bldg.png" alt="Training Icon" />
@@ -234,7 +238,10 @@ export default function HomeA() {
               </div>
             </div>
           </Link>
-          <Link className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2">
+          <Link
+            className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2"
+            to={"/pricing"}
+          >
             <div className="flex flex-col">
               <div className=" w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center">
                 <img
