@@ -138,7 +138,7 @@ const Header2 = ({ toggleModal }) => {
 
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/"
+                to="/services"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Services
@@ -218,7 +218,7 @@ const Header2 = ({ toggleModal }) => {
 
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/"
+                to="/BIMNews"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Newsletters

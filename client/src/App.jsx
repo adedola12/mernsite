@@ -13,7 +13,6 @@ import CreateProduct from "./pages/CreateProduct";
 import Product from "./pages/Product";
 import Marketplace from "./pages/Marketplace";
 import Pricing from "./pages/Pricing";
-import Services from "./pages/Services";
 import Newsletter from "./pages/Newsletter";
 import Search from "./pages/Search";
 import HomeA from "./pages/HomeA";
@@ -28,6 +27,9 @@ import Header2 from "./components/Header2";
 import DashboardDefault from "./pages/DashboardDefault";
 import ShopDetails from "./pages/ShopDetails";
 import SellerReviews from "./pages/SellerReviews";
+import Services from "./pages/productPage/Services";
+import PlanswiftPlugin from "./pages/productPage/PlanswiftPlugin";
+import RateGen from "./pages/productPage/RateGen";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -56,8 +58,8 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/newsletter" element={<Newsletter />} />
+
+        <Route path="/BIMNews" element={<Newsletter />} />
 
         <Route path="/sellerShop/:userId" element={<SellerShop />} />
 
@@ -66,6 +68,9 @@ export default function App() {
         <Route path="/product/:productId" element={<Product />} />
 
         <Route path="/search" element={<Search />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/planswift-plugin" element={<PlanswiftPlugin />} />
+        <Route path="/rate-gen" element={<RateGen />} />
 
         <Route element={<PrivateRoute />}>
           <Route element={<DashboardDefault />}>
