@@ -31,27 +31,6 @@ const Header2 = ({ toggleModal }) => {
 
   const smallScreen = () => windowSize < 1024;
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get("searchTerm");
-
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
-    }
-  }, [location.search]);
-
-  const handleMouseEnter = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDropdownOpen(isDropdownOpen);
-  };
-
-  const handleToggleMenu = () => {
-    setIsMenuOpen((prevState) => !prevState);
-  };
-
   // useEffect(() => {
   //   const urlParams = new URLSearchParams(location.search);
   //   const searchTermFromUrl = urlParams.get("searchTerm");
@@ -61,70 +40,6 @@ const Header2 = ({ toggleModal }) => {
   //   }
   // }, [location.search]);
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutUser());
-
-  //     const res = await fetch(`${config.baseUrl}/api/auth/signout`);
-
-  //     const data = await res.json();
-
-  //     if (data.success === false) {
-  //       dispatch(signOutFaliure(data.message));
-  //       return;
-  //     }
-
-  //     dispatch(signOutSuccess(data));
-
-  //     navigate("/");
-  //   } catch (error) {
-  //     dispatch(signOutFaliure(error.message));
-  //   }
-  // };
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutUser());
-
-  //     const res = await fetch(`/api/auth/signout`, {
-  //       credentials: "include",
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (data.success === false) {
-  //       dispatch(signOutFaliure(data.message));
-  //       return;
-  //     }
-
-  //     dispatch(signOutSuccess(data));
-
-  //     navigate("/");
-  //   } catch (error) {
-  //     dispatch(signOutFaliure(error.message));
-  //   }
-  // };
-  // const handleSignOut = async () => {
-  //   try {
-  //     dispatch(signOutUser());
-
-  //     const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
-  //       credentials: "include",
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (data.success === false) {
-  //       dispatch(signOutFaliure(data.message));
-  //       return;
-  //     }
-
-  //     dispatch(signOutSuccess(data));
-
-  //     navigate("/");
-  //   } catch (error) {
-  //     dispatch(signOutFaliure(error.message));
-  //   }
-  // };
   const handleSignOut = async () => {
     try {
       dispatch(signOutUser());
@@ -231,12 +146,15 @@ const Header2 = ({ toggleModal }) => {
             </li>
 
             <li onClick={closeNavMenu} className="relative group px-3 py-2">
-              <div className="flex items-center cursor-pointer h-full">
+              <Link
+                to={"#"}
+                className="flex items-center cursor-pointer h-full"
+              >
                 <span className="flex items-center hover:opacity-50 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                   Product{" "}
                   <IoIosArrowForward className="ml-1 mt-1 text-sm text-[#00263D] rotate-90 group-hover:duration-300 " />
                 </span>
-              </div>
+              </Link>
               <div
                 className="absolute top-0 -left-12 duration-500 ease-in-out transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible 
                             group-hover:transform z-50 min-w-max transform "
@@ -394,10 +312,7 @@ const Header2 = ({ toggleModal }) => {
               </Link>
             </li>
 
-            <li
-              onClick={closeNavMenu}
-              className="relative group px-3 py-2 bg-white"
-            >
+            <li className="relative group px-3 py-2 bg-white">
               <div className="flex items-center cursor-pointer h-full">
                 <span className="flex items-center hover:opacity-80 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                   Product{" "}
@@ -411,7 +326,7 @@ const Header2 = ({ toggleModal }) => {
                 <div className="relative  top-5 p-6 py-2 bg-gray-100 -ml-10 border-l-2 border-l-blue-950 w-full h-full">
                   <div className="relative z-10">
                     <ul className="text-[15px]r">
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/planswift-plugin"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -419,7 +334,7 @@ const Header2 = ({ toggleModal }) => {
                           Planswift Plugin
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/rate-gen"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -427,7 +342,7 @@ const Header2 = ({ toggleModal }) => {
                           Rate Generator
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/bim-course"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -435,7 +350,7 @@ const Header2 = ({ toggleModal }) => {
                           BIM Course
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/ms-project"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -443,7 +358,7 @@ const Header2 = ({ toggleModal }) => {
                           Microsoft Project Course
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/mat-lab-gen"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -451,7 +366,7 @@ const Header2 = ({ toggleModal }) => {
                           Material and Labour Generator
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={closeNavMenu}>
                         <Link
                           to={"/revit-plugin"}
                           className="text-gray-600 hover:text-gray-800 py-1 block font-normal"
@@ -468,15 +383,16 @@ const Header2 = ({ toggleModal }) => {
             {currentUser && currentUser?._id && (
               <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
                 <button
-                  className="duration-300 px-5 py-3 rounded-md hover:bg-gray-200 text-gray-400  text-center"
+                  className="duration-300 px-5 py-3 hover:bg-gray-200 text-gray-400  text-center"
                   onClick={() => {
                     handleSignOut(), closeNavMenu();
                   }}
                 >
                   Profesional
                 </button>
+                <div className="w-px h-full bg-gray-200" />
                 <button
-                  className="text-center duration-300 hover:bg-gray-200 px-5 py-3 rounded-md text-gray-400"
+                  className="text-center duration-300 hover:bg-gray-200 px-5 py-3 text-gray-400"
                   onClick={handleDeleteUser}
                 >
                   Sell on ADLM
