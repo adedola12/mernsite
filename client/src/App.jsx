@@ -1,35 +1,34 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
-import CreateListing from "./pages/CreateListing";
-import UpdateListing from "./pages/UpdateListing";
-import Listing from "./pages/Listing";
-import CreateProduct from "./pages/CreateProduct";
-import Product from "./pages/Product";
-import Marketplace from "./pages/Marketplace";
-import Pricing from "./pages/Pricing";
-import Newsletter from "./pages/Newsletter";
-import Search from "./pages/Search";
-import HomeA from "./pages/HomeA";
-import ProductDemo from "./pages/ProductDemo";
+
 import Footer from "./components/Footer";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import SignInModal from "./pages/SignIn";
-import SignUpModal from "./pages/SignUp";
-import SellerShop from "./pages/SellerShop";
+
 import Header2 from "./components/Header2";
-import DashboardDefault from "./pages/DashboardDefault";
-import ShopDetails from "./pages/ShopDetails";
-import SellerReviews from "./pages/SellerReviews";
-import Services from "./pages/productPage/Services";
+
+import Home from "./pages/adlm/Home";
+import HomeA from "./pages/MarketPlace/HomeA";
+import About from "./pages/adlm/About";
+import Marketplace from "./pages/MarketPlace/Marketplace";
+import Pricing from "./pages/adlm/Pricing";
+import Newsletter from "./pages/adlm/Newsletter";
+import Listing from "./pages/MarketPlace/Listing";
+import Product from "./pages/MarketPlace/Product";
+import Search from "./pages/MarketPlace/Search";
+import Profile from "./pages/MarketPlace/Profile";
+import DashboardDefault from "./pages/MarketPlace/DashboardDefault";
+import CreateProduct from "./pages/MarketPlace/CreateProduct";
+import CreateListing from "./pages/MarketPlace/CreateListing";
+import ShopDetails from "./pages/MarketPlace/ShopDetails";
+import UpdateListing from "./pages/MarketPlace/UpdateListing";
+import SellerReviews from "./pages/MarketPlace/SellerReviews";
+import Services from "./pages/adlm/Services";
 import PlanswiftPlugin from "./pages/productPage/PlanswiftPlugin";
 import RateGen from "./pages/productPage/RateGen";
+import SellerShop from "./pages/MarketPlace/SellerShop";
+import PrivateRoute from "./components/PrivateRoute";
+import SignInModal from "./pages/MarketPlace/SignIn";
+import SignUpModal from "./pages/MarketPlace/SignUp";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
