@@ -245,7 +245,7 @@ const Header2 = ({ toggleModal }) => {
                   </li>
                 </>
               )}
-              {currentUser && currentUser?._id && (
+              {currentUser && (
                 <>
                   <Link to="/profile" className="">
                     <img
