@@ -125,6 +125,7 @@ export default function SellerShop() {
         `${config.baseUrl}/api/review/create-review`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

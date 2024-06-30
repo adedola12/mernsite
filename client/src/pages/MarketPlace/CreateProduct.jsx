@@ -133,6 +133,7 @@ export default function CreateProduct() {
         `${config.baseUrl}/api/product/create-product`,
         {
           method: "POST",
+          credentials: "include",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(submissionData),
         }

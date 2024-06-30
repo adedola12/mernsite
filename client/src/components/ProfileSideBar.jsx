@@ -9,7 +9,7 @@ import {
   signOutUser,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-import { LuPower } from "react-icons/lu";
+import { LuArrowLeftSquare, LuPower } from "react-icons/lu";
 
 import { config } from "../../config";
 
@@ -22,7 +22,6 @@ export default function ProfileSideBar() {
 
   const handleSignOut = async () => {
     try {
-      
       dispatch(signOutUser());
 
       const res = await fetch(`${config.baseUrl}/api/auth/signout`);
@@ -68,68 +67,138 @@ export default function ProfileSideBar() {
   };
 
   return (
-    <div className="hidden rounded w-64 flex-shrink-0 md:flex flex-col bg-[#FFFFFF]">
-      <h1 className="font-bold text-xl mb-4 border-b  p-5 py-4 ">Profile</h1>
-      <div className="flex flex-col gap-2 px-3">
-        <Link
-          to={"/add-product"}
-          className={`${
-            currentPath === "/add-product"
-              ? "bg-blue-100 text-black"
-              : "text-gray-500"
-          }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
-        >
-          Add Product
-        </Link>
+    <div className="">
+      <div className="hidden rounded w-64 flex-shrink-0 md:flex flex-col bg-[#FFFFFF]">
+        <h1 className="font-bold text-xl mb-4 border-b  p-5 py-4 ">Profile</h1>
+        <div className="flex flex-col gap-2 px-3">
+          <Link
+            to={"/add-product"}
+            className={`${
+              currentPath === "/add-product"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Add Product
+          </Link>
 
-        <Link
-          to={"/profile"}
-          className={`${
-            currentPath === "/profile"
-              ? "bg-blue-100 text-black"
-              : "text-gray-500"
-          }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
-        >
-          Personal Details
-        </Link>
+          <Link
+            to={"/profile"}
+            className={`${
+              currentPath === "/profile"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Personal Details
+          </Link>
 
-        <Link
-          to={"/shop-details"}
-          className={`${
-            currentPath === "/shop-details"
-              ? "bg-blue-100 text-black"
-              : "text-gray-500"
-          } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
-        >
-          Shop details
-        </Link>
+          <Link
+            to={"/shop-details"}
+            className={`${
+              currentPath === "/shop-details"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Shop details
+          </Link>
 
-        <Link
-          to={"/seller-review"}
-          className={`${
-            currentPath === "/seller-review"
-              ? "bg-blue-100 text-black"
-              : "text-gray-500"
-          } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
-        >
-          Reviews
-        </Link>
+          <Link
+            to={"/seller-review"}
+            className={`${
+              currentPath === "/seller-review"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Reviews
+          </Link>
+        </div>
+        <div className="p-3 py-4 mt-auto flex flex-col gap-3 ">
+          <div className=" border-t mt-3" />
+          <button
+            className="text-red-600 hover:bg-red-50 py-3 rounded-md duration-300 px-3 text-left flex items-center justify-between"
+            onClick={handleSignOut}
+          >
+            <span>Log out</span>
+            <LuPower className="text-red-600 rotate-90" />
+          </button>
+          <button
+            className="text-red-600 hover:underline text-left px-3"
+            onClick={handleDeleteUser}
+          >
+            Delete Account
+          </button>
+        </div>
       </div>
-      <div className="p-3 py-4 mt-auto flex flex-col gap-3 ">
-        <div className=" border-t mt-3" />
-        <button
-          className="text-red-600 hover:bg-red-50 py-3 rounded-md duration-300 px-3 text-left flex items-center justify-between"
-          onClick={handleSignOut}
-        >
-          <span>Log out</span>
-          <LuPower className="text-red-600 rotate-90" />
-        </button>
-        <button
-          className="text-red-600 hover:underline text-left px-3"
-          onClick={handleDeleteUser}
-        >
-          Delete Account
-        </button>
+      {/* IF MOBILE VIEW THEN */}
+      <div className="">
+        <LuArrowLeftSquare />
+      </div>
+      <div className="hidden rounded w-64 flex-shrink-0 md:flex flex-col bg-[#FFFFFF]">
+        <h1 className="font-bold text-xl mb-4 border-b  p-5 py-4 ">Profile</h1>
+        <div className="flex flex-col gap-2 px-3">
+          <Link
+            to={"/add-product"}
+            className={`${
+              currentPath === "/add-product"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Add Product
+          </Link>
+
+          <Link
+            to={"/profile"}
+            className={`${
+              currentPath === "/profile"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Personal Details
+          </Link>
+
+          <Link
+            to={"/shop-details"}
+            className={`${
+              currentPath === "/shop-details"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Shop details
+          </Link>
+
+          <Link
+            to={"/seller-review"}
+            className={`${
+              currentPath === "/seller-review"
+                ? "bg-blue-100 text-black"
+                : "text-gray-500"
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+          >
+            Reviews
+          </Link>
+        </div>
+        <div className="p-3 py-4 mt-auto flex flex-col gap-3 ">
+          <div className=" border-t mt-3" />
+          <button
+            className="text-red-600 hover:bg-red-50 py-3 rounded-md duration-300 px-3 text-left flex items-center justify-between"
+            onClick={handleSignOut}
+          >
+            <span>Log out</span>
+            <LuPower className="text-red-600 rotate-90" />
+          </button>
+          <button
+            className="text-red-600 hover:underline text-left px-3"
+            onClick={handleDeleteUser}
+          >
+            Delete Account
+          </button>
+        </div>
       </div>
     </div>
   );

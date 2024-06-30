@@ -2,28 +2,29 @@ import React from "react";
 
 export default function PlanswiftPlugin() {
   return (
-    <div className="">
-      <div className="w-[1440px] h-[679px] relative bg-white">
-        <div className="left-[81px] top-[151px] absolute flex-col justify-start items-start gap-4 inline-flex">
-          <div className="flex-col justify-start items-start gap-4 flex">
-            <div className="flex-col justify-center items-start gap-5 flex">
-              <div className="w-[473px]">
-                <span className="text-stone-950 text-[64px] font-bold font-['DM Sans'] leading-[64px]">
-                  Swift Building Estimation with
+    <div>
+      <div className="w-full h-auto relative bg-white px-4 py-8 md:px-8 md:py-16">
+        <div className="flex flex-col justify-start items-start gap-4">
+          <div className="flex flex-col justify-start items-start gap-4">
+            <div className="flex flex-col justify-center items-start gap-5">
+              <div className="w-full md:w-[473px]">
+                <span className="text-stone-950 text-4xl md:text-[64px] font-bold font-['DM Sans'] leading-tight">
+                  Swift Quantity Takeoff using the
                 </span>
-                <span className="text-yellow-600 text-[64px] font-bold font-['DM Sans'] leading-[64px]">
+                <span className="text-yellow-600 text-4xl md:text-[64px] font-bold font-['DM Sans'] leading-tight">
                   {" "}
-                  Rate Generator
+                  ADLM Planswift Plugin
                 </span>
               </div>
-              <div className="w-[565px] text-zinc-500 text-xl font-normal font-['DM Sans'] leading-normal">
-                Rate Generator assist with generating rates or pricing related
-                to construction projects. These plugins are essential for
-                contractors, estimators, and construction companies to
-                streamline the process of creating accurate estimates and bids
+              <div className="w-full md:w-[565px] text-zinc-500 text-lg md:text-xl font-normal font-['DM Sans'] leading-normal">
+                The ADLM Planswift plugin enhances the functionality of
+                Planswift, making it a powerful tool for quantity surveyors and
+                estimators. It provides precision, speed, and customization
+                tailored to the Nigerian construction industry, ensuring
+                compliance with BESMM4R standards.
               </div>
-              <div className="justify-center items-start gap-3 inline-flex">
-                <div className="px-4 py-[14.50px] bg-neutral-800 rounded-lg justify-center items-center gap-2.5 flex">
+              <div className="flex justify-center items-start gap-3">
+                <div className="px-4 py-3 bg-neutral-800 rounded-lg flex justify-center items-center gap-2.5">
                   <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
                     Get Started Now
                   </div>
@@ -33,135 +34,149 @@ export default function PlanswiftPlugin() {
           </div>
         </div>
         <img
-          className="w-[655px] h-[501px] left-[706px] top-[75px] absolute rounded-lg"
+          className="w-full md:w-[655px] h-auto md:h-[501px] mt-8 md:mt-0 rounded-lg"
           src="https://via.placeholder.com/655x501"
+          alt="ADLM Planswift Plugin"
         />
       </div>
-      <div className="w-[1440px] h-[902px] relative bg-cyan-950">
-        <div className="left-[81px] top-[285px] absolute flex-col justify-start items-start gap-5 inline-flex">
-          <div className="text-white text-5xl font-bold font-['DM Sans'] leading-[48px]">
+      <div className="w-full h-auto relative bg-cyan-950 px-4 py-8 md:px-8 md:py-16">
+        <div className="flex flex-col justify-start items-start gap-5">
+          <div className="text-white text-3xl md:text-5xl font-bold font-['DM Sans'] leading-tight">
             Outstanding Features
           </div>
-          <div className="w-[488px] text-zinc-300 text-xl font-normal font-['DM Sans'] leading-normal">
-            Rate Generator assist with generating rates or pricing related to
-            construction projects. These plugins are{" "}
+          <div className="w-full md:w-[488px] text-zinc-300 text-lg md:text-xl font-normal font-['DM Sans'] leading-normal">
+            The ADLM Planswift plugin offers numerous features that make
+            quantity takeoff and estimation more efficient and accurate for
+            construction projects.
           </div>
-          <div className="flex-col justify-start items-start gap-4 flex">
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
+          <div className="flex flex-col justify-start items-start gap-4">
+            <div className="flex justify-start items-center gap-2">
+              <div className="p-2.5 bg-yellow-600 rounded-full flex justify-center items-center">
+                <div className="w-5 h-5"></div>
               </div>
               <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Cost Estimation
+                Fast Auto Takeoff
               </div>
             </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="p-2.5 bg-yellow-600 rounded-full flex justify-center items-center">
+                <div className="w-5 h-5"></div>
               </div>
               <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Database Integration
+                Grouped Takeoff Items
               </div>
             </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="p-2.5 bg-yellow-600 rounded-full flex justify-center items-center">
+                <div className="w-5 h-5"></div>
               </div>
               <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Reports
+                Structured in Line with BESMM4R
               </div>
             </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="p-2.5 bg-yellow-600 rounded-full flex justify-center items-center">
+                <div className="w-5 h-5"></div>
               </div>
               <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Material schedule for measured works
+                Tailored for the Nigerian Construction Industry
+              </div>
+            </div>
+            <div className="flex justify-start items-center gap-2">
+              <div className="p-2.5 bg-yellow-600 rounded-full flex justify-center items-center">
+                <div className="w-5 h-5"></div>
+              </div>
+              <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
+                Detailed Reports
               </div>
             </div>
           </div>
         </div>
         <img
-          className="w-[525px] h-[427px] left-[835px] top-[151px] absolute rounded-lg"
+          className="w-full md:w-[525px] h-auto md:h-[427px] mt-8 md:mt-0 rounded-lg"
           src="https://via.placeholder.com/525x427"
+          alt="Features"
         />
         <img
-          className="w-[391px] h-[381px] left-[680px] top-[370px] absolute rounded-lg"
+          className="w-full md:w-[391px] h-auto md:h-[381px] mt-8 md:mt-0 rounded-lg"
           src="https://via.placeholder.com/391x381"
+          alt="Features"
         />
       </div>
-      <div className="flex flex-row gap-2">
-        <div className="w-[720px] h-[680px] pl-20 pr-[458px] pt-8 pb-[185px] bg-white flex-col justify-start items-start gap-[357px] inline-flex">
-          <div className="text-black text-5xl font-bold font-['DM Sans'] leading-[57.60px]">
+      <div className="flex flex-col md:flex-row gap-2">
+        <div className="w-full md:w-[720px] h-auto pl-4 pr-4 md:pl-20 md:pr-[458px] pt-8 pb-8 md:pb-[185px] bg-white flex flex-col justify-start items-start gap-[357px]">
+          <div className="text-black text-3xl md:text-5xl font-bold font-['DM Sans'] leading-tight">
             Reviews
           </div>
-          <div className="self-stretch px-4 py-[14.50px] bg-neutral-800 rounded-lg justify-center items-center gap-2.5 inline-flex">
+          <div className="w-full px-4 py-3 bg-neutral-800 rounded-lg flex justify-center items-center gap-2.5">
             <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
               Request a demo
             </div>
           </div>
         </div>
-        <div className="w-[720px] h-[680px] relative bg-gray-200 flex-col justify-start items-start inline-flex">
-          <div className="text-black text-5xl font-bold font-['DM Sans'] leading-[57.60px]">
+        <div className="w-full md:w-[720px] h-auto relative bg-gray-200 flex flex-col justify-start items-start">
+          <div className="text-black text-3xl md:text-5xl font-bold font-['DM Sans'] leading-tight">
             Reviews
           </div>
-          <div className="w-[107px] h-[107px] bg-zinc-300 rounded-full"></div>
+          <div className="w-[107px] h-[107px] bg-zinc-300 rounded-full mt-4"></div>
         </div>
       </div>
-      <div className="w-[1440px] h-[809px] relative bg-white">
-        <div className="left-[77px] top-[85px] absolute text-black text-2xl font-bold font-['DM Sans'] leading-normal">
+      <div className="w-full h-auto relative bg-white px-4 py-8 md:px-8 md:py-16">
+        <div className="text-black text-2xl font-bold font-['DM Sans'] leading-normal">
           Other Products
         </div>
-        <div className="w-[305px] h-[433px] left-[80px] top-[181px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
+          <div className="w-full h-auto rounded-lg border border-gray-200 p-4">
+            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4"></div>
+            <div className="text-black text-xl font-normal font-['DM Sans'] leading-normal">
+              ADLM Elemental Take Off Plugin
+            </div>
+            <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 flex justify-start items-center gap-2 mt-4">
+              <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight">
+                Learn More
+              </div>
             </div>
           </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[405px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
+          <div className="w-full h-auto rounded-lg border border-gray-200 p-4">
+            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4"></div>
+            <div className="text-black text-xl font-normal font-['DM Sans'] leading-normal">
+              ADLM Material Schedule Plugin
+            </div>
+            <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 flex justify-start items-center gap-2 mt-4">
+              <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight">
+                Learn More
+              </div>
             </div>
           </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[730px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
+          <div className="w-full h-auto rounded-lg border border-gray-200 p-4">
+            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4"></div>
+            <div className="text-black text-xl font-normal font-['DM Sans'] leading-normal">
+              ADLM Class
+            </div>
+            <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 flex justify-start items-center gap-2 mt-4">
+              <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight">
+                Learn More
+              </div>
             </div>
           </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[1055px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
+          <div className="w-full h-auto rounded-lg border border-gray-200 p-4">
+            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4"></div>
+            <div className="text-black text-xl font-normal font-['DM Sans'] leading-normal">
+              ADLM Schedule of Works
+            </div>
+            <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 flex justify-start items-center gap-2 mt-4">
+              <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight">
+                Learn More
+              </div>
             </div>
           </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
         </div>
-        <div className="left-[648px] top-[657px] absolute justify-start items-start gap-4 inline-flex">
-          <div className="w-16 h-16 rounded-[64px] border border-gray-200 justify-center items-center flex">
-            <div className="grow shrink basis-0 self-stretch py-1 justify-center items-center inline-flex"></div>
+        <div className="flex justify-center items-start gap-4 mt-8">
+          <div className="w-16 h-16 rounded-full border border-gray-200 flex justify-center items-center">
+            <div className="w-6 h-6"></div>
           </div>
-          <div className="w-16 h-16 rounded-[64px] border border-gray-200 justify-center items-center flex">
-            <div className="grow shrink basis-0 self-stretch py-1 justify-center items-center inline-flex"></div>
+          <div className="w-16 h-16 rounded-full border border-gray-200 flex justify-center items-center">
+            <div className="w-6 h-6"></div>
           </div>
         </div>
       </div>
