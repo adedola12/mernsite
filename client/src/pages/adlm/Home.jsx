@@ -22,7 +22,7 @@ export default function Home() {
           <div className="flex flex-col items-center lg:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 lg:w-[280px]">
               <Link
-                to={"/planswift-plugin"}
+                // to={"/planswift-plugin"}
                 className=" font-[Inter] text-[14px]"
               >
                 Construction management plugin
@@ -222,7 +222,7 @@ export default function Home() {
         <div className="flex md:flex-row flex-col mt-6  gap-8 justify-center">
           <Link
             className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2"
-            to={"/services"}
+            // to={"/services"}
           >
             <div className="flex flex-col">
               <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center">
@@ -241,7 +241,7 @@ export default function Home() {
           </Link>
           <Link
             className="bg-[#F5F5F5] p-6 rounded-lg shadow-md w-full md:w-1/2"
-            to={"/pricing"}
+            // to={"/pricing"}
           >
             <div className="flex flex-col">
               <div className=" w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center">
