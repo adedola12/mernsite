@@ -2,169 +2,103 @@ import React from "react";
 
 export default function RateGen() {
   return (
-    <div className="">
-      <div className="w-[1440px] h-[679px] relative bg-white">
-        <div className="left-[81px] top-[151px] absolute flex-col justify-start items-start gap-4 inline-flex">
-          <div className="flex-col justify-start items-start gap-4 flex">
-            <div className="flex-col justify-center items-start gap-5 flex">
-              <div className="w-[473px]">
-                <span className="text-stone-950 text-[64px] font-bold font-['DM Sans'] leading-[64px]">
-                  Swift Building Estimation with
-                </span>
-                <span className="text-yellow-600 text-[64px] font-bold font-['DM Sans'] leading-[64px]">
-                  {" "}
-                  Rate Generator
-                </span>
-              </div>
-              <div className="w-[565px] text-zinc-500 text-xl font-normal font-['DM Sans'] leading-normal">
-                Rate Generator assist with generating rates or pricing related
-                to construction projects. These plugins are essential for
-                contractors, estimators, and construction companies to
-                streamline the process of creating accurate estimates and bids
-              </div>
-              <div className="justify-center items-start gap-3 inline-flex">
-                <div className="px-4 py-[14.50px] bg-neutral-800 rounded-lg justify-center items-center gap-2.5 flex">
-                  <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
-                    Get Started Now
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div className="bg-white">
+      <div className="max-w-screen-xl mx-auto p-4">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 p-4">
+            <h1 className="text-stone-950 text-4xl md:text-6xl font-bold leading-tight">
+              Swift Building Estimation with
+              <span className="text-yellow-600"> Rate Generator</span>
+            </h1>
+            <p className="text-zinc-500 text-lg md:text-xl mt-4">
+              Rate Generator assists with generating rates or pricing related to
+              construction projects. These tools are essential for contractors,
+              estimators, and construction companies to streamline the process
+              of creating accurate estimates and bids.
+            </p>
+            <button className="mt-6 px-4 py-3 bg-neutral-800 text-white text-base font-normal rounded-lg">
+              Get Started Now
+            </button>
+          </div>
+          <div className="md:w-1/2 p-4">
+            <img
+              className="w-full h-auto rounded-lg"
+              src="https://via.placeholder.com/655x501"
+              alt="Rate Generator"
+            />
           </div>
         </div>
-        <img
-          className="w-[655px] h-[501px] left-[706px] top-[75px] absolute rounded-lg"
-          src="https://via.placeholder.com/655x501"
-        />
       </div>
-      <div className="w-[1440px] h-[902px] relative bg-cyan-950">
-        <div className="left-[81px] top-[285px] absolute flex-col justify-start items-start gap-5 inline-flex">
-          <div className="text-white text-5xl font-bold font-['DM Sans'] leading-[48px]">
+
+      <div className="bg-cyan-950 py-16">
+        <div className="max-w-screen-xl mx-auto p-4 text-center text-white">
+          <h2 className="text-4xl md:text-5xl font-bold">
             Outstanding Features
-          </div>
-          <div className="w-[488px] text-zinc-300 text-xl font-normal font-['DM Sans'] leading-normal">
-            Rate Generator assist with generating rates or pricing related to
-            construction projects. These plugins are{" "}
-          </div>
-          <div className="flex-col justify-start items-start gap-4 flex">
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
-              </div>
-              <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Cost Estimation
-              </div>
-            </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
-              </div>
-              <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Database Integration
-              </div>
-            </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
-              </div>
-              <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Reports
-              </div>
-            </div>
-            <div className="justify-start items-center gap-2 inline-flex">
-              <div className="p-2.5 bg-yellow-600 rounded-[32px] justify-start items-start gap-2.5 flex">
-                <div className="w-5 h-5 px-[4.17px] pt-[5.83px] pb-[5px] justify-center items-center flex"></div>
-              </div>
-              <div className="text-zinc-300 text-base font-normal font-['DM Sans'] leading-tight">
-                Material schedule for measured works
-              </div>
-            </div>
-          </div>
-        </div>
-        <img
-          className="w-[525px] h-[427px] left-[835px] top-[151px] absolute rounded-lg"
-          src="https://via.placeholder.com/525x427"
-        />
-        <img
-          className="w-[391px] h-[381px] left-[680px] top-[370px] absolute rounded-lg"
-          src="https://via.placeholder.com/391x381"
-        />
-      </div>
-      <div className="flex flex-row gap-2">
-        <div className="w-[720px] h-[680px] pl-20 pr-[458px] pt-8 pb-[185px] bg-white flex-col justify-start items-start gap-[357px] inline-flex">
-          <div className="text-black text-5xl font-bold font-['DM Sans'] leading-[57.60px]">
-            Reviews
-          </div>
-          <div className="self-stretch px-4 py-[14.50px] bg-neutral-800 rounded-lg justify-center items-center gap-2.5 inline-flex">
-            <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
-              Request a demo
-            </div>
-          </div>
-        </div>
-        <div className="w-[720px] h-[680px] relative bg-gray-200 flex-col justify-start items-start inline-flex">
-          <div className="text-black text-5xl font-bold font-['DM Sans'] leading-[57.60px]">
-            Reviews
-          </div>
-          <div className="w-[107px] h-[107px] bg-zinc-300 rounded-full"></div>
-        </div>
-      </div>
-      <div className="w-[1440px] h-[809px] relative bg-white">
-        <div className="left-[77px] top-[85px] absolute text-black text-2xl font-bold font-['DM Sans'] leading-normal">
-          Other Products
-        </div>
-        <div className="w-[305px] h-[433px] left-[80px] top-[181px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
-            </div>
-          </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[405px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
-            </div>
-          </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[730px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
-            </div>
-          </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="w-[305px] h-[433px] left-[1055px] top-[182px] absolute rounded-lg border border-gray-200">
-          <div className="left-[16px] top-[216px] absolute text-black text-xl font-normal font-['DM Sans'] leading-normal">
-            Planswift Plugin
-          </div>
-          <div className="px-4 py-[15.50px] left-[16px] top-[353px] absolute bg-white rounded-lg border border-gray-200 justify-start items-center gap-2 inline-flex">
-            <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-[16.80px]">
-              Learn More
-            </div>
-          </div>
-          <div className="w-[273px] h-[183px] left-[16px] top-[16px] absolute bg-zinc-100 rounded-lg"></div>
-        </div>
-        <div className="left-[648px] top-[657px] absolute justify-start items-start gap-4 inline-flex">
-          <div className="w-16 h-16 rounded-[64px] border border-gray-200 justify-center items-center flex">
-            <div className="grow shrink basis-0 self-stretch py-1 justify-center items-center inline-flex"></div>
-          </div>
-          <div className="w-16 h-16 rounded-[64px] border border-gray-200 justify-center items-center flex">
-            <div className="grow shrink basis-0 self-stretch py-1 justify-center items-center inline-flex"></div>
+          </h2>
+          <p className="text-zinc-300 text-lg md:text-xl mt-4">
+            Rate Generator assists with generating rates or pricing related to
+            construction projects. These tools are essential for contractors,
+            estimators, and construction companies to streamline the process of
+            creating accurate estimates and bids.
+          </p>
+          <div className="mt-8 flex flex-col md:flex-row justify-center gap-8">
+            <FeatureItem title="Cost Estimation" />
+            <FeatureItem title="Database Integration" />
+            <FeatureItem title="Reports" />
+            <FeatureItem title="Material schedule for measured works" />
           </div>
         </div>
       </div>
+
+      <div className="max-w-screen-xl mx-auto p-4 flex flex-col md:flex-row gap-8">
+        <div className="w-full md:w-1/2 bg-white p-8 rounded-lg shadow">
+          <h2 className="text-4xl font-bold">Reviews</h2>
+          <button className="mt-6 px-4 py-3 bg-neutral-800 text-white text-base font-normal rounded-lg">
+            Request a demo
+          </button>
+        </div>
+        <div className="w-full md:w-1/2 bg-gray-200 p-8 rounded-lg shadow">
+          <h2 className="text-4xl font-bold">Reviews</h2>
+          <div className="w-24 h-24 bg-zinc-300 rounded-full mt-4"></div>
+        </div>
+      </div>
+
+      <div className="max-w-screen-xl mx-auto p-4 py-16 bg-white">
+        <h2 className="text-2xl font-bold mb-8">Other Products</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ProductCard title="Planswift Plugin" />
+          <ProductCard title="Planswift Plugin" />
+          <ProductCard title="Planswift Plugin" />
+          <ProductCard title="Planswift Plugin" />
+        </div>
+        <div className="mt-8 flex justify-center gap-4">
+          <div className="w-16 h-16 border border-gray-200 rounded-full flex items-center justify-center"></div>
+          <div className="w-16 h-16 border border-gray-200 rounded-full flex items-center justify-center"></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FeatureItem({ title }) {
+  return (
+    <div className="flex items-center gap-4">
+      <div className="p-4 bg-yellow-600 rounded-full">
+        <span className="w-5 h-5 block"></span>
+      </div>
+      <p className="text-zinc-300 text-base">{title}</p>
+    </div>
+  );
+}
+
+function ProductCard({ title }) {
+  return (
+    <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-md">
+      <div className="bg-zinc-100 h-48 rounded-lg mb-4"></div>
+      <h3 className="text-xl font-normal mb-4">{title}</h3>
+      <button className="px-4 py-3 bg-white border border-gray-200 rounded-lg text-zinc-500 text-sm">
+        Learn More
+      </button>
     </div>
   );
 }

@@ -21,7 +21,10 @@ export default function Home() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:py-16 px-4 sm:px-0 lg:pl-10  gap-5">
           <div className="flex flex-col items-center lg:items-start gap-5 lg:mt-[50px] mt-5 p-5 ">
             <div className="flex rounded-lg bg-[#DBEFFF] text-black p-3  justify-center gap-3 lg:w-[280px]">
-              <Link to={"/product"} className=" font-[Inter] text-[14px]">
+              <Link
+                to={"/planswift-plugin"}
+                className=" font-[Inter] text-[14px]"
+              >
                 Construction management plugin
               </Link>
               <FaArrowRight className="items-center w-[16px] h-[16px]" />

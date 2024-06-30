@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function PlanswiftPlugin() {
   return (
@@ -25,9 +26,12 @@ export default function PlanswiftPlugin() {
               </div>
               <div className="flex justify-center items-start gap-3">
                 <div className="px-4 py-3 bg-neutral-800 rounded-lg flex justify-center items-center gap-2.5">
-                  <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
+                  <Link
+                    className="text-white text-base font-normal font-['DM Sans'] leading-tight"
+                    to={"https://wa.me/message/HS7PK467KV53I1"}
+                  >
                     Get Started Now
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -35,7 +39,7 @@ export default function PlanswiftPlugin() {
         </div>
         <img
           className="w-full md:w-[655px] h-auto md:h-[501px] mt-8 md:mt-0 rounded-lg"
-          src="https://via.placeholder.com/655x501"
+          src="/courses image/PSPlug.jpg"
           alt="ADLM Planswift Plugin"
         />
       </div>
@@ -94,12 +98,12 @@ export default function PlanswiftPlugin() {
         </div>
         <img
           className="w-full md:w-[525px] h-auto md:h-[427px] mt-8 md:mt-0 rounded-lg"
-          src="https://via.placeholder.com/525x427"
+          src="/courses image/img/plug1.png"
           alt="Features"
         />
         <img
           className="w-full md:w-[391px] h-auto md:h-[381px] mt-8 md:mt-0 rounded-lg"
-          src="https://via.placeholder.com/391x381"
+          src="/courses image/img/plug2.png"
           alt="Features"
         />
       </div>
@@ -109,9 +113,14 @@ export default function PlanswiftPlugin() {
             Reviews
           </div>
           <div className="w-full px-4 py-3 bg-neutral-800 rounded-lg flex justify-center items-center gap-2.5">
-            <div className="text-white text-base font-normal font-['DM Sans'] leading-tight">
+            <Link
+              className="text-white text-base font-normal font-['DM Sans'] leading-tight"
+              to={
+                "https://youtube.com/playlist?list=PLk1KkUNE9ZrMSApHFe3-YpiV7b-NbwhYM&si=3ACYP1Y--Wz1uf59"
+              }
+            >
               Request a demo
-            </div>
+            </Link>
           </div>
         </div>
         <div className="w-full md:w-[720px] h-auto relative bg-gray-200 flex flex-col justify-start items-start">
@@ -127,14 +136,23 @@ export default function PlanswiftPlugin() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
           <div className="w-full h-auto rounded-lg border border-gray-200 p-4">
-            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4"></div>
-            <div className="text-black text-xl font-normal font-['DM Sans'] leading-normal">
-              ADLM Elemental Take Off Plugin
+            <div className="w-full h-[183px] bg-zinc-100 rounded-lg mb-4">
+              <img
+                className=" h-[180px] w-full"
+                src="/courses image/RateGen.jpg"
+                alt="Features"
+              />
+            </div>
+            <div className="text-black text-xl  font-['DM Sans'] md:text-2xl leading-normal">
+              ADLM Rate Gen
             </div>
             <div className="w-full px-4 py-3 bg-white rounded-lg border border-gray-200 flex justify-start items-center gap-2 mt-4">
-              <div className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight">
+              <Link
+                className="text-zinc-500 text-sm font-normal font-['DM Sans'] leading-tight"
+                to={"/rate-gen"}
+              >
                 Learn More
-              </div>
+              </Link>
             </div>
           </div>
           <div className="w-full h-auto rounded-lg border border-gray-200 p-4">

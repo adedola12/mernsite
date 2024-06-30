@@ -283,7 +283,7 @@ const Header2 = ({ toggleModal }) => {
                 to="/HomeA"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
-                Home
+                Market
               </Link>
             </li>
 
