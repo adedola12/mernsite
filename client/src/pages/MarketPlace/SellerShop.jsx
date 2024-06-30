@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import ProductItem from "../../components/productItem";
+
 import { FaPhone, FaStar } from "react-icons/fa";
-import StarRating from "../../components/Rating";
+
 import { useSelector } from "react-redux";
 import { config } from "../../../config";
-import useSearchParams from "../../hooks/useSearchParams";
 import CategorySelector from "../../components/CategorySelector";
 import LocationSelector from "../../components/LocationSelector";
+import ProductItem from "../../components/productItem";
+import StarRating from "../../components/Rating";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -125,7 +126,6 @@ export default function SellerShop() {
         `${config.baseUrl}/api/review/create-review`,
         {
           method: "POST",
-          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -295,17 +295,17 @@ export default function SellerShop() {
                 </h2>
               </div>
               <form onSubmit={handleSubmitCategory} className="w-full">
-                <div className="w-full max-w-[959px] px-2">
-                  <div className="grid md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
+                <div className="w-full md:max-w-[959px] px-2">
+                  <div className="grid grid-cols-1 text-base md:grid-cols-12 w-full gap-3 bg-white p-4 rounded-lg">
                     <input
                       type="text"
                       name="location"
                       placeholder="Location"
                       onChange={handleLocationInput}
-                      className="border-2 col-span-12 md:col-span-4 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
+                      className="border-2 col-span-1 md:col-span-4 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
                           focus:ring-blue-500"
                     />
-                    <div className="col-span-12 md:col-span-8 grid grid-col-2 md:grid-cols-2 gap-4 ">
+                    <div className="w-full col-span-1 md:col-span-8 grid grid-col-1 md:grid-cols-2 gap-4 ">
                       <LocationSelector onStateSelected={handleChange} />
                       <CategorySelector onCategorySelected={handleChange} />
                     </div>
