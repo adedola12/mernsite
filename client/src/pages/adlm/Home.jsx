@@ -89,7 +89,7 @@ export default function Home() {
           </ul>
           <Link
             className="my-4 flex items-center justify-between rounded-lg border bg-[#6a98e9] w-[170px] py-3 px-4"
-            to={"/services"}
+            // to={"/services"}
           >
             <span className="font-bold text-lg">Learn more</span>
             <FaArrowDown />
