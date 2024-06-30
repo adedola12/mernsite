@@ -60,7 +60,7 @@ export default function Home() {
       </div>
 
       {/* Unlock Features */}
-      <div className="flex lg:flex-row flex-col items-start justify-between px-10">
+      <div className="flex lg:flex-row flex-col items-start justify-between px-10 bg-[#F5F5F5] ">
         <div className="p-5 mb-5  flex flex-col gap-5">
           <h2 className="font-bold text-4xl my-4 md:text-6xl">
             Unlock features of the
@@ -102,7 +102,7 @@ export default function Home() {
       </div>
       {/* Integration */}
 
-      <div className="bg-[#F5F5F5] ">
+      <div className="">
         <div className="w-full lg:max-w-screen-lg lg:mx-auto gap-y-10 flex flex-col lg:flex-row md:items-center lg:justify-between p-5 py-16">
           <div className="flex flex-col space-y-5 md:space-y-7 w-full lg:max-w-[510px] lg:mt-[89px]">
             <h2 className="font-bold text-5xl md:text-6xl text-[#1D1D1D]">
@@ -206,7 +206,7 @@ export default function Home() {
         </div>
       </div>
       {/* Ready to serve */}
-      <div className=" my-10 lg:my-[160px] p-5 lg:mx-[190px] ">
+      <div className=" my-10 lg:my-[160px] p-5  bg-[#F5F5F5] w-full">
         <div className="flex flex-col gap-3">
           <h2 className="font-bold text-5xl md:text-[56px] line-clamp-1">
             We are here to serve you

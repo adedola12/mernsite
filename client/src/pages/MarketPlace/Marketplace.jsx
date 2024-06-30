@@ -1,10 +1,18 @@
+// Marketplace.js
 import React, { useEffect, useState } from "react";
+import { MdLocationOn } from "react-icons/md";
 
-import CategorySelector from "../../components/CategorySelector";
-import LocationSelector from "../../components/LocationSelector";
-import useSearchParams from "../../hooks/useSearchParams";
+import { PiSpinnerBold } from "react-icons/pi";
 import { config } from "../../../config";
+import SideBar from "../../components/SideBar";
+import StateSelector from "../../components/StateSelector";
+import TypeSelector from "../../components/TypeSelector";
 import ProductItem from "../../components/productItem";
+import useSearchParams from "../../hooks/useSearchParams";
+import LocationSelector from "../../components/LocationSelector";
+import CategorySelector from "../../components/CategorySelector";
+
+const MAX_LIMIT = 10;
 
 export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
@@ -60,7 +68,7 @@ export default function Marketplace() {
             <h1 className="font-semibold text-4xl items-center text-white text-center mb-4">
               Explore Marketplace
             </h1>
-            <div className="w-full max-w-[959px] px-2">
+            <div className="w-full max-w-[959px]">
               <div className="grid md:grid-cols-[auto_1fr_auto] w-full gap-3 bg-white p-4 rounded-lg shadow-md">
                 <input
                   type="text"
@@ -70,7 +78,7 @@ export default function Marketplace() {
                   className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
                   focus:ring-blue-500"
                 />
-                <div className="grid grid-col-2 md:grid-cols-2 gap-4 ">
+                <div className="grid grid-col-1 md:grid-cols-2 gap-4 w-full">
                   <LocationSelector onStateSelected={handleChange} />
                   <CategorySelector onCategorySelected={handleChange} />
                 </div>
@@ -88,20 +96,20 @@ export default function Marketplace() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-4 items-center max-w-6xl mx-auto ">
+      <div className="flex flex-col md:flex-row gap-4 items-center w-full lg:max-w-6xl mx-auto  px-3">
         {/* TODO: ADD SIDEBAR FUNCTIONALITY AND CODE FUNCIONALITY */}
-        <div className="bg-white flex-1 rounded-lg lg:p-6 mt-4">
-          <div className="p-3">
+        <div className="bg-white w-full flex-1 rounded-lg lg:p-6 mt-4">
+          <div className="p-3 w-full">
             <h2 className="text-2xl font-semibold mb-4 inline-block">
               ADLM Marketplace
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5  w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5  w-full">
               {isloading ? (
-                <h2 className="text-center col-span-4  text-lg font-semibold text-slate-500">
+                <h2 className="text-center col-span-1 sm:col-span-2 lg:col-span-4  text-lg font-semibold text-slate-500">
                   Loading...
                 </h2>
               ) : searchResults.length == 0 ? (
-                <p className="text-center col-span-4 text-lg font-semibold text-slate-500">
+                <p className="text-center col-span-1 sm:col-span-2 lg:col-span-4 text-lg font-semibold text-slate-500">
                   No product found
                 </p>
               ) : (

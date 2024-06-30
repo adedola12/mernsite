@@ -78,7 +78,7 @@ export default function SignInModal({ onClose }) {
     <div
       id="signin-modal"
       onClick={handleShowModal}
-      className="fixed z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full"
+      className="fixed px-2 z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-sm overflow-y-auto h-full w-full"
     >
       <div
         onClick={(event) => event.stopPropagation()}
