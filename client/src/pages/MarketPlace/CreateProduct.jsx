@@ -129,12 +129,16 @@ export default function CreateProduct() {
     };
 
     try {
+      const token = localStorage.getItem("access_token");
       const response = await fetch(
         `${config.baseUrl}/api/product/create-product`,
         {
           method: "POST",
           credentials: "include",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify(submissionData),
         }
       );

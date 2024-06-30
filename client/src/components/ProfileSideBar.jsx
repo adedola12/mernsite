@@ -143,7 +143,7 @@ export default function ProfileSideBar() {
             className="text-black text-lg font-bold p-4"
             onClick={toggleMobileMenu}
           >
-            Open Menu
+            Menu
           </button>
         ) : (
           <div className="fixed inset-0 bg-white z-50 flex flex-col p-5">
