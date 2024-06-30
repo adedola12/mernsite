@@ -127,25 +127,25 @@ const Header2 = ({ toggleModal }) => {
               </Link>
             </li>
 
-            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+            {/* <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/pricing"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Pricing
               </Link>
-            </li>
+            </li> */}
 
-            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+            {/* <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/services"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Services
               </Link>
-            </li>
+            </li> */}
 
-            <li onClick={closeNavMenu} className="relative group px-3 py-2">
+            {/* <li onClick={closeNavMenu} className="relative group px-3 py-2">
               <Link
                 to={"#"}
                 className="flex items-center cursor-pointer h-full"
@@ -214,16 +214,16 @@ const Header2 = ({ toggleModal }) => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
 
-            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+            {/* <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/BIMNews"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Newsletters
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
@@ -295,24 +295,24 @@ const Header2 = ({ toggleModal }) => {
                 Marketplace
               </Link>
             </li>
-            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+            {/* <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Pricing
               </Link>
-            </li>
-            <li onClick={closeNavMenu} className="relative group px-1 py-2">
+            </li> */}
+            {/* <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
                 to="/"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Services
               </Link>
-            </li>
+            </li> */}
 
-            <li className="relative group px-3 py-2 bg-white">
+            {/* <li className="relative group px-3 py-2 bg-white">
               <div className="flex items-center cursor-pointer h-full">
                 <span className="flex items-center hover:opacity-80 cursor-pointer text-[#00263D] transition-colors duration-300 px-1">
                   Product{" "}
@@ -378,7 +378,7 @@ const Header2 = ({ toggleModal }) => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
 
             {currentUser && currentUser?._id && (
               <div className="mt-6 flex items-center justify-center mx-auto rounded-lg border gap-y-3">
