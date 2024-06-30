@@ -9,6 +9,7 @@ import CategorySelector from "../../components/CategorySelector";
 import LocationSelector from "../../components/LocationSelector";
 import ProductItem from "../../components/productItem";
 import StarRating from "../../components/Rating";
+import useSearchParams from "../../hooks/useSearchParams";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
