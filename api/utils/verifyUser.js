@@ -38,7 +38,7 @@ export const verifyToken = async (req, res, next) => {
 };
 
 export const verifyRefreshToken = async (req, res, next) => {
-  const refresh_token = req.cookies["refresh_token"];
+  const { refresh_token } = req.cookies;
 
   if (!refresh_token) {
     return next(errorHandler(401, "Unauthorized Request"));
@@ -51,7 +51,7 @@ export const verifyRefreshToken = async (req, res, next) => {
     );
 
     if (!decoded) {
-      return next(errorHandler(401, "Unauthorized token"));
+      return next(errorHandler(401, "Invalid refresh token"));
     }
 
     const user = await User.findById(decoded?.id);
@@ -69,6 +69,69 @@ export const verifyRefreshToken = async (req, res, next) => {
       return next(errorHandler(401, "jwt expired"));
     } else if (error instanceof jwt.JsonWebTokenError) {
       return next(errorHandler(401, "jwt expired"));
+    }
+    return next(errorHandler(404, "Forbidden Request"));
+  }
+};
+
+export const refreshToken = async (req, res, next) => {
+  const { refresh_token } = req.cookies;
+
+  if (!refresh_token) {
+    return next(errorHandler(401, "Refresh token not provided"));
+  }
+
+  try {
+    const decoded = jwt.verify(
+      refresh_token,
+      appConstants.JWT_REFRESH_TOKEN_SECRET
+    );
+
+    if (!decoded) {
+      return next(errorHandler(401, "Invalid refresh token"));
+    }
+
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return next(errorHandler(401, "Unauthorized user"));
+    }
+
+    const access_token = jwt.sign({ id: user._id }, appConstants.JWT_SECRET, {
+      expiresIn: "15m",
+    });
+    const new_refresh_token = jwt.sign(
+      { id: user._id },
+      appConstants.JWT_REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("refresh_token", new_refresh_token, {
+      httpOnly: true,
+      path: "/",
+      secure: false,
+      sameSite: "none",
+      expires: new Date(
+        Date.now() + appConstants.REFRESH_TOKEN_COOKIES_TIMEOUT
+      ),
+    });
+
+    res.cookie("access_token", access_token, {
+      path: "/",
+      httpOnly: false,
+      secure: false,
+      sameSite: "lax",
+      expires: new Date(Date.now() + appConstants.ACCESS_TOKEN_COOKIES_TIMEOUT),
+    });
+
+    return res
+      .status(200)
+      .json({ access_token, refresh_token: new_refresh_token });
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      return next(errorHandler(401, "Refresh token expired"));
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      return next(errorHandler(401, "Invalid refresh token"));
     }
     return next(errorHandler(404, "Forbidden Request"));
   }

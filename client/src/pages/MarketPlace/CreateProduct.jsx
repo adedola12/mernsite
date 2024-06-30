@@ -14,6 +14,7 @@ import CreateProductStageTwo from "../../components/CreateProductStageTwo";
 import { CATEGORY_DATA } from "../../constants/data";
 import toast from "react-hot-toast";
 import { config } from "../../../config";
+import fetchWithTokenRefresh from "../../hooks/fetchWithTokenRefresh";
 
 export default function CreateProduct() {
   const [formData, setFormData] = useState({
@@ -130,7 +131,7 @@ export default function CreateProduct() {
 
     try {
       const token = localStorage.getItem("access_token");
-      const response = await fetch(
+      const response = await fetchWithTokenRefresh(
         `${config.baseUrl}/api/product/create-product`,
         {
           method: "POST",
