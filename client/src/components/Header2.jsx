@@ -16,6 +16,8 @@ const Header2 = ({ toggleModal }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    console.log({currentUser})
   
     const [windowSize, setWindowSize] = useState(window.innerWidth ?? 0);
 
@@ -200,7 +202,7 @@ const Header2 = ({ toggleModal }) => {
                             currentUser && currentUser?._id && (
                                 <>
                                 <Link to="/profile" className="">
-                                    <img src={currentUser?.avatar && currentUser?.avatar || "https://placehold.jp/150x150.png"}
+                                    <img src={currentUser?.avatar ? currentUser?.avatar : "https://placehold.jp/150x150.png"}
                                     alt="pp" className="rounded-full h-7 w-7 object-cover" />
                                 </Link>
                             </>
