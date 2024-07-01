@@ -138,6 +138,7 @@ export default function Profile() {
         `${config.baseUrl}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
@@ -180,7 +181,10 @@ export default function Profile() {
     try {
       setShowListingError(false);
       const res = await fetch(
-        `${config.baseUrl}/api/user/listings/${currentUser._id}`
+        `${config.baseUrl}/api/user/listings/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
       );
       const data = await res.json();
 
@@ -200,7 +204,10 @@ export default function Profile() {
       setShowProductError(false);
 
       const res = await fetch(
-        `${config.baseUrl}/api/user/products/${currentUser._id}`
+        `${config.baseUrl}/api/user/products/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
       );
       const data = await res.json();
 
@@ -223,6 +230,7 @@ export default function Profile() {
         `${config.baseUrl}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
@@ -248,6 +256,7 @@ export default function Profile() {
         `${config.baseUrl}/api/product/delete/${productId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
@@ -273,6 +282,7 @@ export default function Profile() {
         `${config.baseUrl}/api/listing/update/${listingId}`,
         {
           method: "POST",
+          credentials: "include",
         }
       );
       const data = await res.json();
