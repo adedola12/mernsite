@@ -116,16 +116,14 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     const { categories: categoryName } = formData;
+    const subCategories = CATEGORY_DATA[formData.categories];
 
     const submissionData = {
       ...formData,
-      categoryData: {
-        categoryName,
-        subCategories: CATEGORY_DATA[formData.categories],
-      },
+      subCategories,
+      categoryName,
       userRef: currentUser._id,
     };
 
