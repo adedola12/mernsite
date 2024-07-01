@@ -489,60 +489,6 @@ export default function Profile() {
             </>
           )}
         </div>
-        <div className="w-[300px] rounded p-5">
-          <ul className="flex flex-col gap-4">
-            <li
-              className={`cursor-pointer ${
-                activeView === views.Personal_Details
-                  ? "text-blue-500"
-                  : "text-gray-700"
-              }`}
-              onClick={() => changeActiveView(views.Personal_Details)}
-            >
-              Personal Details
-            </li>
-            <li
-              className={`cursor-pointer ${
-                activeView === views.Shop_Details
-                  ? "text-blue-500"
-                  : "text-gray-700"
-              }`}
-              onClick={() => changeActiveView(views.Shop_Details)}
-            >
-              Shop Details
-            </li>
-            <li
-              className={`cursor-pointer ${
-                activeView === views.Reviews ? "text-blue-500" : "text-gray-700"
-              }`}
-              onClick={() => changeActiveView(views.Reviews)}
-            >
-              Reviews
-            </li>
-            <li
-              className={`cursor-pointer ${
-                activeView === views.Password
-                  ? "text-blue-500"
-                  : "text-gray-700"
-              }`}
-              onClick={() => changeActiveView(views.Password)}
-            >
-              Password
-            </li>
-            <li
-              className="text-red-500 cursor-pointer"
-              onClick={handleDeleteUser}
-            >
-              Delete Account
-            </li>
-            <li
-              className="text-gray-700 cursor-pointer"
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   );

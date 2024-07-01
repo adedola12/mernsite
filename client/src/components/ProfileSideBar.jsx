@@ -103,6 +103,7 @@ export default function ProfileSideBar() {
                 ? "bg-blue-100 text-black"
                 : "text-gray-500"
             } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+            onClick={() => changeActiveView(views.Shop_Details)}
           >
             Shop details
           </Link>
