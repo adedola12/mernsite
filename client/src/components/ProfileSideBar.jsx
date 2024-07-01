@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   deleteUserFaliure,
   deleteUserStart,
@@ -8,8 +9,7 @@ import {
   signOutSuccess,
   signOutUser,
 } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
-import { FaArrowLeft, FaPowerOff } from "react-icons/fa"; // Import FontAwesome icons
+import { LuArrowLeftSquare, LuPower } from "react-icons/lu";
 import { config } from "../../config";
 
 export default function ProfileSideBar() {
@@ -71,12 +71,13 @@ export default function ProfileSideBar() {
     <div className="">
       {/* Desktop Sidebar */}
       <div className="hidden rounded w-64 flex-shrink-0 md:flex flex-col bg-[#FFFFFF]">
-        <div className="flex items-center justify-between p-5 py-4 border-b">
-          <button onClick={() => navigate(-1)}>
-            <FaArrowLeft className="text-xl" />
-          </button>
-          <h1 className="font-bold text-xl">Profile</h1>
-        </div>
+        <button
+          className="text-black text-lg font-bold p-4 md:hidden"
+          onClick={toggleMobileMenu}
+        >
+          <LuArrowLeftSquare />
+        </button>
+        <h1 className="font-bold text-xl mb-4 border-b p-5 py-4">Profile</h1>
         <div className="flex flex-col gap-2 px-3">
           <Link
             to={"/add-product"}
@@ -84,7 +85,7 @@ export default function ProfileSideBar() {
               currentPath === "/add-product"
                 ? "bg-blue-100 text-black"
                 : "text-gray-500"
-            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
           >
             Add Product
           </Link>
@@ -95,7 +96,7 @@ export default function ProfileSideBar() {
               currentPath === "/profile"
                 ? "bg-blue-100 text-black"
                 : "text-gray-500"
-            }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+            } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
           >
             Personal Details
           </Link>
@@ -123,14 +124,14 @@ export default function ProfileSideBar() {
             Reviews
           </Link>
         </div>
-        <div className="p-3 py-4 mt-auto flex flex-col gap-3 ">
+        <div className="p-3 py-4 mt-auto flex flex-col gap-3">
           <div className="border-t mt-3" />
           <button
             className="text-red-600 hover:bg-red-50 py-3 rounded-md duration-300 px-3 text-left flex items-center justify-between"
             onClick={handleSignOut}
           >
             <span>Log out</span>
-            <FaPowerOff className="text-red-600 rotate-90" />
+            <LuPower className="text-red-600 rotate-90" />
           </button>
           <button
             className="text-red-600 hover:underline text-left px-3"
@@ -143,20 +144,19 @@ export default function ProfileSideBar() {
 
       {/* Mobile Sidebar */}
       <div className="md:hidden">
-        {!isMobileMenuOpen ? (
-          <button
-            className="text-black text-lg font-bold p-4"
-            onClick={toggleMobileMenu}
-          >
-            Menu
-          </button>
-        ) : (
+        <button
+          className="text-black text-lg font-bold p-4"
+          onClick={toggleMobileMenu}
+        >
+          <LuArrowLeftSquare />
+        </button>
+        {isMobileMenuOpen && (
           <div className="fixed inset-0 bg-white z-50 flex flex-col p-5">
             <button
               className="self-start text-2xl mb-4"
               onClick={toggleMobileMenu}
             >
-              <FaArrowLeft />
+              <LuArrowLeftSquare />
             </button>
             <h1 className="font-bold text-xl mb-4 border-b p-5 py-4">
               Profile
@@ -168,7 +168,7 @@ export default function ProfileSideBar() {
                   currentPath === "/add-product"
                     ? "bg-blue-100 text-black"
                     : "text-gray-500"
-                }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+                } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
                 onClick={toggleMobileMenu}
               >
                 Add Product
@@ -180,7 +180,7 @@ export default function ProfileSideBar() {
                   currentPath === "/profile"
                     ? "bg-blue-100 text-black"
                     : "text-gray-500"
-                }  text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
+                } text-left py-3 px-4 hover:bg-blue-50 focus:outline-none focus:ring-blue-200 rounded transition-all duration-75 ease-in-out`}
                 onClick={toggleMobileMenu}
               >
                 Personal Details
@@ -217,7 +217,7 @@ export default function ProfileSideBar() {
                 onClick={handleSignOut}
               >
                 <span>Log out</span>
-                <FaPowerOff className="text-red-600 rotate-90" />
+                <LuPower className="text-red-600 rotate-90" />
               </button>
               <button
                 className="text-red-600 hover:underline text-left px-3"
