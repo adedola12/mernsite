@@ -152,14 +152,6 @@ export default function ProfileSideBar() {
             <h1 className="font-bold text-xl mb-4 border-b p-5 py-4">
               Profile
             </h1>
-
-            <button
-              className="self-start text-2xl mb-4"
-              onClick={toggleMobileMenu}
-            >
-              <LuArrowLeftSquare />
-            </button>
-
             <div className="flex flex-col gap-2 px-3">
               <Link
                 to={"/add-product"}
