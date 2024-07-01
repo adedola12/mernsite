@@ -335,84 +335,61 @@ export default function Profile() {
                   alt="profileImage"
                   className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
                 />
-                {filePerc > 0 && (
-                  <span className="font-bold text-gray-700">{filePerc}%</span>
-                )}
-                {fileError && (
-                  <span className="text-red-600">Image Upload failed</span>
-                )}
+                <p className="self-center text-sm">
+                  {fileError ? (
+                    <span className="text-red-700">
+                      Image Upload Error (Image must be less than 2MB)
+                    </span>
+                  ) : filePerc > 0 && filePerc < 100 ? (
+                    <span className="text-blue-700">{`Uploading ${filePerc}%`}</span>
+                  ) : filePerc === 100 ? (
+                    <span className="text-green-800">
+                      {" "}
+                      Image Upload Complete
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </p>
 
-                {updateSuccess && (
-                  <span className="text-green-600">Profile Updated</span>
-                )}
-                {error && <span className="text-red-600">{error}</span>}
-                <div className="flex flex-col">
-                  <label htmlFor="username" className=" text-gray-800">
-                    Name
-                  </label>
-                  <input
-                    id="username"
-                    type="text"
-                    className=" border-2 border-gray-300 p-2 rounded-lg"
-                    value={formData.username}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="email" className=" text-gray-800">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    className=" border-2 border-gray-300 p-2 rounded-lg"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="bio" className=" text-gray-800">
-                    Bio
-                  </label>
-                  <textarea
-                    id="bio"
-                    className=" border-2 border-gray-300 p-2 rounded-lg"
-                    value={formData.bio}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="password" className=" text-gray-800">
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    className=" border-2 border-gray-300 p-2 rounded-lg"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label
-                    htmlFor="password_confirmation"
-                    className=" text-gray-800"
-                  >
-                    Confirm Password
-                  </label>
-                  <input
-                    id="password_confirmation"
-                    type="password"
-                    className=" border-2 border-gray-300 p-2 rounded-lg"
-                    value={formData.password_confirmation}
-                    onChange={handleChange}
-                  />
-                </div>
+                <input
+                  type="text"
+                  defaultValue={currentUser?.username}
+                  id="username"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+                <input
+                  type="email"
+                  defaultValue={currentUser?.email}
+                  id="email"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+
+                <input
+                  type="text"
+                  defaultValue={currentUser?.storeAddress}
+                  placeholder="Store Address"
+                  id="storeAddress"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+                <input
+                  type="tel"
+                  defaultValue={currentUser?.mobileNumber}
+                  placeholder="Mobile Number"
+                  id="mobileNumber"
+                  className="border p-3 rounded-lg"
+                  onChange={handleChange}
+                />
+
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
                   type="submit"
+                  disabled={loading}
                 >
-                  Update Profile
+                  {loading ? "Please wait" : "Update"}
                 </button>
               </form>
             </>
