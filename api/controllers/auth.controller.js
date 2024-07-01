@@ -31,16 +31,11 @@ export const signup = async (req, res, next) => {
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
 
-<<<<<<< HEAD
-  if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
-    return res.status(400).json({message: "Kindly provide env variables"});
-=======
   if (
     !appConstants.JWT_ACCESS_TOKEN_SECRET ||
     !appConstants.JWT_REFRESH_TOKEN_SECRET
   ) {
     return res.status(400).json({ message: "Kindly provide env variables" });
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
   }
 
   try {
@@ -103,30 +98,15 @@ export const google = async (req, res, next) => {
     return res.status(400).json({ message: "Kindly provide env variables" });
   }
 
-<<<<<<< HEAD
-    if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
-      return res.status(400).json({message: "Kindly provide env variables"});
-    }
-
-    if(!email.trim()) {
-      return res.status(400).json({message: "Email is required"});
-    }
-=======
   if (!email.trim()) {
     return res.status(400).json({ message: "Email is required" });
   }
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
 
   try {
     const user = await User.findOne({ email });
 
-<<<<<<< HEAD
-    req.cookies["access_token"] = '';
-    req.cookies["refresh_token"] = '';
-=======
     req.cookies["access_token"] = "";
     req.cookies["refresh_token"] = "";
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
 
     if (user) {
       const access_token = jwt.sign(
@@ -222,12 +202,7 @@ export const google = async (req, res, next) => {
 };
 
 export const signOut = async (req, res, next) => {
-<<<<<<< HEAD
-
-  const { access_token, refresh_token } = req.cookies
-=======
   const { access_token, refresh_token } = req.cookies;
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
 
   try {
     if (access_token) {
@@ -247,13 +222,6 @@ export const signOut = async (req, res, next) => {
 };
 
 export const refresh = async (req, res, next) => {
-<<<<<<< HEAD
-
-  if(!appConstants.JWT_ACCESS_TOKEN_SECRET || !appConstants.JWT_REFRESH_TOKEN_SECRET) {
-    return res.status(400).json({message: "Kindly provide env variables"});
-  }
-  
-=======
   if (
     !appConstants.JWT_ACCESS_TOKEN_SECRET ||
     !appConstants.JWT_REFRESH_TOKEN_SECRET
@@ -261,20 +229,14 @@ export const refresh = async (req, res, next) => {
     return res.status(400).json({ message: "Kindly provide env variables" });
   }
 
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
   const user = req.user;
 
   if (!user && !user?._id) {
     return next(errorHandler(401, "Unauthorized user"));
   }
 
-<<<<<<< HEAD
-  req.cookies["access_token"] = '';
-  req.cookies["refresh_token"] = '';
-=======
   req.cookies["access_token"] = "";
   req.cookies["refresh_token"] = "";
->>>>>>> 608d7037a32376a2ad23683027b39a537056bdfa
 
   try {
     const access_token = jwt.sign(
