@@ -143,9 +143,12 @@ export default function ProfileSideBar() {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className="md:hidden">
+      <div className="md:hidden  bg-white ">
+        <button className="self-start text-2xl mb-4" onClick={toggleMobileMenu}>
+          <LuArrowLeftSquare />
+        </button>
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 bg-white z-50 flex flex-col p-5">
+          <div className="fixed inset-0z-50 flex flex-col p-5">
             <h1 className="font-bold text-xl mb-4 border-b p-5 py-4">
               Profile
             </h1>
