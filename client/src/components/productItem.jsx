@@ -7,12 +7,8 @@ import { MdLocationOn } from "react-icons/md";
 import { Link } from "react-router-dom";
 import StarRating from "./Rating";
 
-
-export default function ProductItem({ product}) {
-
-
+export default function ProductItem({ product }) {
   return (
-
     <div className="bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full ">
       <div className=" flex flex-col">
         <Link to={`/product/${product._id}`}>
@@ -31,10 +27,10 @@ export default function ProductItem({ product}) {
           </div>
         </Link>
         {/* Add RATING */}
-        
+
         <div className="flex items-center flex-wrap gap-2 p-4">
-            <StarRating />
-            <span className="text-base text-gray-800">(91)</span>
+          <StarRating />
+          <span className="text-base text-gray-800">(91)</span>
         </div>
         
       </div>

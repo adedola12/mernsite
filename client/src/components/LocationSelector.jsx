@@ -67,7 +67,6 @@ export default function LocationSelector({ onStateSelected }) {
           </option>
         ))}
       </select>
-
     </div>
   );
 }

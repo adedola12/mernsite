@@ -15,13 +15,14 @@ export default function OAuth({ onClose }) {
     try {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
-
       const result = await signInWithPopup(auth, provider);
+
       const res = await fetch(`${config.baseUrl}/api/auth/google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           name: result.user.displayName,
           email: result.user.email,
@@ -34,7 +35,7 @@ export default function OAuth({ onClose }) {
       onClose();
       navigate("/");
     } catch (error) {
-      console.log("Couldnot sign in with google", error);
+      console.log("Could not sign in with Google", error);
     }
   };
 

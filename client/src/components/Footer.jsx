@@ -16,7 +16,7 @@ export default function Footer() {
             valuable materials.
           </span>
           <div className="w-full">
-            <form  className="w-full">
+            <form className="w-full">
               <div className="flex gap-2 flex-col md:flex-row">
                 <input
                   type="email"
@@ -24,7 +24,10 @@ export default function Footer() {
                   id="emailAddress"
                   className="border px-4 py-2 flex-1 w-full rounded-lg"
                 />
-                <button type="button" className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2">
+                <button
+                  type="button"
+                  className="bg-[#00263D] text-white text-center rounded-lg px-6 py-2"
+                >
                   Subscribe
                 </button>
               </div>
@@ -235,17 +238,26 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-start flex-wrap md:justify-between my-3 gap-5 px-5 md:px-10 md:items-center">
           <ul className="list-none flex flex-col md:flex-row gap-4">
             <li>
-              <Link to="/terms-of-service"  className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
+              <Link
+                to="/terms-of-service"
+                className="text-gray-600 hover:underline hover:text-gray-800 text-sm"
+              >
                 Terms of service
               </Link>
             </li>
             <li>
-              <Link to="/privacy-policy" className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
+              <Link
+                to="/privacy-policy"
+                className="text-gray-600 hover:underline hover:text-gray-800 text-sm"
+              >
                 Privacy Policy
               </Link>
             </li>
             <li>
-              <Link to="/why-adlm" className="text-gray-600 hover:underline hover:text-gray-800 text-sm" >
+              <Link
+                to="/why-adlm"
+                className="text-gray-600 hover:underline hover:text-gray-800 text-sm"
+              >
                 Why ADLM Studio
               </Link>
             </li>

@@ -12,14 +12,15 @@ import path from "path";
 
 const app = express();
 
-
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
-  "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app"
+  "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app",
+  "https://www.adlmstudio.net",
+  "https://accounts.google.com",
+  "https://mernsite.firebaseapp.com",
 ];
-
 
 // const corsOptions = {
 //   origin: (origin, callback) => {
@@ -38,20 +39,34 @@ const corsOptions = {
   credentials: true,
 };
 
-
-app.use(cors({
-  origin: [
-    'http://127.0.0.1:5173', 
-    'http://127.0.0.1:3000',
-    'https://mernsite-frontend.onrender.com',
-    'https://adlmmarketplace.onrender.com',
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Origin', 'X-Requested-With', 'Accept', 'x-client-key', 'x-client-token', 'x-client-secret', 'Authorization'],
-  credentials: true,
-  optionSuccessStatus:200,
-}));
-
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5173",
+      "http://localhost:5174",
+      "http://127.0.0.1:3000",
+      "https://mernsite-frontend.onrender.com",
+      "https://adlmmarketplace.onrender.com",
+      "https://adlmmarketplace.vercel.app",
+      "https://www.adlmstudio.net",
+      "https://accounts.google.com",
+      "https://mernsite.firebaseapp.com",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Origin",
+      "X-Requested-With",
+      "Accept",
+      "x-client-key",
+      "x-client-token",
+      "x-client-secret",
+      "Authorization",
+    ],
+    credentials: true,
+    optionSuccessStatus: 200,
+  })
+);
 
 // app.use(express.static(path.join(__dirname, "./../client/dist")));
 

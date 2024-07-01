@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { config } from "../../config";
 
-
 export default function CategorySelector({ onCategorySelected }) {
   const [error, setError] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
@@ -45,7 +44,6 @@ export default function CategorySelector({ onCategorySelected }) {
             </option>
           ))}
       </select>
-
     </div>
   );
 }

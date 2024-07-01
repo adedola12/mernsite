@@ -1,0 +1,30 @@
+{
+    "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/HomeA", "dest": "/" },
+      { "src": "/marketplace", "dest": "/" },
+      { "src": "/product", "dest": "/" },
+      { "src": "/product/(.*)", "dest": "/" },
+      { "src": "/CreateProduct", "dest": "/" },
+      { "src": "/DashboardDefault", "dest": "/" },
+      { "src": "/Home", "dest": "/" },
+      { "src": "/Listing", "dest": "/" },
+      { "src": "/Newsletter", "dest": "/" },
+      { "src": "/Pricing", "dest": "/" },
+      { "src": "/PrivateLayout", "dest": "/" },
+      { "src": "/Product", "dest": "/" },
+      { "src": "/ProductDemo", "dest": "/" },
+      { "src": "/Profile", "dest": "/" },
+      { "src": "/Search", "dest": "/" },
+      { "src": "/SellerReviews", "dest": "/" },
+      { "src": "/SellerShop", "dest": "/" },
+      { "src": "/Services", "dest": "/" },
+      { "src": "/ShopDetails", "dest": "/" },
+      { "src": "/SignIn", "dest": "/" },
+      { "src": "/SignUp", "dest": "/" },
+      { "src": "/UpdateListing", "dest": "/" },
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/" }
+    ]
+  }
+  
