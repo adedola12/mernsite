@@ -499,7 +499,7 @@ export default function Profile() {
             </>
           )}
         </div>
-        <div className="w-[300px] rounded p-5">
+        {/* <div className="w-[300px] rounded p-5">
           <ul className="flex flex-col gap-4">
             <li
               className={`cursor-pointer ${
@@ -552,7 +552,7 @@ export default function Profile() {
               Sign Out
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
