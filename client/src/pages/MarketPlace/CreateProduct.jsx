@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import imageCompression from "browser-image-compression";
+
+import imageCompression from 'browser-image-compression';
 import {
   getDownloadURL,
   getStorage,
@@ -74,6 +75,7 @@ export default function CreateProduct() {
     }));
   };
 
+
   const compressImages = async (image) => {
     const options = {
       maxSizeMB: 1,
@@ -84,61 +86,66 @@ export default function CreateProduct() {
       const compressedFile = await imageCompression(image, options);
       return compressedFile;
     } catch (error) {
-      console.error("Error compressing image:", error);
+
+      console.error('Error compressing image:', error);
     }
   };
 
-  const uploadImageToFirebase = async (file) => {
-    const urls = [];
 
+  const uploadImageToFirebase = async (file) => {
+
+    const urls = [];
+    
     if (!file) return;
 
-    const storage = getStorage(app);
+      const storage = getStorage(app);
 
-    const fileName = `${new Date().getTime()}_${file.name}`;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      const fileName = `${new Date().getTime()}_${file.name}`;
+      const storageRef = ref(storage, fileName);
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-      },
-      (error) => console.log(error),
-      () =>
-        getDownloadURL(uploadTask.snapshot.ref)
-          .then(async (downloadURL) => {
-            setFormData((prev) => ({
-              ...prev,
-              imageUrls: [...prev.imageUrls, downloadURL],
-            }));
-            urls.push(downloadURL);
-          })
-          .catch((error) => console.log(error))
-    );
+      uploadTask.on("state_changed", (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+        },
+        (error) => console.log(error),
+        () => getDownloadURL(uploadTask.snapshot.ref)
+            .then(async (downloadURL) => {
+              setFormData((prev) => ({
+                ...prev,
+                imageUrls: [...prev.imageUrls, downloadURL],
+              }));
+              urls.push(downloadURL)
+            })
+            .catch(error => console.log(error))
+      );
 
-    return urls;
-  };
+      return urls;
+
+  }
 
   const handleImageSubmit = async () => {
+
+
     const imageFiles = Array.from(files);
 
     if (imageFiles.length > 0) {
       setUploading(true);
 
       try {
+
         for (let i = 0; i < imageFiles.length; i++) {
           const compressedImage = await compressImages(imageFiles[i]);
           await uploadImageToFirebase(compressedImage);
         }
+
       } catch (error) {
         console.error("Failed to upload images", error);
         setError("Image upload failed (2mb per image limit)");
       } finally {
         setUploading(false);
       }
+
     }
   };
 

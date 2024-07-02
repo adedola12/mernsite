@@ -28,6 +28,7 @@ export default function ProductItem({ product }) {
           <StarRating />
           <span className="text-base text-gray-800">(91)</span>
         </div>
+        
       </div>
     </div>
   );

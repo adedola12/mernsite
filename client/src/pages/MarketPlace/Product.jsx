@@ -13,6 +13,8 @@ export default function Product() {
   const [showNumber, setShowNumber] = useState(false);
   const params = useParams();
 
+  console.log(params.productId)
+
   useEffect(() => {
     const fetchProductandUser = async () => {
       try {
@@ -26,15 +28,10 @@ export default function Product() {
         }
 
         const data = await res.json();
+        setProduct(data.product);
 
-        if (data.success === false) {
-          setError(true);
-          return;
-        } else {
-          setProduct(data.product);
-        }
       } catch (error) {
-        setError(true);
+        setError(true);s
       } finally {
         setLoading(false);
       }
@@ -72,16 +69,17 @@ export default function Product() {
 
   const showMobile = () => {
     setShowNumber((prevState) => !prevState);
-    console.log(product.userRef.mobileNumber);
   };
 
-  // if (loading) return <div>Loading...</div>;
-  if (loading)
+
+  if (loading) {
     return <div className="h-full text-center p-4 md:px-10">Loading...</div>;
-  if (!product)
-    return (
-      <div className="h-full text-center p-4 md:px-10">No product found.</div>
-    );
+  }
+
+  if (!product) {
+    return <div className="h-full text-center p-4 md:px-10">No product found.</div>
+  }
+
   if (error)
     return (
       <div className="h-full text-center p-4 md:px-10">

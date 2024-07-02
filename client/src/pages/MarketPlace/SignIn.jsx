@@ -75,6 +75,7 @@ export default function SignInModal({ onClose }) {
   };
 
   return (
+
     <div
       id="signin-modal"
       onClick={handleShowModal}
@@ -88,6 +89,7 @@ export default function SignInModal({ onClose }) {
           onClick={onClose}
           className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300"
         >
+
           <MdClose className="text-gray-500 group-hover:text-gray-600" />
         </button>
         <div className="flex flex-col items-center justify-center">
