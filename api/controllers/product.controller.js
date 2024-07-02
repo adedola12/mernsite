@@ -254,7 +254,7 @@ export const searchProduct = async (req, res, next) => {
     }
 
     if (orConditions.length > 0) {
-      andConditions.push({ $or: orConditions });
+        andConditions.push({ $or: orConditions });
     }
 
     const filter = andConditions.length > 0 ? { $and: andConditions } : {};
@@ -269,6 +269,7 @@ export const searchProduct = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.log(error)
     next(error);
   }
 };
