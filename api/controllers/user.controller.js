@@ -1,31 +1,27 @@
-import bcryptjs from "bcryptjs";
-import errorHandler from "../utils/error.js";
+
 import User from "../models/user.model.js";
 import Listing from "../models/listing.model.js";
 import Product from "../models/product.model.js";
+import Review from "../models/review.model.js";
+import errorHandler from "../utils/error.js";
 import { isValidObjectId } from "mongoose";
 
 export const test = (req, res) => {
-  res.json({
-    message: "API Route is working!",
-  });
+  res.json({ message: "API Route is working!", });
 };
 
 export const updateUser = async (req, res, next) => {
 
-  const userId = req?.user?.id;
+  const userId = req?.user?._id.toString();
 
   if(!userId) {
-    return next(errorHandler(401, "Please login"));
+    return next(errorHandler(404, "User ID not found"));
   }
 
   if (userId !== req.params.id)
     return next(errorHandler(401, "You can only update your own account"));
   try {
 
-    // if (req.body.password) {
-    //   req.body.password = bcryptjs.hashSync(req.body.password, 10);
-    // }
 
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
@@ -36,8 +32,8 @@ export const updateUser = async (req, res, next) => {
           password: req.body.password,
           avatar: req.body.avatar,
           bio: req.body.bio,
-          // storeAddress: req.body.storeAddress,
-          // mobileNumber: req.body.mobileNumber,
+          storeAddress: req.body.storeAddress,
+          mobileNumber: req.body.mobileNumber,
         },
       },
       { new: true }
@@ -63,7 +59,11 @@ export const deleteUser = async (req, res, next) => {
 
 
   try {
+    await Product.deleteMany({ userRef: req.user._id.toString() })
+    await Listing.deleteMany({ userRef: req.user._id.toString() })
+    await Review.deleteMany({ userRef: req.user._id.toString() })
     await User.findByIdAndDelete(req.params.id);
+    
     res.clearCookie("access_token", "", { expires: new Date(0) });
     res.clearCookie("refresh_token", "", { expires: new Date(0) });
 

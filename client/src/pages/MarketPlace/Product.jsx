@@ -28,6 +28,7 @@ export default function Product() {
         }
 
         const data = await res.json();
+        console.log(product)
         setProduct(data.product);
 
       } catch (error) {
@@ -156,13 +157,13 @@ export default function Product() {
               <h2 className="text-lg font-semibold">Seller Profile</h2>
               <div className="flex items-center mb-4 mt-3">
                 <img
-                  src={product.userRef.avatar}
-                  alt={product.userRef.username}
+                  src={product.userRef?.avatar}
+                  alt={product.userRef?.username}
                   className="rounded-full h-16 w-16 object-cover mr-4"
                 />
-                <Link to={`/sellerShop/${product.userRef._id}`} className="">
+                <Link to={`/sellerShop/${product.userRef?._id}`} className="">
                   <p className="text-md font-semibold text-[#828282] text-xl">
-                    {product.userRef.username}
+                    {product.userRef?.username}
                   </p>
                   <span className="bg-green-100 text-green-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
                     Verified
@@ -171,7 +172,7 @@ export default function Product() {
               </div>
               <div className="flex gap-2 flex-col">
                 <Link
-                  to={`https://wa.me/+2340${product.userRef.mobileNumber}?text=I am intrested in your product ${product.name} listed on the ADLM Marketplace`}
+                  to={`https://wa.me/+2340${product.userRef?.mobileNumber}?text=I am intrested in your product ${product?.name} listed on the ADLM Marketplace`}
                   className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-sm rounded-lg font-medium"
                 >
                   Text on Whatsapp

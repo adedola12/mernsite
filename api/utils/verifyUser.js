@@ -9,6 +9,7 @@ export const verifyToken = async (req, res, next) => {
 
   const access_token = req.cookies["access_token"];
 
+  console.log(access_token)
 
   if (!access_token) {
     return next(errorHandler(401, "Unauthorized Request"));
@@ -17,13 +18,13 @@ export const verifyToken = async (req, res, next) => {
   try {
 
     const decoded = jwt.verify(access_token, appConstants.JWT_SECRET);
-   
+    console.log(decoded)
     if (!decoded) {
       return next(errorHandler(401, "Unauthorized token"));
     }
 
     const user = await User.findById(decoded?.id);
-
+    console.log(user)
     if (!user && !user._id) {
       return next(errorHandler(401, "Unauthorized user"));
     }
