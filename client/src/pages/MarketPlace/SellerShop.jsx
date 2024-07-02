@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { FaPhone,} from "react-icons/fa";
 
+
 import { useSelector } from "react-redux";
 import { config } from "../../../config";
 import CategorySelector from "../../components/CategorySelector";
@@ -243,7 +244,9 @@ export default function SellerShop() {
 
               <div className="flex items-center mb-3 p-3 gap-x-2">
                 <img
+
                   src={user?.avatar ? user?.avatar : "https://placehold.jp/150x150.png"}
+
                   alt="NA"
                   className="rounded-full h-16 w-16 object-cover"
                 />

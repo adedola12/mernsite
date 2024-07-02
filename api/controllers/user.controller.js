@@ -12,17 +12,15 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async (req, res, next) => {
-
   const userId = req?.user?.id;
 
-  if(!userId) {
+  if (!userId) {
     return next(errorHandler(401, "Please login"));
   }
 
   if (userId !== req.params.id)
     return next(errorHandler(401, "You can only update your own account"));
   try {
-
     // if (req.body.password) {
     //   req.body.password = bcryptjs.hashSync(req.body.password, 10);
     // }
@@ -76,6 +74,7 @@ export const deleteUser = async (req, res, next) => {
 export const getUserListings = async (req, res, next) => {
 
   if(req.user._id.toString() !== req.params.id) {
+
     return next(errorHandler(401, "You can only view your own listings!"));
   }
 
@@ -91,11 +90,10 @@ export const getUserListings = async (req, res, next) => {
 export const getSellerProductAndReviews = async (req, res, next) => {
   const { sellerId } = req.params;
   try {
-
     const user = await User.findById(sellerId).populate({
       path: "reviews",
       model: "Review",
-      select: "comment rating"
+      select: "comment rating",
     });
 
     if (!user) {
@@ -111,15 +109,12 @@ export const getSellerProductAndReviews = async (req, res, next) => {
 };
 
 export const getUser = async (req, res, next) => {
-
-  
   try {
-
-    if(!req.params.id) {
+    if (!req.params.id) {
       return next(errorHandler(404, "Invalid user ID!"));
     }
-    
-    if(!isValidObjectId(req.params.id)) {
+
+    if (!isValidObjectId(req.params.id)) {
       return next(errorHandler(404, "Invalid user ID!"));
     }
 
@@ -156,6 +151,7 @@ export const productUserDetails = async (req, res, next) => {
 export const getUserProduct = async (req, res, next) => {
 
   if(req.user._id.toString() !== req.params.id) {
+
     return next(errorHandler(401, "You can only view your own product!"));
   }
 

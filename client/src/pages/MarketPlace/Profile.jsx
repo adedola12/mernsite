@@ -144,7 +144,9 @@ export default function Profile() {
 
       const data = await res.json();
       dispatch(deleteUserSuccess(data));
+
       navigate("/", {replace: true});
+
 
     } catch (error) {
       dispatch(deleteUserFaliure(error.message));
@@ -178,8 +180,10 @@ export default function Profile() {
           credentials: "include",
         }
       );
+
       
       const data = await res.json();
+
 
       setUserListings(data);
     } catch (error) {
@@ -262,7 +266,6 @@ export default function Profile() {
       );
       const data = await res.json();
 
-
     } catch (error) {
       setEditListingError(true);
     }
@@ -275,11 +278,13 @@ export default function Profile() {
       const res = await fetch(
         `${config.baseUrl}/api/product/edit/${productId}`,
         {
+
           credentials: "include"
         }
       );
 
       const data = await res.json();
+
 
     } catch (error) {
       setEditProductError(true);

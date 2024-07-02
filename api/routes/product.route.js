@@ -11,11 +11,12 @@ import {
   getCategories,
   getProduct,
   searchProduct,
+
   updateProduct
+
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
-
 
 router.post("/create-product", verifyToken, createProduct);
 
