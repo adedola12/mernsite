@@ -16,6 +16,8 @@ export default function ProfileSideBar() {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [userListings, setUserListings] = useState([]);
+  const [userProducts, setUserProducts] = useState([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,9 +65,52 @@ export default function ProfileSideBar() {
     }
   };
 
+  const handleShowListing = async () => {
+    try {
+      setShowListingError(false);
+      const res = await fetch(
+        `${config.baseUrl}/api/user/listings/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      setUserListings(data);
+    } catch (error) {
+      setShowListingError(true);
+    }
+  };
+
+  const handleShowProduct = async () => {
+    try {
+      setShowProductError(false);
+
+      const res = await fetch(
+        `${config.baseUrl}/api/user/products/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+
+      setUserProducts(data);
+    } catch (error) {
+      setShowProductError(true);
+    }
+  };
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  useEffect(() => {
+    if (currentPath === "/shop-details") {
+      handleShowProduct();
+      handleShowListing();
+    }
+  }, [activeView]);
 
   return (
     <div className="">
