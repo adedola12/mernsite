@@ -110,7 +110,7 @@ export default function ProfileSideBar() {
       handleShowProduct();
       handleShowListing();
     }
-  }, [activeView]);
+  }, [currentPath]);
 
   return (
     <div className="">
