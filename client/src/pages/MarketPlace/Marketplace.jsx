@@ -14,7 +14,7 @@ import CategorySelector from "../../components/CategorySelector";
 import _ from 'lodash';
 
 
-const MAX_LIMIT = 10;
+const MAX_LIMIT = 12;
 
 export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
