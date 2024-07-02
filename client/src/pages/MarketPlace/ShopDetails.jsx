@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { config } from "../../../config";
+import { useSelector } from "react-redux";
 
 const ShopDetails = () => {
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const [showListingError, setShowListingError] = useState(false);
   const [showProductError, setShowProductError] = useState(false);
 
@@ -15,6 +17,7 @@ const ShopDetails = () => {
   }, []);
 
   console.log(userProducts);
+  console.log(currentUser._id);
 
   const handleShowListing = async () => {
     try {
@@ -27,6 +30,8 @@ const ShopDetails = () => {
       );
 
       const data = await res.json();
+
+      console.log(data);
 
       setUserListings(data);
     } catch (error) {
