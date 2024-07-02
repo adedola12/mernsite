@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { config } from "../../../config";
 
 const ShopDetails = () => {
   const [showListingError, setShowListingError] = useState(false);
@@ -7,6 +8,13 @@ const ShopDetails = () => {
 
   const [userListings, setUserListings] = useState([]);
   const [userProducts, setUserProducts] = useState([]);
+
+  useEffect(() => {
+    handleShowListing();
+    handleShowProduct();
+  }, []);
+
+  console.log(userProducts);
 
   const handleShowListing = async () => {
     try {
@@ -141,6 +149,7 @@ const ShopDetails = () => {
         <div className="flex flex-col gap-4">
           <div>
             <h3 className="font-bold text-lg">Your Listings</h3>
+
             {showListingError ? (
               <span className="text-red-600">Failed to load listings</span>
             ) : (
@@ -170,6 +179,7 @@ const ShopDetails = () => {
           </div>
           <div>
             <h3 className="font-bold text-lg">Your Products</h3>
+
             {showProductError ? (
               <span className="text-red-600">Failed to load products</span>
             ) : (
