@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import imageCompression from "browser-image-compression";
 import {
   getDownloadURL,
   getStorage,
@@ -14,6 +15,7 @@ import CreateProductStageTwo from "../../components/CreateProductStageTwo";
 import { CATEGORY_DATA } from "../../constants/data";
 import toast from "react-hot-toast";
 import { config } from "../../../config";
+
 import fetchWithTokenRefresh from "../../hooks/fetchWithTokenRefresh";
 
 export default function CreateProduct() {
@@ -72,39 +74,65 @@ export default function CreateProduct() {
     }));
   };
 
-  const handleImageSubmit = async () => {
-    if (files.length > 0) {
-      setUploading(true);
-      const storage = getStorage(app);
-      const promises = Array.from(files).map((file) => {
-        const fileName = `${new Date().getTime()}_${file.name}`;
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
+  const compressImages = async (image) => {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 800,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(image, options);
+      return compressedFile;
+    } catch (error) {
+      console.error("Error compressing image:", error);
+    }
+  };
 
-        return new Promise((resolve, reject) => {
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log(`Upload is ${progress}% done`);
-            },
-            (error) => reject(error),
-            () =>
-              getDownloadURL(uploadTask.snapshot.ref)
-                .then(resolve)
-                .catch(reject)
-          );
-        });
-      });
+  const uploadImageToFirebase = async (file) => {
+    const urls = [];
+
+    if (!file) return;
+
+    const storage = getStorage(app);
+
+    const fileName = `${new Date().getTime()}_${file.name}`;
+    const storageRef = ref(storage, fileName);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+      },
+      (error) => console.log(error),
+      () =>
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then(async (downloadURL) => {
+            setFormData((prev) => ({
+              ...prev,
+              imageUrls: [...prev.imageUrls, downloadURL],
+            }));
+            urls.push(downloadURL);
+          })
+          .catch((error) => console.log(error))
+    );
+
+    return urls;
+  };
+
+  const handleImageSubmit = async () => {
+    const imageFiles = Array.from(files);
+
+    if (imageFiles.length > 0) {
+      setUploading(true);
 
       try {
-        const urls = await Promise.all(promises);
-
-        setFormData((prev) => ({
-          ...prev,
-          imageUrls: [...prev.imageUrls, ...urls],
-        }));
+        for (let i = 0; i < imageFiles.length; i++) {
+          const compressedImage = await compressImages(imageFiles[i]);
+          await uploadImageToFirebase(compressedImage);
+        }
       } catch (error) {
         console.error("Failed to upload images", error);
         setError("Image upload failed (2mb per image limit)");

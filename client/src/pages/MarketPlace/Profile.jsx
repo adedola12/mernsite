@@ -143,16 +143,12 @@ export default function Profile() {
       );
 
       const data = await res.json();
-
-      if (data.success === false) {
-        dispatch(deleteUserFaliure(data.message));
-        return;
-      }
-
       dispatch(deleteUserSuccess(data));
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       dispatch(deleteUserFaliure(error.message));
+    } finally {
+      localStorage.removeItem("persist:root");
     }
   };
 
@@ -164,16 +160,11 @@ export default function Profile() {
 
       const data = await res.json();
 
-      if (data.success === false) {
-        dispatch(signOutFaliure("Unable to signout"));
-        return;
-      }
-
       dispatch(signOutSuccess(data));
 
       navigate("/");
     } catch (error) {
-      dispatch(signOutFaliure(error.message));
+      dispatch(signOutFaliure(error.message ?? "Unable to signout"));
     }
   };
 
@@ -186,12 +177,8 @@ export default function Profile() {
           credentials: "include",
         }
       );
-      const data = await res.json();
 
-      if (data.success === false) {
-        setShowListingError(true);
-        return;
-      }
+      const data = await res.json();
 
       setUserListings(data);
     } catch (error) {
@@ -211,11 +198,6 @@ export default function Profile() {
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setShowProductError(true);
-        return;
-      }
-
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);
@@ -225,7 +207,6 @@ export default function Profile() {
   const handleListingDelete = async (listingId) => {
     try {
       setDeleteListingError(false);
-
       const res = await fetch(
         `${config.baseUrl}/api/listing/delete/${listingId}`,
         {
@@ -234,11 +215,6 @@ export default function Profile() {
         }
       );
       const data = await res.json();
-
-      if (data.success === false) {
-        setDeleteListingError(true);
-        return;
-      }
 
       setUserListings((prev) =>
         prev.filter((listing) => listing._id !== listingId)
@@ -261,11 +237,6 @@ export default function Profile() {
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setDeleteProductError(true);
-        return;
-      }
-
       setUserProducts((prev) =>
         prev.filter((product) => product._id !== productId)
       );
@@ -281,16 +252,11 @@ export default function Profile() {
       const res = await fetch(
         `${config.baseUrl}/api/listing/update/${listingId}`,
         {
-          method: "POST",
+          method: "PUT",
           credentials: "include",
         }
       );
       const data = await res.json();
-
-      if (data.success === false) {
-        setEditListingError(true);
-        return;
-      }
     } catch (error) {
       setEditListingError(true);
     }
@@ -301,17 +267,13 @@ export default function Profile() {
       setEditProductError(false);
 
       const res = await fetch(
-        `${config.baseUrl}/api/product/update/${productId}`,
+        `${config.baseUrl}/api/product/edit/${productId}`,
         {
-          method: "POST",
+          credentials: "include",
         }
       );
-      const data = await res.json();
 
-      if (data.success === false) {
-        setEditProductError(true);
-        return;
-      }
+      const data = await res.json();
     } catch (error) {
       setEditProductError(true);
     }
@@ -343,7 +305,7 @@ export default function Profile() {
                   onClick={() => fileRef.current.click()}
                   src={formData?.avatar || currentUser?.avatar}
                   alt="profileImage"
-                  className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
+                  className="rounded-full h-28 w-28 self-center pointer-events-none object-cover cursor-pointer"
                 />
                 <p className="self-center text-sm">
                   {fileError ? (
@@ -484,6 +446,7 @@ export default function Profile() {
                   type="password"
                   placeholder="Password"
                   id="password"
+                  autoComplete="off"
                   className="border p-3 rounded-lg"
                   onChange={handleChange}
                 />
@@ -499,7 +462,7 @@ export default function Profile() {
             </>
           )}
         </div>
-        {/* <div className="w-[300px] rounded p-5">
+        <div className="w-[300px] rounded p-5">
           <ul className="flex flex-col gap-4">
             <li
               className={`cursor-pointer ${
@@ -552,7 +515,7 @@ export default function Profile() {
               Sign Out
             </li>
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );

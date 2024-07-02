@@ -12,34 +12,34 @@ const CreateProductStageTwo = ({
   error,
   handleSubmit,
   handleCategoryChange,
-  onhandleSubCategoryChange
+  onhandleSubCategoryChange,
 }) => {
   const units = ["nr", "bags", "tonnes", "m", "m2", "m3"];
   const types = ["Material", "Labour"];
-  
-  const [selectedSubCategory, setSelectedSubCategory] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
 
+  const [selectedSubCategory, setSelectedSubCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const onHandleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
-    handleCategoryChange(event.target.value)
-    setSelectedSubCategory('');
+    handleCategoryChange(event.target.value);
+    setSelectedSubCategory("");
   };
-
 
   const handleSubCategoryChange = (event) => {
     setSelectedSubCategory(event.target.value);
     onhandleSubCategoryChange(event.target.value);
   };
 
-  const subCategories = selectedCategory ? CATEGORY_DATA[selectedCategory].subCategories : [];
+  const subCategories = selectedCategory
+    ? CATEGORY_DATA[selectedCategory].subCategories
+    : [];
 
   return (
     <div className="flex flex-col w-full gap-y-5 bg-white rounded-md">
       <div className="border-b w-full ">
-            <h1 className="font-bold text-xl p-5 py-4 ">Create Product</h1>
-        </div>
+        <h1 className="font-bold text-xl p-5 py-4 ">Create Product</h1>
+      </div>
 
       <div className="w-full md:max-w-2xl mx-auto flex flex-col p-5">
         <div className="w-full flex flex-col gap-y-3">
@@ -81,28 +81,26 @@ const CreateProductStageTwo = ({
             <option value="">--select a category--</option>
             {Object.keys(CATEGORY_DATA).map((category) => (
               <option key={category} value={category}>
-                 {category.charAt(0).toUpperCase() + category.slice(1)}
+                {category.charAt(0).toUpperCase() + category.slice(1)}
               </option>
             ))}
           </select>
 
-
-          {
-            selectedCategory && (
-              <select 
-              value={selectedSubCategory} 
+          {selectedCategory && (
+            <select
+              value={selectedSubCategory}
               onChange={handleSubCategoryChange}
               className="p-3 rounded-lg  flex-1 border"
-              >
-                <option value="">--select a sub-category--</option>
-                {subCategories?.length && subCategories.map((subCategory) => (
+            >
+              <option value="">--select a sub-category--</option>
+              {subCategories?.length &&
+                subCategories.map((subCategory) => (
                   <option key={subCategory} value={subCategory}>
                     {subCategory}
                   </option>
                 ))}
-              </select>
-            )
-          }
+            </select>
+          )}
 
           <input
             type="number"
@@ -153,12 +151,12 @@ const CreateProductStageTwo = ({
                 {formData.imageUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="flex justify-between p-3 border items-center"
+                    className="flex justify-between p-3 border items-center overflow-hidden"
                   >
                     <img
                       src={url}
                       alt="Item Image"
-                      className="w-20 h-20 object-contain rounded-lg"
+                      className="w-20 h-20 object-cover rounded-md"
                     />
 
                     <button>DELETE IMAGE</button>
@@ -186,7 +184,6 @@ const CreateProductStageTwo = ({
             {isLoading ? "Creating..." : "Create Product"}
           </button>
         </div>
-        
       </div>
     </div>
   );

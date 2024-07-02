@@ -1,9 +1,5 @@
 import React from "react";
 
-import { FaStar } from "react-icons/fa";
-
-import { MdLocationOn } from "react-icons/md";
-
 import { Link } from "react-router-dom";
 import StarRating from "./Rating";
 
@@ -15,7 +11,7 @@ export default function ProductItem({ product }) {
           <img
             src={product.imageUrls[0]}
             alt="imageUrl"
-            className="h-[200px] md:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
+            className="h-[200px] md:h-[220px] w-full pointer-events-none object-cover hover:scale-105 transition-scale duration-300"
           />
           <div className="px-4 pt-4 flex flex-col gap-y-1">
             <p className="text-lg font-semibold truncate text-slate-700">

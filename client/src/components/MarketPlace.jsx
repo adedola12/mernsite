@@ -1,5 +1,5 @@
 // Marketplace.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 import SideBar from "../components/SideBar";
 import StateSelector from "../components/StateSelector";
@@ -7,13 +7,14 @@ import TypeSelector from "../components/TypeSelector";
 import ProductItem from "./productItem";
 import { PiSpinnerBold } from "react-icons/pi";
 import useSearchParams from "../hooks/useSearchParams";
+import _ from "lodash";
 import { config } from "../../config";
 
 const MAX_LIMIT = 10;
 
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [isProductLoading, setIsLoadingProduct] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
@@ -35,6 +36,27 @@ export default function Marketplace() {
   const handleTypeSelected = (type) => {
     setParams({ ...params, type });
   };
+
+  const handleLocationInput = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const debounceSearch = useCallback(
+    _.debounce((query) => {
+      setParams({ ...params, name: query });
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    if (searchTerm) {
+      debounceSearch(searchTerm);
+    } else {
+      setSearchTerm("");
+      debounceSearch.cancel();
+      setParams({ ...params, name: null });
+    }
+  }, [searchTerm, debounceSearch]);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -76,6 +98,7 @@ export default function Marketplace() {
       setIsLoadingProduct(true);
 
       const fetchUrl = `${config.baseUrl}/api/product/getCat?page=${page}&limit=${MAX_LIMIT}`;
+
       const res = await fetch(fetchUrl, { credentials: "include" });
 
       if (!res.ok) {
@@ -134,9 +157,15 @@ export default function Marketplace() {
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md ">
             <h2 className="font-semibold text-3xl ">ADLM Marketplace</h2>
             <div className="flex flex-col md:flex-row gap-4 w-full">
-              <div className="border p-2 bg-[#F1F1F1] rounded-lg flex gap-6 items-center md:w-[205px] justify-between">
-                <p className="text-[#CFCFCF] font-semibold">Location</p>
-                <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px]" />
+              <div className="relative border bg-white rounded-lg flex gap-6 items-center  md:w-[205px] justify-between">
+                <input
+                  name="name"
+                  onChange={handleLocationInput}
+                  type="text"
+                  placeholder="Location"
+                  className="px-2 py-5  text-[#818181] font-semibold size-full pr-7 "
+                />
+                <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px] absolute top-[50%] -translate-y-[50%] right-2" />
               </div>
               {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
               <StateSelector onStateSelected={handleStateSelected} />

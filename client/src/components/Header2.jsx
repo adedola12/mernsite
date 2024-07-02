@@ -96,14 +96,14 @@ const Header2 = ({ toggleModal }) => {
   }, [smallScreen]);
 
   return (
-    <header className="bg-white relative">
+    <header className="bg-white relative border-b">
       <div className="contain mx-auto px-4 flex items-center justify-between ">
         <div className="">
           <Link to="/" className="object-contain">
             <img
               src="..\logo\ADLM Studio Logo PNG-07.png"
               alt="adlmlogo"
-              className="w-16 h-16 lg:w-[95px] lg:h-[95px]"
+              className="w-16 h-16 lg:w-[95px] lg:h-[95px] pointer-events-none"
             />
           </Link>
         </div>
@@ -254,7 +254,7 @@ const Header2 = ({ toggleModal }) => {
                         "https://placehold.jp/150x150.png"
                       }
                       alt="pp"
-                      className="rounded-full h-7 w-7 object-cover"
+                      className="rounded-full h-7 w-7 object-cover pointer-events-none"
                     />
                   </Link>
                 </>
