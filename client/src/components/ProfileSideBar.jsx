@@ -18,6 +18,8 @@ export default function ProfileSideBar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const [userProducts, setUserProducts] = useState([]);
+  const [showListingError, setShowListingError] = useState(false);
+  const [showProductError, setShowProductError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
