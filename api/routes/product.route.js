@@ -11,6 +11,7 @@ import {
   getCategories,
   getProduct,
   searchProduct,
+  updateProduct
 } from "../controllers/product.controller.js";
 
 const router = express.Router();
@@ -19,7 +20,8 @@ const router = express.Router();
 router.post("/create-product", verifyToken, createProduct);
 
 router.delete("/delete/:id", verifyToken, deleteProduct);
-router.post("/update/:id", verifyToken, editProduct);
+router.get("/edit/:id", verifyToken, editProduct);
+router.put("/update/:id", verifyToken, updateProduct);
 router.get("/getCategories", getCategories);
 router.get("/getCat", getCat);
 router.get("/getProduct/category/:category", getAllProductInCategory);

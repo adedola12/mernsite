@@ -1,8 +1,8 @@
 import Product from "../models/product.model.js";
 import errorHandler from "../utils/error.js";
-
 import { productCategories } from "../constants/data.js";
 import User from "../models/user.model.js";
+
 
 export const createProduct = async (req, res, next) => {
   const {
@@ -21,6 +21,7 @@ export const createProduct = async (req, res, next) => {
     subCategories: {subCategories},
     userRef,
   } = req.body;
+
 
 
   try {
@@ -149,11 +150,13 @@ export const getAllUserProduct = async (req, res, next) => {
 
 export const getCat = async (req, res, next) => {
   try {
+    
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
 
     const {
+      name,
       location,
       category,
       subCategory,
@@ -164,6 +167,10 @@ export const getCat = async (req, res, next) => {
 
     const andConditions = [];
     const orConditions = [];
+
+    if (name) {
+      orConditions.push({ name: new RegExp(name, "i") });
+    }
 
     if (location) {
       orConditions.push({ location: new RegExp(location, "i") });
@@ -212,6 +219,7 @@ export const getCat = async (req, res, next) => {
 export const searchProduct = async (req, res, next) => {
   try {
     const {
+      name,
       location,
       category,
       subCategory,
@@ -225,6 +233,10 @@ export const searchProduct = async (req, res, next) => {
     const andConditions = [];
     const orConditions = [];
 
+    if (name) {
+      orConditions.push({ name: new RegExp(name, "i") });
+    }
+    
     if (location) {
       orConditions.push({ location: new RegExp(location, "i") });
     }
@@ -257,7 +269,6 @@ export const searchProduct = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -276,22 +287,23 @@ export const getProduct = async (req, res, next) => {
     res.status(200).json({ product });
   } catch (error) {
     next(error);
-    console.log(error);
   }
 };
 
 export const deleteProduct = async (req, res, next) => {
+  
   const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(errorHandler(401, "Product not found"));
   }
 
-  if (req.user.id !== product.userRef) {
-    return next;
+  if (req.user._id.toString() !== product.userRef.toString()) {
+    return next(errorHandler(400, "You can only delete product your created"));
   }
 
   try {
+
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted");
   } catch (error) {
@@ -300,14 +312,35 @@ export const deleteProduct = async (req, res, next) => {
 };
 
 export const editProduct = async (req, res, next) => {
+
   const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(errorHandler(404, "Product not found"));
   }
 
-  if (req.user.id !== product.userRef) {
-    return next(errorHandler(401, "You can only edit your own product!"));
+
+  if (req.user._id.toString() !== product.userRef.toString()) {
+    return next(errorHandler(400, "You can only edit your own product!"));
+  }
+
+  try {
+    res.status(200).json(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProduct = async (req, res, next) => {
+
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    return next(errorHandler(404, "Product not found"));
+  }
+
+  if (req.user._id.toString() !== product.userRef.toString()) {
+    return next(errorHandler(400, "You can only edit your own product!"));
   }
 
   try {

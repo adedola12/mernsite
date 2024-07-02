@@ -1,5 +1,5 @@
 // Marketplace.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 
 import { PiSpinnerBold } from "react-icons/pi";
@@ -11,12 +11,14 @@ import ProductItem from "../../components/productItem";
 import useSearchParams from "../../hooks/useSearchParams";
 import LocationSelector from "../../components/LocationSelector";
 import CategorySelector from "../../components/CategorySelector";
+import _ from 'lodash';
+
 
 const MAX_LIMIT = 10;
 
 export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState("")
   const [isloading, setIsLoading] = useState(true);
 
   const [params, setParams, queryString] = useSearchParams();
@@ -47,14 +49,31 @@ export default function Marketplace() {
     handleSearchWithQuery();
   }, [queryString]);
 
-  const handleLocationInput = ({ value }) => {
-    setParams({ ...params, value });
+  const debounceSearch = useCallback(
+    _.debounce((query) => {
+      setParams({ ...params, name: query });
+    }, 500),
+  []);
+
+
+  const handleLocationInput = (event) => {
+      setSearchTerm(event.target.value)
   };
 
   const handleChange = (type, value) => {
     if (type == "location") setParams({ ...params, location: value });
     if (type == "category") setParams({ ...params, category: value });
   };
+
+  useEffect(() => {
+    if (searchTerm) {
+      debounceSearch(searchTerm);
+    } else {
+      setSearchTerm("")
+      debounceSearch.cancel();
+      setParams({ ...params, name: null });
+    }
+  }, [searchTerm, debounceSearch]);
 
   return (
     <div className="w-full">

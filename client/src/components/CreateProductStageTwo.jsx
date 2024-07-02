@@ -153,12 +153,12 @@ const CreateProductStageTwo = ({
                 {formData.imageUrls.map((url, index) => (
                   <div
                     key={index}
-                    className="flex justify-between p-3 border items-center"
+                    className="flex justify-between p-3 border items-center overflow-hidden"
                   >
                     <img
                       src={url}
                       alt="Item Image"
-                      className="w-20 h-20 object-contain rounded-lg"
+                      className="w-20 h-20 object-cover rounded-md"
                     />
 
                     <button>DELETE IMAGE</button>

@@ -15,6 +15,7 @@ export default function Footer() {
             Be the first to receive all the recent updates, articles, and
             valuable materials.
           </span>
+
           <div className="w-full">
             <form className="w-full">
               <div className="flex gap-2 flex-col md:flex-row">

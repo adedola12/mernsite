@@ -9,8 +9,6 @@ const prod = {
 // "https://adlmmarketplace.onrender.com
 // https://mernsite-k2ky.onrender.com
 
-
-
 // PLEASE DO NOT CHANGE THE VALUE IN THE dev.baseUrl
 const dev = {
   baseUrl: "http://localhost:5173",

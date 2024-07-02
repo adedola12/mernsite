@@ -41,7 +41,7 @@ export default function Profile() {
   const [showProductError, setShowProductError] = useState(false);
 
   const [userListings, setUserListings] = useState([]);
-  const [userProduct, setUserProducts] = useState([]);
+  const [userProducts, setUserProducts] = useState([]);
 
   const [deleteListingError, setDeleteListingError] = useState(false);
   const [deleteProductError, setDeleteProductError] = useState(false);
@@ -54,7 +54,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (file) {
-      handlefileUpload();
+      handleFileUpload();
     }
   }, [file]);
 
@@ -66,9 +66,16 @@ export default function Profile() {
       password_confirmation: "",
       bio: currentUser?.bio || "",
     });
-  }, []);
+  }, [currentUser]);
 
-  const handlefileUpload = () => {
+  useEffect(() => {
+    if (activeView === views.Shop_Details) {
+      handleShowProduct();
+      handleShowListing();
+    }
+  }, [activeView]);
+
+  const handleFileUpload = () => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
@@ -85,7 +92,6 @@ export default function Profile() {
       (error) => {
         setFileError(true);
       },
-
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
           setFormData({ ...formData, avatar: downloadURL })
@@ -132,20 +138,18 @@ export default function Profile() {
         `${config.baseUrl}/api/user/delete/${currentUser._id}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
 
       const data = await res.json();
-
-      if (data.success === false) {
-        dispatch(deleteUserFaliure(data.message));
-        return;
-      }
-
       dispatch(deleteUserSuccess(data));
-      navigate("/");
+      navigate("/", {replace: true});
+
     } catch (error) {
       dispatch(deleteUserFaliure(error.message));
+    } finally {
+      localStorage.removeItem("persist:root");
     }
   };
 
@@ -157,16 +161,11 @@ export default function Profile() {
 
       const data = await res.json();
 
-      if (data.success === false) {
-        dispatch(signOutFaliure("Unable to signout"));
-        return;
-      }
-
       dispatch(signOutSuccess(data));
 
       navigate("/");
     } catch (error) {
-      dispatch(signOutFaliure(error.message));
+      dispatch(signOutFaliure(error.message ?? "Unable to signout"));
     }
   };
 
@@ -174,14 +173,13 @@ export default function Profile() {
     try {
       setShowListingError(false);
       const res = await fetch(
-        `${config.baseUrl}/api/user/listings/${currentUser._id}`
+        `${config.baseUrl}/api/user/listings/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
       );
+      
       const data = await res.json();
-
-      if (data.success === false) {
-        setShowListingError(true);
-        return;
-      }
 
       setUserListings(data);
     } catch (error) {
@@ -193,19 +191,14 @@ export default function Profile() {
     try {
       setShowProductError(false);
 
-      console.log(`current user ID : ${currentUser._id}`);
-
       const res = await fetch(
-        `${config.baseUrl}/api/user/products/${currentUser._id}`
+        `${config.baseUrl}/api/user/products/${currentUser._id}`,
+        {
+          credentials: "include",
+        }
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setShowProductError(true);
-        return;
-      }
-
-      console.log(data);
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);
@@ -214,23 +207,19 @@ export default function Profile() {
 
   const handleListingDelete = async (listingId) => {
     try {
-      setDeleteListingError(false);
 
+      setDeleteListingError(false);
       const res = await fetch(
         `${config.baseUrl}/api/listing/delete/${listingId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setDeleteListingError(true);
-        return;
-      }
-
       setUserListings((prev) =>
-        prev.filter((listing) => listing._id !== listing)
+        prev.filter((listing) => listing._id !== listingId)
       );
     } catch (error) {
       setDeleteListingError(true);
@@ -239,23 +228,20 @@ export default function Profile() {
 
   const handleProductDelete = async (productId) => {
     try {
+
       setDeleteProductError(false);
 
       const res = await fetch(
         `${config.baseUrl}/api/product/delete/${productId}`,
         {
           method: "DELETE",
+          credentials: "include",
         }
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setDeleteProductError(true);
-        return;
-      }
-
       setUserProducts((prev) =>
-        prev.filter((product) => product._id !== product)
+        prev.filter((product) => product._id !== productId)
       );
     } catch (error) {
       setDeleteProductError(true);
@@ -264,20 +250,19 @@ export default function Profile() {
 
   const handleListingEdit = async (listingId) => {
     try {
+
       setEditListingError(false);
 
       const res = await fetch(
         `${config.baseUrl}/api/listing/update/${listingId}`,
         {
-          method: "POST",
+          method: "PUT",
+          credentials: "include",
         }
       );
       const data = await res.json();
 
-      if (data.success === false) {
-        setEditListingError(true);
-        return;
-      }
+
     } catch (error) {
       setEditListingError(true);
     }
@@ -288,25 +273,18 @@ export default function Profile() {
       setEditProductError(false);
 
       const res = await fetch(
-        `${config.baseUrl}/api/product/update/${productId}`,
+        `${config.baseUrl}/api/product/edit/${productId}`,
         {
-          method: "POST",
+          credentials: "include"
         }
       );
+
       const data = await res.json();
 
-      if (data.success === false) {
-        setEditProductError(true);
-        return;
-      }
-    } catch (error) {}
+    } catch (error) {
+      setEditProductError(true);
+    }
   };
-
-  // const handleShowShopDetails = () => {
-  //   changeActiveView(views.Shop_Details);
-  //   handleShowProduct();
-  //   handleShowListing();
-  // };
 
   const changeActiveView = (newView) => {
     setActiveView(newView);
@@ -395,121 +373,78 @@ export default function Profile() {
               </form>
             </>
           )}
-          {/* TODO: Value is Button Clicked Value */}
           {activeView === views.Shop_Details && (
             <>
-              <h2 className="">Shop Details</h2>
-              <div className="flex mt-5 gap-3 items-center">
-                <Link
-                  to={"/create-product"}
-                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
-                >
-                  CREATE PRODUCT
-                </Link>
-
-                <Link
-                  to={"/create-listing"}
-                  className="bg-[#00263D] text-white text-center text-bold rounded-lg max-w-auto uppercase p-2 px-5 hover:opacity-80"
-                >
-                  CREATE LISTING
-                </Link>
-              </div>
-              {userProduct && userProduct.length > 0 && (
-                <div className="flex flex-col gap-4">
-                  <h1 className="text-center mt-7 text-2xl font-semibold">
-                    Your Product
-                  </h1>
-                  {userProduct.map((product) => (
-                    <div
-                      key={product._id}
-                      className="border rounded-lg p-3 flex justify-between items-center gap-4"
-                    >
-                      <Link to={`/product/${product._id}`}>
-                        <img
-                          src={product.imageUrls[0]}
-                          alt="product cover"
-                          className="h-16 w-16 object-contain"
-                        />
-                      </Link>
-                      <Link
-                        to={`/product/${product._id}`}
-                        className="text-slate-700 font-semibold flex-1 truncate hover:underline"
-                      >
-                        <p>{product.name}</p>
-                      </Link>
-                      <div className="flex flex-col items-center">
-                        <Link>
-                          <button
-                            onClick={() => handleProductEdit(product._id)}
-                          >
-                            Edit
-                          </button>
+              <h2 className="font-semibold ">Shop Details</h2>
+              <div>
+                <h3 className="font-bold text-lg">Your Listings</h3>
+                {showListingError ? (
+                  <span className="text-red-600">Failed to load listings</span>
+                ) : (
+                  <div>
+                    {userListings.map((listing) => (
+                      <div key={listing._id} className="mb-4">
+                        <Link to={`/listing/${listing._id}`}>
+                          <h4 className="font-semibold">{listing.title}</h4>
                         </Link>
+                        <p>{listing.description}</p>
+                        <button
+                          onClick={() => handleListingDelete(listing._id)}
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Delete Listing
+                        </button>
+                        <button
+                          onClick={() => handleListingEdit(listing._id)}
+                          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Edit Listing
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 className="font-bold text-lg">Your Products</h3>
+                {showProductError ? (
+                  <span className="text-red-600">Failed to load products</span>
+                ) : (
+                  <div>
+                    {userProducts.map((product) => (
+                      <div key={product._id} className="mb-4">
+                        <Link to={`/product/${product._id}`}>
+                          <h4 className="font-semibold">{product.name}</h4>
+                        </Link>
+                        <p>{product.description}</p>
                         <button
                           onClick={() => handleProductDelete(product._id)}
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                         >
-                          Delete
+                          Delete Product
                         </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {userListings && userListings.length > 0 && (
-                <div className="flex flex-col gap-4">
-                  <h1 className="text-center mt-7 text-2xl font-semibold">
-                    Your Property Listing
-                  </h1>
-                  {userListings.map((listing) => (
-                    <div
-                      key={listing._id}
-                      className="border rounded-lg p-3 flex justify-between items-center gap-4"
-                    >
-                      <Link to={`/listing/${listing._id}`}>
-                        <img
-                          src={listing.imageUrls[0]}
-                          alt="Product Cover"
-                          className="h-16 w-16 object-contain"
-                        />
-                      </Link>
-                      <Link
-                        to={`/listing/${listing._id}`}
-                        className="text-slate-700 font-semibold flex-1 hover:underline truncate"
-                      >
-                        <p>{listing.name}</p>
-                      </Link>
-
-                      <div className="flex flex-col items-center">
                         <button
-                          className="text-red-700 uppercase"
-                          onClick={() => handleListingDelete(listing._id)}
+                          onClick={() => handleProductEdit(product._id)}
+                          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                         >
-                          Delete
+                          Edit Product
                         </button>
-                        <Link to={`/update-listing/${listing._id}`}>
-                          <button
-                            className="text-green-700 uppercase"
-                            onClick={() => handleListingEdit(listing._id)}
-                          >
-                            Edit
-                          </button>
-                        </Link>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
             </>
           )}
           {activeView === views.Reviews && (
             <>
-              <h2 className="">Reviews</h2>
+              <h2 className="font-semibold ">Reviews</h2>
+              {/* Add your review content here */}
             </>
           )}
           {activeView === views.Password && (
             <>
-              <h2 className="">Password</h2>
+              <h2 className="font-semibold ">Password</h2>
               <form
                 className="flex flex-col gap-4 p-10"
                 onSubmit={handleSubmit}
@@ -518,6 +453,7 @@ export default function Profile() {
                   type="password"
                   placeholder="Password"
                   id="password"
+                  autoComplete="off"
                   className="border p-3 rounded-lg"
                   onChange={handleChange}
                 />
@@ -532,16 +468,60 @@ export default function Profile() {
               </form>
             </>
           )}
-
-          <div className="flex gap-5 justify-between my-3"></div>
-          <p className="text-red-700 mt-3">{error ? error : " "}</p>
-          <p className="text-green-700">
-            {updateSuccess ? "User is Updated successfully!!" : " "}
-          </p>
-
-          <p className="text-red-700 mt-5">
-            {showListingError ? "Error showing listings" : ""}
-          </p>
+        </div>
+        <div className="w-[300px] rounded p-5">
+          <ul className="flex flex-col gap-4">
+            <li
+              className={`cursor-pointer ${
+                activeView === views.Personal_Details
+                  ? "text-blue-500"
+                  : "text-gray-700"
+              }`}
+              onClick={() => changeActiveView(views.Personal_Details)}
+            >
+              Personal Details
+            </li>
+            <li
+              className={`cursor-pointer ${
+                activeView === views.Shop_Details
+                  ? "text-blue-500"
+                  : "text-gray-700"
+              }`}
+              onClick={() => changeActiveView(views.Shop_Details)}
+            >
+              Shop Details
+            </li>
+            <li
+              className={`cursor-pointer ${
+                activeView === views.Reviews ? "text-blue-500" : "text-gray-700"
+              }`}
+              onClick={() => changeActiveView(views.Reviews)}
+            >
+              Reviews
+            </li>
+            <li
+              className={`cursor-pointer ${
+                activeView === views.Password
+                  ? "text-blue-500"
+                  : "text-gray-700"
+              }`}
+              onClick={() => changeActiveView(views.Password)}
+            >
+              Password
+            </li>
+            <li
+              className="text-red-500 cursor-pointer"
+              onClick={handleDeleteUser}
+            >
+              Delete Account
+            </li>
+            <li
+              className="text-gray-700 cursor-pointer"
+              onClick={handleSignOut}
+            >
+              Sign Out
+            </li>
+          </ul>
         </div>
       </div>
     </div>
