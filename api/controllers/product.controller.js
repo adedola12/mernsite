@@ -3,7 +3,6 @@ import errorHandler from "../utils/error.js";
 import { productCategories } from "../constants/data.js";
 import User from "../models/user.model.js";
 
-
 export const createProduct = async (req, res, next) => {
   const {
     name,
@@ -18,11 +17,9 @@ export const createProduct = async (req, res, next) => {
     mobile,
     unit,
     categoryName,
-    subCategories: {subCategories},
+    subCategories: { subCategories },
     userRef,
   } = req.body;
-
-
 
   try {
     const subCat = subCategories.map((name) => name);
@@ -150,7 +147,6 @@ export const getAllUserProduct = async (req, res, next) => {
 
 export const getCat = async (req, res, next) => {
   try {
-    
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
@@ -254,7 +250,7 @@ export const searchProduct = async (req, res, next) => {
     }
 
     if (orConditions.length > 0) {
-        andConditions.push({ $or: orConditions });
+      andConditions.push({ $or: orConditions });
     }
 
     const filter = andConditions.length > 0 ? { $and: andConditions } : {};
@@ -269,7 +265,7 @@ export const searchProduct = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(error);
   }
 };
@@ -292,7 +288,6 @@ export const getProduct = async (req, res, next) => {
 };
 
 export const deleteProduct = async (req, res, next) => {
-  
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -304,7 +299,6 @@ export const deleteProduct = async (req, res, next) => {
   }
 
   try {
-
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted");
   } catch (error) {
@@ -313,13 +307,11 @@ export const deleteProduct = async (req, res, next) => {
 };
 
 export const editProduct = async (req, res, next) => {
-
   const product = await Product.findById(req.params.id);
 
   if (!product) {
     return next(errorHandler(404, "Product not found"));
   }
-
 
   if (req.user._id.toString() !== product.userRef.toString()) {
     return next(errorHandler(400, "You can only edit your own product!"));
@@ -332,25 +324,25 @@ export const editProduct = async (req, res, next) => {
   }
 };
 
-export const updateProduct = async (req, res, next) => {
+// export const updateProduct = async (req, res, next) => {
 
-  const product = await Product.findById(req.params.id);
+//   const product = await Product.findById(req.params.id);
 
-  if (!product) {
-    return next(errorHandler(404, "Product not found"));
-  }
+//   if (!product) {
+//     return next(errorHandler(404, "Product not found"));
+//   }
 
-  if (req.user._id.toString() !== product.userRef.toString()) {
-    return next(errorHandler(400, "You can only edit your own product!"));
+//   if (req.user._id.toString() !== product.userRef.toString()) {
+//     return next(errorHandler(400, "You can only edit your own product!"));
 
-  }
+//   }
 
-  try {
-    res.status(200).json(product);
-  } catch (error) {
-    next(error);
-  }
-};
+//   try {
+//     res.status(200).json(product);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 export const updateProduct = async (req, res, next) => {
   const product = await Product.findById(req.params.id);
