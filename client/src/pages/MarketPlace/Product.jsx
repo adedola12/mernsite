@@ -13,7 +13,6 @@ export default function Product() {
   const [showNumber, setShowNumber] = useState(false);
   const params = useParams();
 
-  console.log(params.productId)
 
   useEffect(() => {
     const fetchProductandUser = async () => {
