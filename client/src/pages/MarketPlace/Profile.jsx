@@ -334,7 +334,7 @@ export default function Profile() {
                   onClick={() => fileRef.current.click()}
                   src={formData?.avatar || currentUser?.avatar}
                   alt="profileImage"
-                  className="rounded-full h-28 w-28 self-center object-cover cursor-pointer"
+                  className="rounded-full h-28 w-28 self-center pointer-events-none object-cover cursor-pointer"
                 />
                 <p className="self-center text-sm">
                   {fileError ? (
