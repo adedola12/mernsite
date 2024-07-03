@@ -13,7 +13,6 @@ export default function Product() {
   const [showNumber, setShowNumber] = useState(false);
   const params = useParams();
 
-  console.log(params.productId)
 
   useEffect(() => {
     const fetchProductandUser = async () => {
@@ -31,7 +30,7 @@ export default function Product() {
         setProduct(data.product);
 
       } catch (error) {
-        setError(true);s
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -41,26 +40,32 @@ export default function Product() {
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
+      
       if (!product || !product.categories) {
         return;
       }
 
       try {
+
         const response = await fetch(
           `${config.baseUrl}/api/product/getProduct/category/${product._id}`,
           {
             credentials: "include",
           }
         );
+
         if (!response.ok) {
           throw new Error("Related Categories cannot be fetched");
         }
+
         const data = await response.json();
 
         setAllProduct(data.products);
+
       } catch (error) {
         console.error("Failed to fetch products", error);
       } finally {
+
       }
     };
 
@@ -99,22 +104,22 @@ export default function Product() {
                   {product.imageUrls.slice(0, 3).map((url, index) => (
                     <div
                       key={index}
-                      className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden"
+                      className="w-[100px] h-[100px] border-2 p-2 rounded-md border-gray-200 overflow-hidden"
                     >
                       <img
                         src={url}
                         alt={`product image ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md pointer-events-none"
                       />
                     </div>
                   ))}
                 </div>
 
-                <div className="flex-grow border-2 border-gray-200 overflow-hidden">
+                <div className="w-full h-[350px] md:h-[500px] md:w-[500px] flex-grow border-2 p-2 rounded-md border-gray-200 overflow-hidden">
                   <img
                     src={product.imageUrls[0]}
                     alt="main product"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none rounded-md"
                   />
                 </div>
               </div>
@@ -156,13 +161,13 @@ export default function Product() {
               <h2 className="text-lg font-semibold">Seller Profile</h2>
               <div className="flex items-center mb-4 mt-3">
                 <img
-                  src={product.userRef.avatar}
-                  alt={product.userRef.username}
+                  src={product.userRef?.avatar}
+                  alt={product.userRef?.username}
                   className="rounded-full h-16 w-16 object-cover mr-4"
                 />
-                <Link to={`/sellerShop/${product.userRef._id}`} className="">
+                <Link to={`/sellerShop/${product.userRef?._id}`} className="">
                   <p className="text-md font-semibold text-[#828282] text-xl">
-                    {product.userRef.username}
+                    {product.userRef?.username}
                   </p>
                   <span className="bg-green-100 text-green-700 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
                     Verified
@@ -171,7 +176,7 @@ export default function Product() {
               </div>
               <div className="flex gap-2 flex-col">
                 <Link
-                  to={`https://wa.me/+2340${product.userRef.mobileNumber}?text=I am intrested in your product ${product.name} listed on the ADLM Marketplace`}
+                  to={`https://wa.me/+2340${product.userRef?.mobileNumber}?text=I am intrested in your product ${product?.name} listed on the ADLM Marketplace`}
                   className="bg-[#00263D] text-[#FFFFFF] p-3 text-[14px] text-center  text-sm rounded-lg font-medium"
                 >
                   Text on Whatsapp

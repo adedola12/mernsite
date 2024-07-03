@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
 import { FaPhone,} from "react-icons/fa";
-
-
 import { useSelector } from "react-redux";
 import { config } from "../../../config";
 import CategorySelector from "../../components/CategorySelector";
@@ -11,6 +8,8 @@ import LocationSelector from "../../components/LocationSelector";
 import ProductItem from "../../components/productItem";
 import StarRating from "../../components/Rating";
 import useSearchParams from "../../hooks/useSearchParams";
+import _ from 'lodash';
+
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -58,6 +57,7 @@ const NIGERIAN_STATES = [
 ];
 
 export default function SellerShop() {
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
@@ -77,8 +77,8 @@ export default function SellerShop() {
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleLocationInput = ({ value }) => {
-    setParams({ ...params, value });
+  const handleLocationInput = (event) => {
+    setSearchTerm(event.target.value)
   };
 
   const handleSearchWithQuery = async () => {
@@ -104,9 +104,7 @@ export default function SellerShop() {
     }
   };
 
-  useEffect(() => {
-    handleSearchWithQuery();
-  }, [queryString]);
+
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -168,6 +166,12 @@ export default function SellerShop() {
     if (type == "category") setParams({ ...params, category: value });
   };
 
+  const debounceSearch = useCallback(
+    _.debounce((query) => {
+      setParams({ ...params, name: query });
+    }, 500),
+  []);
+
   useEffect(() => {
     const fetchProductsByUser = async () => {
       try {
@@ -182,20 +186,18 @@ export default function SellerShop() {
           throw new Error("Failed to fetch products");
         }
         const data = await res.json();
+        setProducts(data.products);
+        setUser(data.user);
 
-        if (data.success === false) {
-          setError(true);
-          return;
-        } else {
-          setProducts(data.products);
-          setUser(data.user);
-        }
       } catch (error) {
         setError(true);
+        throw new Error("Failed to fetch products");
       } finally {
         setLoading(false);
       }
     };
+
+
 
     // const fetchUserInfo = async () => {
     //   try {
@@ -230,6 +232,22 @@ export default function SellerShop() {
     setShowNumber((prevState) => !prevState);
   };
 
+  useEffect(() => {
+    handleSearchWithQuery();
+  }, [queryString]); 
+
+  useEffect(() => {
+    if (searchTerm) {
+      debounceSearch(searchTerm);
+    } else {
+
+      setSearchTerm("")
+
+      debounceSearch.cancel();
+      setParams({ ...params, name: null });
+    }
+  }, [searchTerm, debounceSearch]);
+
   return (
     <main className="min-h-screen">
       <div className="text-2xl max-w-screen-lg mx-auto my-10">
@@ -244,9 +262,7 @@ export default function SellerShop() {
 
               <div className="flex items-center mb-3 p-3 gap-x-2">
                 <img
-
                   src={user?.avatar ? user?.avatar : "https://placehold.jp/150x150.png"}
-
                   alt="NA"
                   className="rounded-full h-16 w-16 object-cover"
                 />
@@ -277,15 +293,11 @@ export default function SellerShop() {
                   className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
                   onClick={handleShowNumber}
                 >
-                  {showNumber ? (
-                    `${
-                      products[0]?.userRef?.mobileNumber
-                        ? "+2340" + products[0]?.userRef?.mobileNumber
-                        : "No number"
-                    }`
-                  ) : (
+                  {showNumber 
+                  ? ( `${ user?.mobileNumber ? "+2340" + user?.mobileNumber : "No number" }`) 
+                  : (
                     <>
-                      <FaPhone className="mr-2" /> See Number
+                      <FaPhone className="mr-2" /> <span>See Number</span>
                     </>
                   )}
                 </button>

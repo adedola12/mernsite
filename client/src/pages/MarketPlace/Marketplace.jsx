@@ -1,12 +1,7 @@
 // Marketplace.js
 import React, { useCallback, useEffect, useState } from "react";
-import { MdLocationOn } from "react-icons/md";
 
-import { PiSpinnerBold } from "react-icons/pi";
 import { config } from "../../../config";
-import SideBar from "../../components/SideBar";
-import StateSelector from "../../components/StateSelector";
-import TypeSelector from "../../components/TypeSelector";
 import ProductItem from "../../components/productItem";
 import useSearchParams from "../../hooks/useSearchParams";
 import LocationSelector from "../../components/LocationSelector";
@@ -47,10 +42,6 @@ export default function Marketplace() {
     }
   };
 
-  useEffect(() => {
-    handleSearchWithQuery();
-  }, [queryString]);
-
   const debounceSearch = useCallback(
     _.debounce((query) => {
       setParams({ ...params, name: query });
@@ -70,11 +61,14 @@ export default function Marketplace() {
   };
 
   useEffect(() => {
+    handleSearchWithQuery();
+  }, [queryString]);
+
+  useEffect(() => {
     if (searchTerm) {
       debounceSearch(searchTerm);
     } else {
-      setSearchTerm("")
-
+      setSearchTerm("");
       debounceSearch.cancel();
       setParams({ ...params, name: null });
     }
