@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-
 import { FaPhone,} from "react-icons/fa";
-
 import { useSelector } from "react-redux";
 import { config } from "../../../config";
 import CategorySelector from "../../components/CategorySelector";
@@ -57,6 +55,7 @@ const NIGERIAN_STATES = [
 ];
 
 export default function SellerShop() {
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
@@ -181,16 +180,12 @@ export default function SellerShop() {
           throw new Error("Failed to fetch products");
         }
         const data = await res.json();
+        setProducts(data.products);
+        setUser(data.user);
 
-        if (data.success === false) {
-          setError(true);
-          return;
-        } else {
-          setProducts(data.products);
-          setUser(data.user);
-        }
       } catch (error) {
         setError(true);
+        throw new Error("Failed to fetch products");
       } finally {
         setLoading(false);
       }
@@ -274,15 +269,11 @@ export default function SellerShop() {
                   className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
                   onClick={handleShowNumber}
                 >
-                  {showNumber ? (
-                    `${
-                      products[0]?.userRef?.mobileNumber
-                        ? "+2340" + products[0]?.userRef?.mobileNumber
-                        : "No number"
-                    }`
-                  ) : (
+                  {showNumber 
+                  ? ( `${ user?.mobileNumber ? "+2340" + user?.mobileNumber : "No number" }`) 
+                  : (
                     <>
-                      <FaPhone className="mr-2" /> See Number
+                      <FaPhone className="mr-2" /> <span>See Number</span>
                     </>
                   )}
                 </button>

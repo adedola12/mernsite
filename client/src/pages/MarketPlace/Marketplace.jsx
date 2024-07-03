@@ -9,11 +9,13 @@ import CategorySelector from "../../components/CategorySelector";
 import _ from 'lodash';
 
 
+
 const MAX_LIMIT = 12;
 
 export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("")
+
   const [isloading, setIsLoading] = useState(true);
 
   const [params, setParams, queryString] = useSearchParams();
@@ -44,11 +46,13 @@ export default function Marketplace() {
     _.debounce((query) => {
       setParams({ ...params, name: query });
     }, 500),
+
   []);
 
 
   const handleLocationInput = (event) => {
       setSearchTerm(event.target.value)
+
   };
 
   const handleChange = (type, value) => {

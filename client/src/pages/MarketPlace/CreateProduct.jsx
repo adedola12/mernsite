@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import imageCompression from 'browser-image-compression';
 import {
   getDownloadURL,
@@ -75,7 +76,6 @@ export default function CreateProduct() {
   };
 
 
-
   const compressImages = async (image) => {
     const options = {
       maxSizeMB: 1,
@@ -86,6 +86,7 @@ export default function CreateProduct() {
       const compressedFile = await imageCompression(image, options);
       return compressedFile;
     } catch (error) {
+
       console.error('Error compressing image:', error);
     }
   };
@@ -124,6 +125,7 @@ export default function CreateProduct() {
   }
 
   const handleImageSubmit = async () => {
+
 
     const imageFiles = Array.from(files);
 

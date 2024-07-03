@@ -71,6 +71,11 @@ export default function App() {
         <Route path="/planswift-plugin" element={<PlanswiftPlugin />} />
         <Route path="/rate-gen" element={<RateGen />} />
 
+        {/* <Route element={<DashboardDefault />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/shop-details" element={<ShopDetails />} />
+        </Route> */}
+
         <Route element={<PrivateRoute />}>
           <Route element={<DashboardDefault />}>
             <Route path="/profile" element={<Profile />} />

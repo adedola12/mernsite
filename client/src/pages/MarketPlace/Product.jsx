@@ -27,11 +27,10 @@ export default function Product() {
         }
 
         const data = await res.json();
-        console.log(product)
         setProduct(data.product);
 
       } catch (error) {
-        setError(true);s
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -41,26 +40,32 @@ export default function Product() {
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
+      
       if (!product || !product.categories) {
         return;
       }
 
       try {
+
         const response = await fetch(
           `${config.baseUrl}/api/product/getProduct/category/${product._id}`,
           {
             credentials: "include",
           }
         );
+
         if (!response.ok) {
           throw new Error("Related Categories cannot be fetched");
         }
+
         const data = await response.json();
 
         setAllProduct(data.products);
+
       } catch (error) {
         console.error("Failed to fetch products", error);
       } finally {
+
       }
     };
 
@@ -99,22 +104,22 @@ export default function Product() {
                   {product.imageUrls.slice(0, 3).map((url, index) => (
                     <div
                       key={index}
-                      className="w-[120px] h-[120px] border-2 border-gray-200 overflow-hidden"
+                      className="w-[100px] h-[100px] border-2 p-2 rounded-md border-gray-200 overflow-hidden"
                     >
                       <img
                         src={url}
                         alt={`product image ${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-md pointer-events-none"
                       />
                     </div>
                   ))}
                 </div>
 
-                <div className="flex-grow border-2 border-gray-200 overflow-hidden">
+                <div className="w-full h-[350px] md:h-[500px] md:w-[500px] flex-grow border-2 p-2 rounded-md border-gray-200 overflow-hidden">
                   <img
                     src={product.imageUrls[0]}
                     alt="main product"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none rounded-md"
                   />
                 </div>
               </div>
