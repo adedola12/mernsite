@@ -263,6 +263,7 @@ export default function Profile() {
         }
       );
       const data = await res.json();
+      console.log(data)
     } catch (error) {
       setEditListingError(true);
     }

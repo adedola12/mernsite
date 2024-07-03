@@ -151,7 +151,6 @@ export const productUserDetails = async (req, res, next) => {
 export const getUserProduct = async (req, res, next) => {
 
   if(req.user._id.toString() !== req.params.id) {
-
     return next(errorHandler(401, "You can only view your own product!"));
   }
 
