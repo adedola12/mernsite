@@ -39,7 +39,6 @@ export default function Marketplace() {
   };
 
   const handleLocationInput = (event) => {
-
     setSearchTerm(event.target.value)
 };
 

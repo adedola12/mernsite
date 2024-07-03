@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaPhone,} from "react-icons/fa";
 import { useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import LocationSelector from "../../components/LocationSelector";
 import ProductItem from "../../components/productItem";
 import StarRating from "../../components/Rating";
 import useSearchParams from "../../hooks/useSearchParams";
+import _ from 'lodash';
+
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -55,7 +57,7 @@ const NIGERIAN_STATES = [
 ];
 
 export default function SellerShop() {
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
@@ -75,8 +77,8 @@ export default function SellerShop() {
 
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleLocationInput = ({ value }) => {
-    setParams({ ...params, value });
+  const handleLocationInput = (event) => {
+    setSearchTerm(event.target.value)
   };
 
   const handleSearchWithQuery = async () => {
@@ -102,9 +104,7 @@ export default function SellerShop() {
     }
   };
 
-  useEffect(() => {
-    handleSearchWithQuery();
-  }, [queryString]);
+
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -166,6 +166,12 @@ export default function SellerShop() {
     if (type == "category") setParams({ ...params, category: value });
   };
 
+  const debounceSearch = useCallback(
+    _.debounce((query) => {
+      setParams({ ...params, name: query });
+    }, 500),
+  []);
+
   useEffect(() => {
     const fetchProductsByUser = async () => {
       try {
@@ -190,6 +196,8 @@ export default function SellerShop() {
         setLoading(false);
       }
     };
+
+
 
     // const fetchUserInfo = async () => {
     //   try {
@@ -223,6 +231,22 @@ export default function SellerShop() {
   const handleShowNumber = () => {
     setShowNumber((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    handleSearchWithQuery();
+  }, [queryString]); 
+
+  useEffect(() => {
+    if (searchTerm) {
+      debounceSearch(searchTerm);
+    } else {
+
+      setSearchTerm("")
+
+      debounceSearch.cancel();
+      setParams({ ...params, name: null });
+    }
+  }, [searchTerm, debounceSearch]);
 
   return (
     <main className="min-h-screen">
