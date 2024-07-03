@@ -113,3 +113,29 @@ export const fetchAllProductReviews = async (req, res, next) => {
     }
 };
   
+  
+//GET:: fetch all reviews by a particular product ID.
+export const fetchAllSellerReviews = async (req, res, next) => {
+
+   const { sellerId } = req.params;
+  
+
+    try {
+        const reviews = await Review.find({ seller: sellerId })
+                        .populate({
+                            path: 'user',
+                            model: 'User',
+                            select: 'name avatar',
+                        })
+
+        if(!reviews) {
+            return next(errorHandler(401, "Product not found"));
+        }
+
+      return res.status(201).json({ reviews });
+  
+    } catch (error) {
+      next(error);
+    }
+};
+  

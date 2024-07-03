@@ -11,6 +11,11 @@ const ShopDetails = () => {
   const [userListings, setUserListings] = useState([]);
   const [userProducts, setUserProducts] = useState([]);
 
+  const [deleteListingError, setDeleteListingError] = useState(false);
+  const [deleteProductError, setDeleteProductError] = useState(false);
+  const [editListingError, setEditListingError] = useState(false);
+  const [editProductError, setEditProductError] = useState(false);
+
   useEffect(() => {
     handleShowListing();
     handleShowProduct();
@@ -161,23 +166,36 @@ const ShopDetails = () => {
             ) : (
               <div>
                 {userListings.map((listing) => (
-                  <div key={listing._id} className="mb-4">
-                    <Link to={`/listing/${listing._id}`}>
-                      <h4 className="font-semibold">{listing.title}</h4>
-                    </Link>
-                    <p>{listing.description}</p>
-                    <button
-                      onClick={() => handleListingDelete(listing._id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Delete Listing
-                    </button>
-                    <button
-                      onClick={() => handleListingEdit(listing._id)}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Edit Listing
-                    </button>
+                  <div
+                    key={listing._id}
+                    className="flex justify-between items-center mb-4 border p-4 rounded-lg w-full"
+                  >
+                    <div className="flex items-center flex-row">
+                      <img
+                        src={listing.imageUrls[0]}
+                        alt="listing Image"
+                        className="h-16 w-16 object-cover rounded-md mr-4"
+                      />
+                      <Link to={`/listing/${listing._id}`}>
+                        <h4 className="font-semibold">{product.name}</h4>
+                      </Link>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <Link
+                        to={`/edit-listing/${listing._id}`}
+                        className="mb-2"
+                      >
+                        <button className="font-bold py-2 px-4 rounded">
+                          Edit
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => handleListingDelete(listing._id)}
+                        className="font-bold py-2 px-4 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -191,23 +209,36 @@ const ShopDetails = () => {
             ) : (
               <div>
                 {userProducts.map((product) => (
-                  <div key={product._id} className="mb-4">
-                    <Link to={`/product/${product._id}`}>
-                      <h4 className="font-semibold">{product.name}</h4>
-                    </Link>
-                    <p>{product.description}</p>
-                    <button
-                      onClick={() => handleProductDelete(product._id)}
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Delete Product
-                    </button>
-                    <button
-                      onClick={() => handleProductEdit(product._id)}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Edit Product
-                    </button>
+                  <div
+                    key={product._id}
+                    className="flex justify-between items-center mb-4 border p-4 rounded-lg w-full"
+                  >
+                    <div className="flex items-center flex-row">
+                      <img
+                        src={product.imageUrls[0]}
+                        alt="product Image"
+                        className="h-16 w-16 object-cover rounded-md mr-4"
+                      />
+                      <Link to={`/product/${product._id}`}>
+                        <h4 className="font-semibold">{product.name}</h4>
+                      </Link>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <Link
+                        to={`/edit-product/${product._id}`}
+                        className="mb-2"
+                      >
+                        <button className="font-bold py-2 px-4 rounded">
+                          Edit
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => handleProductDelete(product._id)}
+                        className="font-bold py-2 px-4 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

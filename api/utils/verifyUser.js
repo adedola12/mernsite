@@ -4,7 +4,6 @@ import appConstants from "../constants/index.js";
 import User from "../models/user.model.js";
 
 export const verifyToken = async (req, res, next) => {
-
   const access_token = req.cookies["access_token"];
 
   if (!access_token) {
@@ -12,7 +11,6 @@ export const verifyToken = async (req, res, next) => {
   }
 
   try {
-
     const decoded = jwt.verify(access_token, appConstants.JWT_SECRET);
 
     if (!decoded) {
@@ -30,7 +28,6 @@ export const verifyToken = async (req, res, next) => {
     req.user = rest;
 
     next();
-    
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
       return next(errorHandler(401, "jwt expired"));
@@ -42,7 +39,6 @@ export const verifyToken = async (req, res, next) => {
 };
 
 export const verifyRefreshToken = async (req, res, next) => {
-
   const refresh_token = req.cookies["refresh_token"];
 
   if (!refresh_token) {
@@ -103,12 +99,12 @@ export const refreshToken = async (req, res, next) => {
     }
 
     const access_token = jwt.sign({ id: user.id }, appConstants.JWT_SECRET, {
-      expiresIn: appConstants.JWT_ACCESS_TOKEN_TIMEOUT
+      expiresIn: appConstants.JWT_ACCESS_TOKEN_TIMEOUT,
     });
     const new_refresh_token = jwt.sign(
       { id: user.id },
       appConstants.JWT_REFRESH_TOKEN_SECRET,
-      {expiresIn: appConstants.JWT_REFRESH_TOKEN_TIMEOUT }
+      { expiresIn: appConstants.JWT_REFRESH_TOKEN_TIMEOUT }
     );
 
     res.cookie("refresh_token", new_refresh_token, {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { FaPhone,} from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { config } from "../../../config";
 import CategorySelector from "../../components/CategorySelector";
@@ -8,8 +8,7 @@ import LocationSelector from "../../components/LocationSelector";
 import ProductItem from "../../components/productItem";
 import StarRating from "../../components/Rating";
 import useSearchParams from "../../hooks/useSearchParams";
-import _ from 'lodash';
-
+import _ from "lodash";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -78,7 +77,7 @@ export default function SellerShop() {
   const currentUser = useSelector((state) => state.user.currentUser);
 
   const handleLocationInput = (event) => {
-    setSearchTerm(event.target.value)
+    setSearchTerm(event.target.value);
   };
 
   const handleSearchWithQuery = async () => {
@@ -103,8 +102,6 @@ export default function SellerShop() {
       setLoading(false);
     }
   };
-
-
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -170,7 +167,8 @@ export default function SellerShop() {
     _.debounce((query) => {
       setParams({ ...params, name: query });
     }, 500),
-  []);
+    []
+  );
 
   useEffect(() => {
     const fetchProductsByUser = async () => {
@@ -188,7 +186,6 @@ export default function SellerShop() {
         const data = await res.json();
         setProducts(data.products);
         setUser(data.user);
-
       } catch (error) {
         setError(true);
         throw new Error("Failed to fetch products");
@@ -196,8 +193,6 @@ export default function SellerShop() {
         setLoading(false);
       }
     };
-
-
 
     // const fetchUserInfo = async () => {
     //   try {
@@ -234,14 +229,13 @@ export default function SellerShop() {
 
   useEffect(() => {
     handleSearchWithQuery();
-  }, [queryString]); 
+  }, [queryString]);
 
   useEffect(() => {
     if (searchTerm) {
       debounceSearch(searchTerm);
     } else {
-
-      setSearchTerm("")
+      setSearchTerm("");
 
       debounceSearch.cancel();
       setParams({ ...params, name: null });
@@ -262,7 +256,11 @@ export default function SellerShop() {
 
               <div className="flex items-center mb-3 p-3 gap-x-2">
                 <img
-                  src={user?.avatar ? user?.avatar : "https://placehold.jp/150x150.png"}
+                  src={
+                    user?.avatar
+                      ? user?.avatar
+                      : "https://placehold.jp/150x150.png"
+                  }
                   alt="NA"
                   className="rounded-full h-16 w-16 object-cover"
                 />
@@ -293,9 +291,13 @@ export default function SellerShop() {
                   className="bg-gray-300 text-black py-2 px-4 rounded-lg text-sm font-medium flex items-center justify-center"
                   onClick={handleShowNumber}
                 >
-                  {showNumber 
-                  ? ( `${ user?.mobileNumber ? "+2340" + user?.mobileNumber : "No number" }`) 
-                  : (
+                  {showNumber ? (
+                    `${
+                      user?.mobileNumber
+                        ? "+2340" + user?.mobileNumber
+                        : "No number"
+                    }`
+                  ) : (
                     <>
                       <FaPhone className="mr-2" /> <span>See Number</span>
                     </>

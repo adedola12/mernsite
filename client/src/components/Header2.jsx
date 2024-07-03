@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { IoIosArrowForward } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,19 +30,10 @@ const Header2 = ({ toggleModal }) => {
 
   const smallScreen = () => windowSize < 1024;
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(location.search);
-  //   const searchTermFromUrl = urlParams.get("searchTerm");
-
-  //   if (searchTermFromUrl) {
-  //     setSearchTerm(searchTermFromUrl);
-  //   }
-  // }, [location.search]);
-
   const handleSignOut = async () => {
     try {
-      dispatch(signOutUser());
 
+      dispatch(signOutUser());
       const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
         credentials: "include",
       });
@@ -96,7 +86,7 @@ const Header2 = ({ toggleModal }) => {
   }, [smallScreen]);
 
   return (
-    <header className="bg-white relative border-b">
+    <header className="bg-white border-b fixed top-0 left-0 z-50 right-0">
       <div className="contain mx-auto px-4 flex items-center justify-between ">
         <div className="">
           <Link to="/" className="object-contain">
@@ -111,7 +101,7 @@ const Header2 = ({ toggleModal }) => {
           <ul className="flex items-center text-white justify-center font-semibold ">
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/HomeA"
+                to="/market"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Market
@@ -280,7 +270,7 @@ const Header2 = ({ toggleModal }) => {
           <ul className="flex flex-col items-center gap-y-4 text-white font-semibold ">
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/HomeA"
+                to="/market"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Market

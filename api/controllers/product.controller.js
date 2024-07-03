@@ -222,16 +222,15 @@ export const searchProduct = async (req, res, next) => {
     limit = 12,
     startIndex = 0,
   } = req.query;
-  
-  try {
 
+  try {
     const distinctCategories = await Product.distinct("category");
 
     const andConditions = [];
     const orConditions = [];
 
     if (name) {
-        orConditions.push({ name: new RegExp(`.*${name}.*`, "i") });
+      orConditions.push({ name: new RegExp(`.*${name}.*`, "i") });
       // orConditions.push({ name: new RegExp(name, "i") });
     }
 
@@ -246,7 +245,9 @@ export const searchProduct = async (req, res, next) => {
     }
 
     if (subCategory) {
-      orConditions.push({ subCategories: new RegExp(`.*${subCategory}.*`, "i") });
+      orConditions.push({
+        subCategories: new RegExp(`.*${subCategory}.*`, "i"),
+      });
       // orConditions.push({ subCategories: new RegExp(subCategory, "i") });
     }
 

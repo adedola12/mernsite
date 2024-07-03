@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import imageCompression from "browser-image-compression";
 import {
@@ -8,18 +8,18 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../../firebase";
-import CreateProductStageOne from "../../components/CreateProductStageOne";
-import CreateProductStageTwo from "../../components/CreateProductStageTwo";
 
 import { CATEGORY_DATA } from "../../constants/data";
 import toast from "react-hot-toast";
 import { config } from "../../../config";
 
 import fetchWithTokenRefresh from "../../hooks/fetchWithTokenRefresh";
+import UpdateProductStageOne from "../../components/UpdateProductStageOne";
+import UpdateProductStageTwo from "../../components/UpdateProductStageTwo";
 
-export default function CreateProduct() {
+export default function UpdateProduct() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -34,7 +34,6 @@ export default function CreateProduct() {
     mobile: "",
     unit: "",
   });
-
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
@@ -44,6 +43,48 @@ export default function CreateProduct() {
   const navigate = useNavigate();
 
   const [steps, setSteps] = useState(1);
+
+  const [editProductError, setEditProductError] = useState(false);
+  const params = useParams();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const productId = params.productId;
+      const res = await fetch(`${config.baseUrl}/api/product/get/${productId}`);
+
+      const data = await res.json();
+      console.log("fetched data", data.product);
+
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data.product);
+    };
+
+    fetchProduct();
+  }, []);
+
+  const handleProductEdit = async (e) => {
+    try {
+      setEditProductError(false);
+
+      const res = await fetch(
+        `${config.baseUrl}/api/product/edit/${params.productId}`,
+        {
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+    } catch (error) {
+      setEditProductError(true);
+    }
+  };
+
+  useEffect(() => {
+    handleProductEdit();
+  }, []);
 
   const previousStep = () => {
     setSteps((prevState) => prevState - 1);
@@ -145,6 +186,8 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     const { categories: categoryName } = formData;
     const subCategories = CATEGORY_DATA[formData.categories];
@@ -158,7 +201,7 @@ export default function CreateProduct() {
 
     try {
       const response = await fetchWithTokenRefresh(
-        `${config.baseUrl}/api/product/create-product`,
+        `${config.baseUrl}/api/product/update/${params.productId}`,
         {
           method: "POST",
           credentials: "include",
@@ -171,7 +214,7 @@ export default function CreateProduct() {
 
       const data = await response.json();
       if (!response.ok)
-        throw new Error(data.message || "Failed to create product");
+        throw new Error(data.message || "Failed to update product");
       navigate(`/product/${data._id}`);
     } catch (error) {
       toast.error(error.message);
@@ -185,7 +228,7 @@ export default function CreateProduct() {
     switch (steps) {
       case 1:
         return (
-          <CreateProductStageOne
+          <UpdateProductStageOne
             nextStep={nextStep}
             formData={formData}
             handleChange={handleChange}
@@ -193,7 +236,7 @@ export default function CreateProduct() {
         );
       case 2:
         return (
-          <CreateProductStageTwo
+          <UpdateProductStageTwo
             handleCategoryChange={handleCategoryChange}
             onhandleSubCategoryChange={handleSubCategoryChange}
             handleSubmit={handleSubmit}
