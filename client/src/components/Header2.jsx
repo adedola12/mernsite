@@ -111,7 +111,7 @@ const Header2 = ({ toggleModal }) => {
           <ul className="flex items-center text-white justify-center font-semibold ">
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/HomeA"
+                to="/market"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Market
@@ -280,7 +280,7 @@ const Header2 = ({ toggleModal }) => {
           <ul className="flex flex-col items-center gap-y-4 text-white font-semibold ">
             <li onClick={closeNavMenu} className="relative group px-1 py-2">
               <Link
-                to="/HomeA"
+                to="/market"
                 className="hover:opacity-50 duration-300 text-[#00263D] px-2 py-2"
               >
                 Market

@@ -52,7 +52,7 @@ export default function App() {
       <Header2 toggleModal={toggleModal} />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/homeA" element={<HomeA />} />
+        <Route path="/market" element={<HomeA />} />
         {/* <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} /> */}
         <Route path="/about" element={<About />} />
