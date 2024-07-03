@@ -106,9 +106,8 @@ export default function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    try {
 
+    try {
       dispatch(updateUserStart());
 
       const res = await fetch(
@@ -191,7 +190,6 @@ export default function Profile() {
 
   const handleShowProduct = async () => {
     try {
-
       setShowProductError(false);
 
       const res = await fetch(
@@ -202,7 +200,7 @@ export default function Profile() {
       );
 
       const data = await res.json();
-     
+
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);

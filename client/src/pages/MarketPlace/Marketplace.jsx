@@ -6,15 +6,13 @@ import ProductItem from "../../components/productItem";
 import useSearchParams from "../../hooks/useSearchParams";
 import LocationSelector from "../../components/LocationSelector";
 import CategorySelector from "../../components/CategorySelector";
-import _ from 'lodash';
-
-
+import _ from "lodash";
 
 const MAX_LIMIT = 12;
 
 export default function Marketplace() {
   const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [isloading, setIsLoading] = useState(true);
 
@@ -47,12 +45,11 @@ export default function Marketplace() {
       setParams({ ...params, name: query });
     }, 500),
 
-  []);
-
+    []
+  );
 
   const handleLocationInput = (event) => {
-      setSearchTerm(event.target.value)
-
+    setSearchTerm(event.target.value);
   };
 
   const handleChange = (type, value) => {

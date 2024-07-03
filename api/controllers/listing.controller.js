@@ -11,7 +11,6 @@ export const createListing = async (req, res, next) => {
 };
 
 export const deleteListing = async (req, res, next) => {
-
   const listing = await Listing.findById(req.params.id);
 
   if (!listing) {
@@ -31,7 +30,6 @@ export const deleteListing = async (req, res, next) => {
 };
 
 export const editListing = async (req, res, next) => {
-  
   const listing = await Listing.findById(req.params.id);
 
   if (!listing) {
@@ -56,7 +54,6 @@ export const editListing = async (req, res, next) => {
 
 export const getListing = async (req, res, next) => {
   try {
-
     const listing = await Listing.findById(req.params.id);
 
     if (!listing) {
