@@ -29,6 +29,7 @@ import SellerShop from "./pages/MarketPlace/SellerShop";
 import PrivateRoute from "./components/PrivateRoute";
 import SignInModal from "./pages/MarketPlace/SignIn";
 import SignUpModal from "./pages/MarketPlace/SignUp";
+import UpdateProduct from "./pages/MarketPlace/UpdateProduct";
 
 export default function App() {
   const [showSignInModal, setShowSignInModal] = useState(false);
@@ -87,6 +88,10 @@ export default function App() {
             <Route
               path="/update-listing/:listingId"
               element={<UpdateListing />}
+            />
+            <Route
+              path="/edit-product/:productId"
+              element={<UpdateProduct />}
             />
           </Route>
         </Route>
