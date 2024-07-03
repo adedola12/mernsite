@@ -100,6 +100,7 @@ const ShopDetails = () => {
 
   const handleListingEdit = async (listingId) => {
     try {
+      
       setEditListingError(false);
 
       const res = await fetch(
