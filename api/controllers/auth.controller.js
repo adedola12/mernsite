@@ -50,7 +50,7 @@ export const signin = async (req, res, next) => {
     const validPassword = await validUser.comparePassword(password);
 
     if (!validPassword) {
-      return next(errorHandler(404, "Wrong password!!"));
+      return next(errorHandler(400, "Wrong password!!"));
     }
 
     const access_token = jwt.sign(
