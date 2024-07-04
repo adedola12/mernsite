@@ -117,6 +117,11 @@ export default function SellerShop() {
       return;
     }
 
+    if(!reviewForm.email || !reviewForm.message || !reviewForm.name || !rating) {
+      alert("All form fields are required to submit a review");
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await fetch(

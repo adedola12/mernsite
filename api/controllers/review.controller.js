@@ -1,4 +1,3 @@
-import Product from "../models/product.model.js";
 import Review from "../models/review.model.js";
 import errorHandler from "../utils/error.js";
 import User from "../models/user.model.js";
@@ -7,9 +6,12 @@ import { isValidObjectId } from "mongoose";
 //POST:: create new product review.
 export const createProductReview = async (req, res, next) => {
 
-    const { name, email, rating, message, seller } = req.body;
+    const {name, email, rating, message, sellerId } = req.body;
+
+    console.log(req.body)
+    
   
-    const userId = req.user?.id;
+    const userId = req.user?._id.toString();
 
     if(!userId) {
         return next(errorHandler(400, "Unauthorized, please login"));
@@ -27,33 +29,36 @@ export const createProductReview = async (req, res, next) => {
             return next(errorHandler(404, "User not found"));
         }
 
-        const sellerExist = await User.findById(seller);
+        const sellerExist = await User.findById(sellerId);
 
         if(!sellerExist) {
             return next(errorHandler(404, "Seller not found"));
         }
 
-        if(userId === seller) {
+        if(userId === sellerId) {
             return next(errorHandler(400, "You are not allowed to review yourself"));
+        }
+
+        if(sellerExist.reviews.includes(userId)) {
+            return next(errorHandler(400, "You already reviewed the seller"));
         }
 
         const data = {
             name,
-            rating, 
+            rating,
             email,
-            product: seller, 
+            product: sellerId,
             comment: message, 
             user: userId,
-            seller
+            seller: sellerId
         }
+
 
         const review = new Review(data);
         await review.save();
 
-
         sellerExist.reviews.push(review);
         await sellerExist.save();
-
 
       return res.status(201).json({ message: "Review created"});
   
