@@ -8,13 +8,14 @@ export const createProductReview = async (req, res, next) => {
 
     const {name, email, rating, message, sellerId } = req.body;
 
-    console.log(req.body)
-    
-  
     const userId = req.user?._id.toString();
 
     if(!userId) {
         return next(errorHandler(400, "Unauthorized, please login"));
+    }
+
+    if(!isValidObjectId(sellerId)) {
+        return next(errorHandler(400, "Invalid seller ID"));
     }
 
     if(!isValidObjectId(userId)) {
@@ -22,16 +23,17 @@ export const createProductReview = async (req, res, next) => {
     }
 
     try {
-        
-        const userExist = await User.findById(userId);
 
-        if(!userExist) {
+        const userPromise  = User.findById(userId);
+        const sellerPromise = User.findById(sellerId);
+
+        const [user, seller] = await Promise.all([userPromise, sellerPromise]);
+
+        if(!user) {
             return next(errorHandler(404, "User not found"));
         }
 
-        const sellerExist = await User.findById(sellerId);
-
-        if(!sellerExist) {
+        if(!seller) {
             return next(errorHandler(404, "Seller not found"));
         }
 
@@ -39,7 +41,7 @@ export const createProductReview = async (req, res, next) => {
             return next(errorHandler(400, "You are not allowed to review yourself"));
         }
 
-        if(sellerExist.reviews.includes(userId)) {
+        if(seller.reviews.includes(userId)) {
             return next(errorHandler(400, "You already reviewed the seller"));
         }
 
@@ -53,12 +55,11 @@ export const createProductReview = async (req, res, next) => {
             seller: sellerId
         }
 
-
         const review = new Review(data);
         await review.save();
 
-        sellerExist.reviews.push(review);
-        await sellerExist.save();
+        seller.reviews.push(review);
+        await seller.save();
 
       return res.status(201).json({ message: "Review created"});
   
@@ -72,24 +73,7 @@ export const fetchAllProductReviews = async (req, res, next) => {
 
    const { productId } = req.params;
   
-
-
     try {
-        
-        // const product = await Product.findById(productId).populate({
-        //     path: 'reviews',
-        //     model: 'Review',
-        //     select: 'comment rating user',
-        //     populate: {
-        //       path: 'user',
-        //       model: 'User',
-        //       select: 'name email'
-        //     }
-        //   });
-
-        // if(!product) {
-        //     return next(errorHandler(401, "Product not found"));
-        // }
 
         const reviews = await Review.find({ product: productId })
                         .populate({
@@ -117,8 +101,8 @@ export const fetchAllProductReviews = async (req, res, next) => {
       next(error);
     }
 };
-  
-  
+
+
 //GET:: fetch all reviews by a particular product ID.
 export const fetchAllSellerReviews = async (req, res, next) => {
 
@@ -126,12 +110,14 @@ export const fetchAllSellerReviews = async (req, res, next) => {
 
     try {
 
-        const reviews = await Review.find({ seller: sellerId })
+        const reviews = await Review.find({ seller: sellerId })            
                         .populate({
-                            path: 'user',
+                            path: 'seller',
                             model: 'User',
                             select: 'name avatar',
                         })
+                        .select("-product -user")
+                        .sort({ createdAt: -1})
 
         if(!reviews) {
             return next(errorHandler(401, "No reviews for this seller"));
@@ -153,10 +139,12 @@ export const fetchAllReviews = async (req, res, next) => {
 
         const reviews = await Review.find({})
                         .populate({
-                            path: 'user',
+                            path: 'seller',
                             model: 'User',
                             select: 'name avatar',
                         })
+                        .select("-product -user")
+                        .sort({ createdAt: -1})
 
         if(!reviews) {
             return next(errorHandler(401, "No reviews for this seller"));

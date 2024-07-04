@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 import Home from "./pages/adlm/Home";
 import HomeA from "./pages/MarketPlace/HomeA";
 import About from "./pages/adlm/About";
@@ -22,32 +20,17 @@ import PlanswiftPlugin from "./pages/productPage/PlanswiftPlugin";
 import RateGen from "./pages/productPage/RateGen";
 import SellerShop from "./pages/MarketPlace/SellerShop";
 import PrivateRoute from "./components/PrivateRoute";
-import SignInModal from "./pages/MarketPlace/SignIn";
-import SignUpModal from "./pages/MarketPlace/SignUp";
 import UpdateProduct from "./pages/MarketPlace/UpdateProduct";
 import MainLayout from "./pages/MarketPlace/MainLayout";
 
 export default function App() {
 
-  const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
-
-  const currentUser = useSelector((state) => state.user.currentUser);
-
-  const toggleModal = (modalName) => {
-    if (modalName === "signIn") {
-      setShowSignInModal(!showSignInModal);
-      setShowSignUpModal(false);
-    } else if (modalName === "signUp") {
-      setShowSignUpModal(!showSignUpModal);
-      setShowSignInModal(false);
-    }
-  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
+          
           <Route path="/" element={<Home />} />
           <Route path="/market" element={<HomeA />} />
           <Route path="/about" element={<About />} />
@@ -77,8 +60,7 @@ export default function App() {
 
         </Route>
       </Routes>
-      {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
-      {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
+
     </BrowserRouter>
   );
 }

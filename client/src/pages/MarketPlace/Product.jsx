@@ -93,7 +93,7 @@ export default function Product() {
     );
 
   return (
-    <main className="min-h-screen">
+    <section className="my-20 lg:mt-28">
       <div className="m-5 md:m-20 lg:m-[100px] text-2xl">
         <div className="flex gap-4 flex-col lg:flex-row justify-between">
           <div className="flex flex-col  gap-4 w-full lg:w-2/3">
@@ -255,6 +255,6 @@ export default function Product() {
             ))}
         </div>
       </div>
-    </main>
+    </section>
   );
 }

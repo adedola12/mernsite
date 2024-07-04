@@ -42,7 +42,7 @@ export default function Marketplace() {
 
   const debounceSearch = useCallback(
     _.debounce((query) => {
-      setParams({ ...params, name: query });
+      setParams({ ...params, query });
     }, 500),
 
     []
@@ -53,8 +53,8 @@ export default function Marketplace() {
   };
 
   const handleChange = (type, value) => {
-    if (type == "location") setParams({ ...params, location: value });
-    if (type == "category") setParams({ ...params, category: value });
+    if (type == "location") setParams({ ...params, query: value });
+    if (type == "category") setParams({ ...params, query: value });
   };
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Marketplace() {
     } else {
       setSearchTerm("");
       debounceSearch.cancel();
-      setParams({ ...params, name: null });
+      setParams({ ...params, query: null });
     }
   }, [searchTerm, debounceSearch]);
 
@@ -88,7 +88,7 @@ export default function Marketplace() {
                 <input
                   type="text"
                   name="location"
-                  placeholder="Location"
+                  placeholder="Product name"
                   onChange={handleLocationInput}
                   className="border-2 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
                   focus:ring-blue-500"

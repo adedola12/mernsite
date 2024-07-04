@@ -1,6 +1,5 @@
 // Marketplace.js
 import React, { useCallback, useEffect, useState } from "react";
-import { MdLocationOn } from "react-icons/md";
 import SideBar from "../components/SideBar";
 import StateSelector from "../components/StateSelector";
 import TypeSelector from "../components/TypeSelector";
@@ -23,19 +22,19 @@ export default function Marketplace() {
   const [params, setParams, queryString] = useSearchParams();
 
   const handleCategorySelect = (category) => {
-    setParams({ ...params, category });
+    setParams({ ...params, query: category });
   };
 
   const handleSubCategorySelect = (subCategory) => {
-    setParams({ ...params, subCategory });
+    setParams({ ...params, query: subCategory });
   };
 
   const handleStateSelected = (location) => {
-    setParams({ ...params, location });
+    setParams({ ...params, query: location });
   };
 
   const handleTypeSelected = (type) => {
-    setParams({ ...params, type });
+    setParams({ ...params, query: type });
   };
 
   const handleLocationInput = (event) => {
@@ -44,7 +43,7 @@ export default function Marketplace() {
 
   const debounceSearch = useCallback(
     _.debounce((query) => {
-      setParams({ ...params, name: query });
+      setParams({ ...params, query: query });
     }, 500),
 
     []
@@ -57,7 +56,7 @@ export default function Marketplace() {
       setSearchTerm("");
 
       debounceSearch.cancel();
-      setParams({ ...params, name: null });
+      setParams({ ...params, query: null });
     }
   }, [searchTerm, debounceSearch]);
 
@@ -165,11 +164,11 @@ export default function Marketplace() {
                   name="name"
                   onChange={handleLocationInput}
                   type="text"
-                  placeholder="Location"
-                  className="px-2 py-5  text-[#818181] font-semibold size-full pr-7 "
+                  placeholder="Product name"
+                  className="px-2 py-5  text-[#818181] font-semibold size-full"
                 />
 
-                <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px] absolute top-[50%] -translate-y-[50%] right-2" />
+                {/* <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px] absolute top-[50%] -translate-y-[50%] right-2" /> */}
               </div>
               {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
               <StateSelector onStateSelected={handleStateSelected} />

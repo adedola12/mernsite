@@ -13,12 +13,21 @@ import {
   signOutUser,
 } from "../redux/user/userSlice";
 import { config } from "../../config";
+import SignInModal from "../pages/MarketPlace/SignIn";
+import SignUpModal from "../pages/MarketPlace/SignUp";
 
-const Header2 = ({ toggleModal }) => {
+const Header2 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
+  const [showSignInModal, setShowSignInModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+
+
 
   const [windowSize, setWindowSize] = useState(window.innerWidth ?? 0);
 
@@ -29,6 +38,16 @@ const Header2 = ({ toggleModal }) => {
   );
 
   const smallScreen = () => windowSize < 1024;
+
+  const toggleModal = (modalName) => {
+    if (modalName === "signIn") {
+      setShowSignInModal(!showSignInModal);
+      setShowSignUpModal(false);
+    } else if (modalName === "signUp") {
+      setShowSignUpModal(!showSignUpModal);
+      setShowSignInModal(false);
+    }
+  };
 
   const handleSignOut = async () => {
     try {
@@ -86,6 +105,7 @@ const Header2 = ({ toggleModal }) => {
   }, [smallScreen]);
 
   return (
+    <>
     <header className="bg-white border-b fixed top-0 left-0 z-50 right-0">
       <div className="contain mx-auto px-4 flex items-center justify-between ">
         <div className="">
@@ -391,6 +411,9 @@ const Header2 = ({ toggleModal }) => {
         </nav>
       )}
     </header>
+    {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
+    {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
+    </>
   );
 };
 
