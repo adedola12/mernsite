@@ -6,9 +6,6 @@ import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { config } from "../../config";
 
-
-
-
 export default function OAuth({ onClose }) {
   const dispatch = useDispatch();
 
