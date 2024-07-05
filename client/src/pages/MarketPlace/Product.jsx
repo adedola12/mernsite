@@ -13,7 +13,6 @@ export default function Product() {
   const [showNumber, setShowNumber] = useState(false);
   const params = useParams();
 
-
   useEffect(() => {
     const fetchProductandUser = async () => {
       try {
@@ -28,7 +27,6 @@ export default function Product() {
 
         const data = await res.json();
         setProduct(data.product);
-
       } catch (error) {
         setError(true);
       } finally {
@@ -40,13 +38,11 @@ export default function Product() {
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
-      
       if (!product || !product.categories) {
         return;
       }
 
       try {
-
         const response = await fetch(
           `${config.baseUrl}/api/product/getProduct/category/${product._id}`,
           {
@@ -61,11 +57,9 @@ export default function Product() {
         const data = await response.json();
 
         setAllProduct(data.products);
-
       } catch (error) {
         console.error("Failed to fetch products", error);
       } finally {
-
       }
     };
 
@@ -76,13 +70,14 @@ export default function Product() {
     setShowNumber((prevState) => !prevState);
   };
 
-
   if (loading) {
     return <div className="h-full text-center p-4 md:px-10">Loading...</div>;
   }
 
   if (!product) {
-    return <div className="h-full text-center p-4 md:px-10">No product found.</div>
+    return (
+      <div className="h-full text-center p-4 md:px-10">No product found.</div>
+    );
   }
 
   if (error)

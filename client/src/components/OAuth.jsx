@@ -17,9 +17,8 @@ export default function OAuth({ onClose }) {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 
-
-      if(!result) {
-        alert("Oauth error, please try again")
+      if (!result) {
+        alert("Oauth error, please try again");
         return;
       }
 
