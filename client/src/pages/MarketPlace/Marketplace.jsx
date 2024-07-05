@@ -19,11 +19,12 @@ export default function Marketplace() {
   const [params, setParams, queryString] = useSearchParams();
 
   const handleSearchWithQuery = async () => {
+
     try {
       setIsLoading(true);
       const fetchUrl = queryString
-        ? `${config.baseUrl}/api/product/search?${queryString}`
-        : `${config.baseUrl}/api/product/search`;
+        ? `${config.baseUrl}/api/product/market-search?${queryString}`
+        : `${config.baseUrl}/api/product/market-search`;
 
       const response = await fetch(fetchUrl);
 

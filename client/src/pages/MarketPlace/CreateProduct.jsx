@@ -78,7 +78,7 @@ export default function CreateProduct() {
   const compressImages = async (image) => {
     const options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 800,
+      maxWidthOrHeight: 499,
       useWebWorker: true,
     };
     try {

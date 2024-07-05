@@ -38,7 +38,7 @@ export default function StateSelector({ onStateSelected }) {
     "Taraba",
     "Yobe",
     "Zamfara",
-    "Federal Capital Territory || FCT",
+    "FCT",
   ];
 
   const [selectedState, setSelectedState] = useState("");

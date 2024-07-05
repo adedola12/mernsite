@@ -38,7 +38,7 @@ const CreateProductStageOne = ({ nextStep, formData, handleChange }) => {
     "Taraba",
     "Yobe",
     "Zamfara",
-    "Federal Capital Territory || FCT",
+    "FCT",
   ];
 
   return (

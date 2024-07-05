@@ -23,7 +23,7 @@ export const createProductReview = async (req, res, next) => {
     }
 
     try {
-
+       
         const userPromise  = User.findById(userId);
         const sellerPromise = User.findById(sellerId);
 
@@ -41,16 +41,16 @@ export const createProductReview = async (req, res, next) => {
             return next(errorHandler(400, "You are not allowed to review yourself"));
         }
 
-        if(seller.reviews.includes(userId)) {
-            return next(errorHandler(400, "You already reviewed the seller"));
-        }
+        // if(seller.reviews.includes(userId)) {
+        //     return next(errorHandler(400, "You already reviewed the seller"));
+        // }
 
         const data = {
             name,
             rating,
             email,
             product: sellerId,
-            comment: message, 
+            comment: message,
             user: userId,
             seller: sellerId
         }
@@ -64,6 +64,7 @@ export const createProductReview = async (req, res, next) => {
       return res.status(201).json({ message: "Review created"});
   
     } catch (error) {
+        console.log(error)
       next(error);
     }
 };
@@ -134,16 +135,15 @@ export const fetchAllSellerReviews = async (req, res, next) => {
 //GET:: fetch all reviews by a particular product ID.
 export const fetchAllReviews = async (req, res, next) => {
 
-
     try {
 
         const reviews = await Review.find({})
                         .populate({
                             path: 'seller',
                             model: 'User',
-                            select: 'name avatar',
+                            select: 'username avatar',
                         })
-                        .select("-product -user")
+                        .select("-product -user -updatedAt")
                         .sort({ createdAt: -1})
 
         if(!reviews) {
