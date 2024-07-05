@@ -13,9 +13,26 @@ export const createProductReview = async (req, res, next) => {
     return next(errorHandler(400, "Unauthorized, please login"));
   }
 
-  if (!isValidObjectId(sellerId)) {
-    return next(errorHandler(400, "Invalid seller ID"));
-  }
+
+    if(!userId) {
+        return next(errorHandler(400, "Unauthorized, please login"));
+    }
+
+    if(!isValidObjectId(sellerId)) {
+        return next(errorHandler(400, "Invalid seller ID"));
+    }
+
+    if(!isValidObjectId(userId)) {
+        return next(errorHandler(400, "Invalid user ID"));
+    }
+
+    try {
+       
+        const userPromise  = User.findById(userId);
+        const sellerPromise = User.findById(sellerId);
+
+        const [user, seller] = await Promise.all([userPromise, sellerPromise]);
+
 
   if (!isValidObjectId(userId)) {
     return next(errorHandler(400, "Invalid user ID"));
@@ -27,9 +44,21 @@ export const createProductReview = async (req, res, next) => {
 
     const [user, seller] = await Promise.all([userPromise, sellerPromise]);
 
-    if (!user) {
-      return next(errorHandler(404, "User not found"));
-    }
+
+        // if(seller.reviews.includes(userId)) {
+        //     return next(errorHandler(400, "You already reviewed the seller"));
+        // }
+
+        const data = {
+            name,
+            rating,
+            email,
+            product: sellerId,
+            comment: message,
+            user: userId,
+            seller: sellerId
+        }
+
 
     if (!seller) {
       return next(errorHandler(404, "Seller not found"));
@@ -39,8 +68,16 @@ export const createProductReview = async (req, res, next) => {
       return next(errorHandler(400, "You are not allowed to review yourself"));
     }
 
+
+      return res.status(201).json({ message: "Review created"});
+  
+    } catch (error) {
+        console.log(error)
+      next(error);
+
     if (seller.reviews.includes(userId)) {
       return next(errorHandler(400, "You already reviewed the seller"));
+
     }
 
     const data = {
@@ -118,18 +155,27 @@ export const fetchAllSellerReviews = async (req, res, next) => {
 
 //GET:: fetch all reviews by a particular product ID.
 export const fetchAllReviews = async (req, res, next) => {
-  try {
-    const reviews = await Review.find({})
-      .populate({
-        path: "seller",
-        model: "User",
-        select: "name avatar",
-      })
-      .select("-product -user")
-      .sort({ createdAt: -1 });
 
-    if (!reviews) {
-      return next(errorHandler(401, "No reviews for this seller"));
+    try {
+
+        const reviews = await Review.find({})
+                        .populate({
+                            path: 'seller',
+                            model: 'User',
+                            select: 'username avatar',
+                        })
+                        .select("-product -user -updatedAt")
+                        .sort({ createdAt: -1})
+
+        if(!reviews) {
+            return next(errorHandler(401, "No reviews for this seller"));
+        }
+
+      return res.status(200).json({ reviews });
+
+    } catch (error) {
+      next(error);
+
     }
 
     return res.status(200).json({ reviews });

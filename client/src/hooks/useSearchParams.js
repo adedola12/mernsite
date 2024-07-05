@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useSearchParams as useReactSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams as useReactSearchParams } from "react-router-dom";
 
 
 const useSearchParams = () => {
@@ -15,16 +15,17 @@ const useSearchParams = () => {
     }, [searchParams]);
 
     const setParams = (newParams) => {
-        const updatedParams = new URLSearchParams(searchParams);
+      
+        // const updatedParams = new URLSearchParams(searchParams); 
+        const updatedParams = new URLSearchParams(); 
         Object.keys(newParams).forEach((key) => {
-
             if(newParams[key] !== undefined && newParams[key] !== null && newParams[key] !== '') {               
                 updatedParams.set(key, newParams[key])
             }else {
                 updatedParams.delete(key);
             }
         });
-
+    
         setQueryString(updatedParams.toString());
         setSearchParams(updatedParams);
     }

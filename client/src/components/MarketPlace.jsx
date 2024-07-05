@@ -22,19 +22,19 @@ export default function Marketplace() {
   const [params, setParams, queryString] = useSearchParams();
 
   const handleCategorySelect = (category) => {
-    setParams({ ...params, query: category });
+    setParams({ category });
   };
 
   const handleSubCategorySelect = (subCategory) => {
-    setParams({ ...params, query: subCategory });
+    setParams({ subCategory });
   };
 
   const handleStateSelected = (location) => {
-    setParams({ ...params, query: location });
+    setParams({location });
   };
 
   const handleTypeSelected = (type) => {
-    setParams({ ...params, query: type });
+    setParams({ type });
   };
 
   const handleLocationInput = (event) => {
@@ -43,7 +43,7 @@ export default function Marketplace() {
 
   const debounceSearch = useCallback(
     _.debounce((query) => {
-      setParams({ ...params, query: query });
+      setParams({ name: query });
     }, 500),
 
     []
@@ -56,11 +56,12 @@ export default function Marketplace() {
       setSearchTerm("");
 
       debounceSearch.cancel();
-      setParams({ ...params, query: null });
+      setParams({ name: null });
     }
   }, [searchTerm, debounceSearch]);
 
   useEffect(() => {
+    console.log(queryString)
     const fetchCategory = async () => {
       const fetchUrl = queryString
         ? `${config.baseUrl}/api/product/getCat?${queryString}&page=${page}&limit=${MAX_LIMIT}`
@@ -159,20 +160,18 @@ export default function Marketplace() {
           <div className="flex flex-col gap-6 bg-white p-5 rounded-md ">
             <h2 className="font-semibold text-3xl ">ADLM Marketplace</h2>
             <div className="flex flex-col md:flex-row gap-4 w-full">
-              <div className="relative border bg-white rounded-lg flex gap-6 items-center  md:w-[205px] justify-between">
-                <input
-                  name="name"
-                  onChange={handleLocationInput}
-                  type="text"
-                  placeholder="Product name"
-                  className="px-2 py-5  text-[#818181] font-semibold size-full"
-                />
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 w-full">
+                  <input
+                    name="name"
+                    onChange={handleLocationInput}
+                    type="text"
+                    placeholder="Product name"
+                    className="px-2 py-5 border rounded-md text-[#818181] font-semibold size-full"
+                  />
 
-                {/* <MdLocationOn className="text-[#CFCFCF] h-[16px] w-[16px] absolute top-[50%] -translate-y-[50%] right-2" /> */}
-              </div>
-              {/* SELECT A STATE TO BE USED TO SEARCH FOR PRODUCT */}
-              <StateSelector onStateSelected={handleStateSelected} />
-              <TypeSelector onTypeSelected={handleTypeSelected} />
+                  <StateSelector onStateSelected={handleStateSelected} />
+                  <TypeSelector onTypeSelected={handleTypeSelected} />
+                </div>
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 place-items-center gap-5 w-full">

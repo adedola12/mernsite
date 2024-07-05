@@ -38,7 +38,7 @@ export default function LocationSelector({ onStateSelected }) {
     "Taraba",
     "Yobe",
     "Zamfara",
-    "Federal Capital Territory || FCT",
+    "FCT",
   ];
 
   const [selectedState, setSelectedState] = useState("");
@@ -59,7 +59,7 @@ export default function LocationSelector({ onStateSelected }) {
         focus:ring-blue-500"
       >
         <option value="" className="text-gray-600 text-sm">
-          City{" "}
+          City
         </option>
         {NIGERIAN_STATES.map((state) => (
           <option key={state} value={state}>

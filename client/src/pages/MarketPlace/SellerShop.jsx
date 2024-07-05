@@ -9,6 +9,7 @@ import ProductItem from "../../components/productItem";
 import StarRating from "../../components/Rating";
 import useSearchParams from "../../hooks/useSearchParams";
 import _ from "lodash";
+import toast from "react-hot-toast";
 
 const reviewTabs = [
   { id: 0, name: "Reviews" },
@@ -52,7 +53,7 @@ const NIGERIAN_STATES = [
   "Taraba",
   "Yobe",
   "Zamfara",
-  "Federal Capital Territory || FCT",
+  "FCT",
 ];
 
 export default function SellerShop() {
@@ -62,6 +63,8 @@ export default function SellerShop() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [products, setProducts] = useState([]);
+  const [sellerProducts, setSellerProducts] = useState([]);
+  const [isSellerProductsLoading, setIsSellerProductsLoading] = useState([]);
   const [user, setUser] = useState(null);
   const [showNumber, setShowNumber] = useState(false);
   const { userId } = useParams();
@@ -83,12 +86,20 @@ export default function SellerShop() {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearchWithQuery = async () => {
+  const fetchSellerProducts = async () => {
+
+    const sellerId = userId;
+
+    if(!sellerId) {
+      alert("SellerId is required")
+      return;
+    }
+
     try {
-      setLoading(true);
-      const fetchUrl = queryString
-        ? `${config.baseUrl}/api/product/search?${queryString}`
-        : `${config.baseUrl}/api/product/search`;
+      setIsSellerProductsLoading(true)
+        const fetchUrl = queryString
+        ? `${config.baseUrl}/api/product/seller-products/${sellerId}?${queryString}`
+        : `${config.baseUrl}/api/product/seller-products/${sellerId}`;
 
       const response = await fetch(fetchUrl, {
         credentials: "include",
@@ -99,12 +110,40 @@ export default function SellerShop() {
       }
 
       const { data } = await response.json();
-      setProducts([...data.products]);
+  
+      setSellerProducts(data?.products);
     } catch (error) {
+      
     } finally {
-      setLoading(false);
+      setIsSellerProductsLoading(false)
     }
-  };
+  }
+
+
+
+  const fetchProductsByUser = async () => {
+  try {
+    setLoading(true);
+    const res = await fetch(
+      `${config.baseUrl}/api/product/user/${userId}`,
+      {
+        credentials: "include",
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    const data = await res.json();
+    setProducts(data.products);
+    setUser(data.user);
+  } catch (error) {
+    setError(true);
+    throw new Error("Failed to fetch products");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -150,9 +189,11 @@ export default function SellerShop() {
         setError(data.message);
       }
 
-      // setReviewForm({ name: "", email: "", message: "" });
-      // setRating(0);
+      setReviewForm({ name: "", email: "", message: "" });
+      setRating(0);
+      toast.success("Review submitted");
     } catch (error) {
+      console.log(error)
       setError(error.message);
       toast.error(error.message);
     } finally {
@@ -172,77 +213,29 @@ export default function SellerShop() {
   };
 
   const handleChange = (type, value) => {
-    if (type == "location") setParams({ ...params, location: value });
-    if (type == "category") setParams({ ...params, category: value });
+    if(type === "location") setParams({ "location": value });
+    if(type === "category") setParams({ "category": value });
   };
 
   const debounceSearch = useCallback(
     _.debounce((query) => {
-      setParams({ ...params, name: query });
+      setParams({ name: query });
     }, 500),
     []
   );
 
   useEffect(() => {
-    const fetchProductsByUser = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch(
-          `${config.baseUrl}/api/product/user/${userId}`,
-          {
-            credentials: "include",
-          }
-        );
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await res.json();
-        setProducts(data.products);
-        setUser(data.user);
-      } catch (error) {
-        setError(true);
-        throw new Error("Failed to fetch products");
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchSellerProducts();
+  }, [queryString])
 
-    // const fetchUserInfo = async () => {
-    //   try {
-    //     setLoading(true);
-    //     const res = await fetch(`${config.baseUrl}/api/user/${userId}`, {
-    //       credentials: "include"
-    //     });
-
-    //     if (!res.ok) {
-    //       throw new Error("Failed to fetch user");
-    //     }
-    //     const data = await res.json();
-
-    //     if (data.success === false) {
-    //       setError(true);
-    //       return;
-    //     } else {
-    //       setUser(data);
-    //     }
-    //   } catch (error) {
-    //     setError(true)
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
+  useEffect(() => {
     fetchProductsByUser();
-    // fetchUserInfo();
   }, [userId]);
 
   const handleShowNumber = () => {
     setShowNumber((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    handleSearchWithQuery();
-  }, [queryString]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -251,7 +244,7 @@ export default function SellerShop() {
       setSearchTerm("");
 
       debounceSearch.cancel();
-      setParams({ ...params, name: null });
+      setParams({ name: null });
     }
   }, [searchTerm, debounceSearch]);
 
@@ -362,7 +355,7 @@ export default function SellerShop() {
                     <input
                       type="text"
                       name="location"
-                      placeholder="Location"
+                      placeholder="Product name"
                       onChange={handleLocationInput}
                       className="border-2 col-span-1 md:col-span-4 border-gray-300 rounded-lg p-2 focus:border-blue-500 focus:ring-1
                           focus:ring-blue-500"
@@ -375,51 +368,7 @@ export default function SellerShop() {
                     {/* Show Categories and Select Categories */}
                   </div>
                 </div>
-                {/* <div className="p-4 grid md:grid-cols-2 gap-4">
-                      <div className="relative">
-                          <input type="text" value={category.location} onChange={handleCategoryFormInputChange} name="location" placeholder="location" className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri'] w-full px-4 pr-10 " />
-                          <MdLocationOn size={15} className="absolute text-gray-400 top-2/4 right-4 -translate-y-2/4 " />
-                      </div>
-                      <div className="relative">
-                          
-                          <select
-                              name="city"
-                              value={category.city}
-                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                              onChange={handleCategoryFormInputChange}
-                            >
-                              <option className="text-gray-400">select a city</option>
-                              {NIGERIAN_STATES.map((state) => (
-                                <option key={state} value={state}>
-                                  {state}
-                                </option>
-                              ))}
-                          </select>
-                      </div>
-                      <div className="relative">
-
-                         <CategorySelector onCategorySelected={handleChange} />
-                          <select
-                              name="category"
-                              value={category.category}
-                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                              onChange={handleCategoryFormInputChange}
-                            >
-                              <option className="text-gray-400">select a category</option>
-                              {categoryList?.length &&
-                                categoryList?.map((category) => (
-                              <option key={category.category} value={category.category}>
-                                {category.category}
-                              </option>
-                            ))}
-                          </select>
-                      </div>
-
-                    </div> */}
-
-                {/* <div className="p-4">
-                      <button type="button" className="py-2 rounded-md text-white cursor-pointer text-base px-6 bg-black/90">Search</button>
-                    </div> */}
+               
               </form>
             </div>
           </div>
@@ -432,13 +381,14 @@ export default function SellerShop() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
-              {products && products.length > 0 ? (
-                products.map((product) => (
+             
+              {sellerProducts && sellerProducts?.length > 0 ? (
+                sellerProducts.map((product) => (
                   <ProductItem key={product._id} product={product} />
                 ))
               ) : (
                 <p className="text-center col-span-12 text-lg font-semibold text-slate-500">
-                  No product found
+                  { isSellerProductsLoading ? "Loading..." : "No product found" }
                 </p>
               )}
             </div>

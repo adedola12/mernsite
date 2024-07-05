@@ -12,13 +12,18 @@ export default function OAuth({ onClose }) {
   const navigate = useNavigate();
 
   const handleGoogleClick = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const auth = getAuth(app);
-      const result = await signInWithPopup(auth, provider);
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth(app);
 
-      if (!result) {
-        alert("Oauth error, please try again");
+    try {
+
+
+      const result = await signInWithPopup(auth, provider);
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+
+      if(!result?.user?.uid) {
+        alert("Unable to login, please try again");
+
         return;
       }
 
@@ -36,11 +41,16 @@ export default function OAuth({ onClose }) {
       });
 
       const data = await res.json();
+      
       dispatch(signInSuccess(data));
       onClose();
       navigate("/");
     } catch (error) {
-      console.log("Could not sign in with Google", error);
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.error('The popup was closed before completing the sign-in process.', error);
+      } else {
+        console.error('An error occurred during sign-in:', error);        
+      }
     }
   };
 
