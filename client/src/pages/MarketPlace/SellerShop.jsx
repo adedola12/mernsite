@@ -78,6 +78,8 @@ export default function SellerShop() {
     message: "",
   });
 
+  const [reviews, setReviews] = useState([]);
+
   const currentUser = useSelector((state) => state.user.currentUser);
 
   const handleLocationInput = (event) => {
@@ -251,6 +253,34 @@ export default function SellerShop() {
     }
   }, [searchTerm, debounceSearch]);
 
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${config.baseUrl}/api/review/get-reviews`, {
+          credentials: "include",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+
+        const data = await res.json();
+        console.log(data);
+
+        setReviews(data);
+      } catch (error) {
+        setError(true);
+        throw new Error("Failed to fetch reviews");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectedTab === 0) {
+      fetchReviews();
+    }
+  }, [selectedTab, userId]);
+
   return (
     <div className="">
       <div className="text-2xl max-w-screen-lg mx-auto">
@@ -340,51 +370,6 @@ export default function SellerShop() {
                     {/* Show Categories and Select Categories */}
                   </div>
                 </div>
-                {/* <div className="p-4 grid md:grid-cols-2 gap-4">
-                      <div className="relative">
-                          <input type="text" value={category.location} onChange={handleCategoryFormInputChange} name="location" placeholder="location" className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri'] w-full px-4 pr-10 " />
-                          <MdLocationOn size={15} className="absolute text-gray-400 top-2/4 right-4 -translate-y-2/4 " />
-                      </div>
-                      <div className="relative">
-                          
-                          <select
-                              name="city"
-                              value={category.city}
-                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                              onChange={handleCategoryFormInputChange}
-                            >
-                              <option className="text-gray-400">select a city</option>
-                              {NIGERIAN_STATES.map((state) => (
-                                <option key={state} value={state}>
-                                  {state}
-                                </option>
-                              ))}
-                          </select>
-                      </div>
-                      <div className="relative">
-
-                         <CategorySelector onCategorySelected={handleChange} />
-                          <select
-                              name="category"
-                              value={category.category}
-                              className="border rounded-md py-2 focus:outline-none text-stone-500 text-base font-normal font-['Calibri']  w-full px-4 "
-                              onChange={handleCategoryFormInputChange}
-                            >
-                              <option className="text-gray-400">select a category</option>
-                              {categoryList?.length &&
-                                categoryList?.map((category) => (
-                              <option key={category.category} value={category.category}>
-                                {category.category}
-                              </option>
-                            ))}
-                          </select>
-                      </div>
-
-                    </div> */}
-
-                {/* <div className="p-4">
-                      <button type="button" className="py-2 rounded-md text-white cursor-pointer text-base px-6 bg-black/90">Search</button>
-                    </div> */}
               </form>
             </div>
           </div>
@@ -408,22 +393,40 @@ export default function SellerShop() {
               )}
             </div>
 
-            <div className="border-t p-5 text-base text-gray-400 gap-2 gap-y-4 flex flex-wrap items-center justify-center mt-5 ">
+            <div
+              className="border-t p-5 text-base text-gray-400 gap-2 
+            gap-y-4 flex flex-wrap items-center justify-center mt-5 "
+            >
               <div className="">Page of 1 of 30</div>
               <div className="flex gap-2">
-                <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">
+                <button
+                  className="border cursor-pointer border-transparent 
+                rounded-md px-2 h-8 w-8 flex items-center justify-center "
+                >
                   1
                 </button>
-                <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">
+                <button
+                  className="border cursor-pointer border-transparent 
+                rounded-md px-2 h-8 w-8 flex items-center justify-center "
+                >
                   2
                 </button>
-                <button className="border cursor-pointer border-yellow-500 rounded-md px-2 h-8 w-8 flex items-center justify-center ">
+                <button
+                  className="border cursor-pointer border-yellow-500 
+                rounded-md px-2 h-8 w-8 flex items-center justify-center "
+                >
                   3
                 </button>
-                <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">
+                <button
+                  className="border cursor-pointer border-transparent 
+                rounded-md px-2 h-8 w-8 flex items-center justify-center "
+                >
                   ...
                 </button>
-                <button className="border cursor-pointer border-transparent rounded-md px-2 h-8 w-8 flex items-center justify-center ">
+                <button
+                  className="border cursor-pointer border-transparent 
+                rounded-md px-2 h-8 w-8 flex items-center justify-center "
+                >
                   4
                 </button>
               </div>

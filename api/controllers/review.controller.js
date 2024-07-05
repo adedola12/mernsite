@@ -5,6 +5,8 @@ import { isValidObjectId } from "mongoose";
 
 //POST:: create new product review.
 export const createProductReview = async (req, res, next) => {
+  const { name, email, rating, message, seller } = req.body;
+
 
     const {name, email, rating, message, sellerId } = req.body;
 
@@ -61,15 +63,36 @@ export const createProductReview = async (req, res, next) => {
         seller.reviews.push(review);
         await seller.save();
 
-      return res.status(201).json({ message: "Review created"});
-  
-    } catch (error) {
-      next(error);
+
+    if (userId === seller) {
+      return next(errorHandler(400, "You are not allowed to review yourself"));
     }
+
+    const data = {
+      name,
+      rating,
+      email,
+      product: seller,
+      comment: message,
+      user: userId,
+      seller,
+    };
+
+    const review = new Review(data);
+    await review.save();
+
+    sellerExist.reviews.push(review);
+    await sellerExist.save();
+
+    return res.status(201).json({ message: "Review created" });
+  } catch (error) {
+    next(error);
+  }
 };
-  
+
 //GET:: fetch all reviews by a particular product ID.
 export const fetchAllProductReviews = async (req, res, next) => {
+
 
    const { productId } = req.params;
   
@@ -99,8 +122,14 @@ export const fetchAllProductReviews = async (req, res, next) => {
   
     } catch (error) {
       next(error);
+
     }
+    return res.status(201).json({ reviews });
+  } catch (error) {
+    next(error);
+  }
 };
+
 
 
 //GET:: fetch all reviews by a particular product ID.
@@ -157,3 +186,4 @@ export const fetchAllReviews = async (req, res, next) => {
     }
 };
   
+
