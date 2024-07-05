@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { IoIosArrowForward } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,12 +13,21 @@ import {
   signOutUser,
 } from "../redux/user/userSlice";
 import { config } from "../../config";
+import SignInModal from "../pages/MarketPlace/SignIn";
+import SignUpModal from "../pages/MarketPlace/SignUp";
 
-const Header2 = ({ toggleModal }) => {
+const Header2 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
+  const [showSignInModal, setShowSignInModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+
+
 
   const [windowSize, setWindowSize] = useState(window.innerWidth ?? 0);
 
@@ -31,19 +39,20 @@ const Header2 = ({ toggleModal }) => {
 
   const smallScreen = () => windowSize < 1024;
 
-  // useEffect(() => {
-  //   const urlParams = new URLSearchParams(location.search);
-  //   const searchTermFromUrl = urlParams.get("searchTerm");
-
-  //   if (searchTermFromUrl) {
-  //     setSearchTerm(searchTermFromUrl);
-  //   }
-  // }, [location.search]);
+  const toggleModal = (modalName) => {
+    if (modalName === "signIn") {
+      setShowSignInModal(!showSignInModal);
+      setShowSignUpModal(false);
+    } else if (modalName === "signUp") {
+      setShowSignUpModal(!showSignUpModal);
+      setShowSignInModal(false);
+    }
+  };
 
   const handleSignOut = async () => {
     try {
-      dispatch(signOutUser());
 
+      dispatch(signOutUser());
       const res = await fetch(`${config.baseUrl}/api/auth/signout`, {
         credentials: "include",
       });
@@ -96,7 +105,8 @@ const Header2 = ({ toggleModal }) => {
   }, [smallScreen]);
 
   return (
-    <header className="bg-white relative border-b">
+    <>
+    <header className="bg-white border-b fixed top-0 left-0 z-50 right-0">
       <div className="contain mx-auto px-4 flex items-center justify-between ">
         <div className="">
           <Link to="/" className="object-contain">
@@ -401,6 +411,9 @@ const Header2 = ({ toggleModal }) => {
         </nav>
       )}
     </header>
+    {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
+    {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ const CreateProductStageTwo = ({
   handleCategoryChange,
   onhandleSubCategoryChange,
 }) => {
+
   const units = ["nr", "bags", "tonnes", "m", "m2", "m3"];
   const types = ["Material", "Labour"];
 

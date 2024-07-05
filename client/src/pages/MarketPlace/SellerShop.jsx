@@ -56,6 +56,10 @@ const NIGERIAN_STATES = [
 ];
 
 export default function SellerShop() {
+
+// Review API GET REQUEST:: /api/review/get-reviews/sellerId
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -111,11 +115,16 @@ export default function SellerShop() {
     const reviewFormData = {
       ...reviewForm,
       rating,
-      seller: userId,
+      sellerId: userId,
     };
 
     if (!currentUser?._id) {
       alert("Please sign in");
+      return;
+    }
+
+    if(!reviewForm.email || !reviewForm.message || !reviewForm.name || !rating) {
+      alert("All form fields are required to submit a review");
       return;
     }
 
@@ -139,8 +148,8 @@ export default function SellerShop() {
         setError(data.message);
       }
 
-      setReviewForm({ name: "", email: "", message: "" });
-      setRating(0);
+      // setReviewForm({ name: "", email: "", message: "" });
+      // setRating(0);
     } catch (error) {
       setError(error.message);
       toast.error(error.message);
@@ -273,9 +282,9 @@ export default function SellerShop() {
   }, [selectedTab, userId]);
 
   return (
-    <main className="min-h-screen">
-      <div className="text-2xl max-w-screen-lg mx-auto my-10">
-        <div className="flex flex-col gap-4 w-full px-4">
+    <div className="">
+      <div className="text-2xl max-w-screen-lg mx-auto">
+        <div className="flex flex-col gap-4 w-full px-4 my-20 lg:mt-28">
           <div className="grid grid-cols-1 lg:grid-cols-[300px,_1fr] gap-3">
             <div className="bg-white pb-3 rounded-lg shadow-sm">
               <div className="border-b py-4">
@@ -536,6 +545,6 @@ export default function SellerShop() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

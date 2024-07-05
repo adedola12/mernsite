@@ -261,13 +261,16 @@ export default function Profile() {
         }
       );
       const data = await res.json();
+  
     } catch (error) {
+      console.log(error)
       setEditListingError(true);
     }
   };
 
   const handleProductEdit = async (productId) => {
     try {
+
       setEditProductError(false);
 
       const res = await fetch(
@@ -278,6 +281,7 @@ export default function Profile() {
       );
 
       const data = await res.json();
+
     } catch (error) {
       setEditProductError(true);
     }

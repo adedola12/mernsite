@@ -36,20 +36,11 @@ export default function SignUpModal({ onClose }) {
 
       const data = await res.json();
 
-      if (data.success === false) {
-        // setLoading(false);
-        setError(data.message);
-
-        setShowSignInModal(false);
-        return;
-      }
-
-      // setLoading(false);
       setError(null);
       onClose();
+      setShowSignInModal(false);
       navigate("/");
     } catch (error) {
-      // setLoading(false);
       setError(error.message);
     } finally {
       setLoading(false);

@@ -127,7 +127,6 @@ export const getAllProductInSubCategory = async (req, res, next) => {
       subCategories,
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -146,56 +145,34 @@ export const getAllUserProduct = async (req, res, next) => {
 };
 
 export const getCat = async (req, res, next) => {
+
   try {
+
+    const { query = "", sort = "createdAt", order = "desc", } = req.query;
+
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const skip = (page - 1) * limit;
 
-    const {
-      name,
-      location,
-      category,
-      subCategory,
-      type,
-      sort = "createdAt",
-      order = "desc",
-    } = req.query;
+    const queryRegx = new RegExp(query, 'i');
 
-    const andConditions = [];
-    const orConditions = [];
+    const queryFilters = {
+      $or: [
+        { name: { $regex: queryRegx } },
+        { location: { $regex: queryRegx } },
+        { category: { $regex: queryRegx } },
+        { subCategories: { $regex: queryRegx } },
+        { type: { $regex: queryRegx } },
+      ],
+    };
 
-    if (name) {
-      orConditions.push({ name: new RegExp(name, "i") });
-    }
 
-    if (location) {
-      orConditions.push({ location: new RegExp(location, "i") });
-    }
+    const totalDoc = await Product.countDocuments(queryFilters);
 
-    if (category) {
-      orConditions.push({ category: new RegExp(category, "i") });
-    }
-
-    if (subCategory) {
-      orConditions.push({ subCategories: new RegExp(subCategory, "i") });
-    }
-
-    if (type) {
-      orConditions.push({ type: new RegExp(type, "i") });
-    }
-
-    if (orConditions.length > 0) {
-      andConditions.push({ $or: orConditions });
-    }
-
-    const filter = andConditions.length > 0 ? { $and: andConditions } : {};
-
-    const products = await Product.find(filter)
-      .sort({ [sort]: order })
-      .limit(limit)
-      .skip(skip);
-
-    const totalDoc = await Product.countDocuments(filter);
+    const products = await Product.find(queryFilters)
+    .sort({ [sort]: order })
+    .limit(limit)
+    .skip(skip);
 
     return res.status(200).json({
       products,
@@ -207,67 +184,38 @@ export const getCat = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
 
 export const searchProduct = async (req, res, next) => {
-  const {
-    name,
-    location,
-    category,
-    subCategory,
-    type,
-    limit = 12,
-    startIndex = 0,
-  } = req.query;
+
+  const { query = "", limit = 12, startIndex = 0, } = req.query;
+
+  const queryRegx = new RegExp(query, 'i');
 
   try {
+
     const distinctCategories = await Product.distinct("category");
 
-    const andConditions = [];
-    const orConditions = [];
-
-    if (name) {
-      orConditions.push({ name: new RegExp(`.*${name}.*`, "i") });
-      // orConditions.push({ name: new RegExp(name, "i") });
+    const queryFilters = {
+      $or: [
+        { name: { $regex: queryRegx } },
+        { location: { $regex: queryRegx } },
+        { category: { $regex: queryRegx } },
+        { subCategories: { $regex: queryRegx } },
+        { type: { $regex: queryRegx } },
+      ],
     }
 
-    if (location) {
-      orConditions.push({ location: new RegExp(`.*${location}.*`, "i") });
-      // orConditions.push({ location: new RegExp(location, "i") });
-    }
-
-    if (category) {
-      orConditions.push({ category: new RegExp(`.*${category}*.`, "i") });
-      // orConditions.push({ category: new RegExp(category, "i") });
-    }
-
-    if (subCategory) {
-      orConditions.push({
-        subCategories: new RegExp(`.*${subCategory}.*`, "i"),
-      });
-      // orConditions.push({ subCategories: new RegExp(subCategory, "i") });
-    }
-
-    if (type) {
-      orConditions.push({ type: new RegExp(`.*${type}.*`, "i") });
-      // orConditions.push({ type: new RegExp(type, "i") });
-    }
-
-    if (orConditions.length > 0) {
-      andConditions.push({ $or: orConditions });
-    }
-
-    const filter = andConditions.length > 0 ? { $and: andConditions } : {};
-
-    const products = await Product.find(filter).limit(limit).skip(startIndex);
+    const products = await Product.find(queryFilters)
+    .limit(limit)
+    .skip(startIndex)
 
     res.status(200).json({
       success: true,
       data: {
-        products: products ?? [],
+        products,
         subCategories: distinctCategories ?? [],
       },
     });
