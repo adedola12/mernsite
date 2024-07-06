@@ -43,9 +43,8 @@ export default function Marketplace() {
 
   const debounceSearch = useCallback(
     _.debounce((query) => {
-      setParams({ ...params, query });
+      setParams({ name: query });
     }, 500),
-
     []
   );
 
@@ -54,8 +53,8 @@ export default function Marketplace() {
   };
 
   const handleChange = (type, value) => {
-    if (type == "location") setParams({ ...params, query: value });
-    if (type == "category") setParams({ ...params, query: value });
+    if (type === "location") setParams({ location: value });
+    if (type === "category") setParams({ category: value });
   };
 
   useEffect(() => {
@@ -68,7 +67,7 @@ export default function Marketplace() {
     } else {
       setSearchTerm("");
       debounceSearch.cancel();
-      setParams({ ...params, query: null });
+      setParams({ name: null });
     }
   }, [searchTerm, debounceSearch]);
 

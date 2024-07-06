@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import {
   getDownloadURL,
   getStorage,
@@ -124,6 +125,11 @@ export default function Profile() {
 
       const data = await res.json();
 
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+      toast.success("Updated successfully")
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
@@ -144,11 +150,19 @@ export default function Profile() {
       );
 
       const data = await res.json();
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
+      toast.success("Deleted successfully")
+
       dispatch(deleteUserSuccess(data));
 
       navigate("/", { replace: true });
     } catch (error) {
-      dispatch(deleteUserFaliure(error.message));
+      dispatch(deleteUserFaliure(error?.message));
     } finally {
       localStorage.removeItem("persist:root");
     }
@@ -182,6 +196,11 @@ export default function Profile() {
 
       const data = await res.json();
 
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
       setUserListings(data);
     } catch (error) {
       setShowListingError(true);
@@ -201,6 +220,11 @@ export default function Profile() {
 
       const data = await res.json();
 
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
       setUserProducts(data);
     } catch (error) {
       setShowProductError(true);
@@ -219,6 +243,11 @@ export default function Profile() {
       );
 
       const data = await res.json();
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
 
       setUserListings((prev) =>
         prev.filter((listing) => listing._id !== listingId)
@@ -241,6 +270,11 @@ export default function Profile() {
       );
       const data = await res.json();
 
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
       setUserProducts((prev) =>
         prev.filter((product) => product._id !== productId)
       );
@@ -261,6 +295,11 @@ export default function Profile() {
         }
       );
       const data = await res.json();
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
   
     } catch (error) {
       console.log(error)
@@ -281,6 +320,11 @@ export default function Profile() {
       );
 
       const data = await res.json();
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
 
     } catch (error) {
       setEditProductError(true);

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useSearchParams as useReactSearchParams } from "react-router-dom";
+import {  useSearchParams as useReactSearchParams } from "react-router-dom";
 
 
 const useSearchParams = () => {

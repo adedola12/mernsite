@@ -46,20 +46,30 @@ export default function UpdateProduct() {
 
   const [editProductError, setEditProductError] = useState(false);
   const params = useParams();
+  const productId = params.productId;
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const productId = params.productId;
-      const res = await fetch(`${config.baseUrl}/api/product/get/${productId}`);
+      
+      if(!productId) return;
 
-      const data = await res.json();
-      console.log("fetched data", data.product);
+      try {
+        const res = await fetch(`${config.baseUrl}/api/product/get/${productId}`);
 
-      if (data.success === false) {
-        console.log(data.message);
-        return;
+        const data = await res.json();
+
+        if(!res.ok) {
+          toast.error(data?.message)
+          return;
+        }
+  
+        setFormData(data?.product);
+
+      } catch (error) {
+        toast.error(error?.message)
       }
-      setFormData(data.product);
+
+
     };
 
     fetchProduct();
@@ -77,6 +87,13 @@ export default function UpdateProduct() {
       );
 
       const data = await res.json();
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
+
     } catch (error) {
       setEditProductError(true);
     }
@@ -203,7 +220,7 @@ export default function UpdateProduct() {
       const response = await fetchWithTokenRefresh(
         `${config.baseUrl}/api/product/update/${params.productId}`,
         {
-          method: "POST",
+          method: "PUT",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
@@ -213,9 +230,16 @@ export default function UpdateProduct() {
       );
 
       const data = await response.json();
-      if (!response.ok)
-        throw new Error(data.message || "Failed to update product");
+      
+      if (!response.ok) {
+        toast.error(data?.message);
+        return;
+      }
+      
+      toast.success("Updated successfully");
+
       navigate(`/product/${data._id}`);
+
     } catch (error) {
       toast.error(error.message);
       setError(error.message);
