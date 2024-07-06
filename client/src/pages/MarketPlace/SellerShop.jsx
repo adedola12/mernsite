@@ -56,6 +56,8 @@ const NIGERIAN_STATES = [
   "FCT",
 ];
 
+const MAX_REVIEW = 5;
+
 export default function SellerShop() {
   // Review API GET REQUEST:: /api/review/get-reviews/sellerId
 
@@ -71,6 +73,8 @@ export default function SellerShop() {
   const [selectedTab, setSelectedTab] = useState(1);
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
 
   const [params, setParams, queryString] = useSearchParams();
 
@@ -87,17 +91,16 @@ export default function SellerShop() {
   };
 
   const fetchSellerProducts = async () => {
-
     const sellerId = userId;
 
-    if(!sellerId) {
-      alert("SellerId is required")
+    if (!sellerId) {
+      alert("SellerId is required");
       return;
     }
 
     try {
-      setIsSellerProductsLoading(true)
-        const fetchUrl = queryString
+      setIsSellerProductsLoading(true);
+      const fetchUrl = queryString
         ? `${config.baseUrl}/api/product/seller-products/${sellerId}?${queryString}`
         : `${config.baseUrl}/api/product/seller-products/${sellerId}`;
 
@@ -110,40 +113,34 @@ export default function SellerShop() {
       }
 
       const { data } = await response.json();
-  
+
       setSellerProducts(data?.products);
     } catch (error) {
-      
     } finally {
-      setIsSellerProductsLoading(false)
+      setIsSellerProductsLoading(false);
     }
-  }
-
-
+  };
 
   const fetchProductsByUser = async () => {
-  try {
-    setLoading(true);
-    const res = await fetch(
-      `${config.baseUrl}/api/product/user/${userId}`,
-      {
+    try {
+      setLoading(true);
+      const res = await fetch(`${config.baseUrl}/api/product/user/${userId}`, {
         credentials: "include",
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch products");
       }
-    );
-    if (!res.ok) {
-      throw new Error("Failed to fetch products");
-    }
 
-    const data = await res.json();
-    setProducts(data.products);
-    setUser(data.user);
-  } catch (error) {
-    setError(true);
-    throw new Error("Failed to fetch products");
-  } finally {
-    setLoading(false);
-  }
-};
+      const data = await res.json();
+      setProducts(data.products);
+      setUser(data.user);
+    } catch (error) {
+      setError(true);
+      throw new Error("Failed to fetch products");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmitReview = async (event) => {
     event.preventDefault();
@@ -193,7 +190,7 @@ export default function SellerShop() {
       setRating(0);
       toast.success("Review submitted");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError(error.message);
       toast.error(error.message);
     } finally {
@@ -213,8 +210,8 @@ export default function SellerShop() {
   };
 
   const handleChange = (type, value) => {
-    if(type === "location") setParams({ "location": value });
-    if(type === "category") setParams({ "category": value });
+    if (type === "location") setParams({ location: value });
+    if (type === "category") setParams({ category: value });
   };
 
   const debounceSearch = useCallback(
@@ -226,7 +223,7 @@ export default function SellerShop() {
 
   useEffect(() => {
     fetchSellerProducts();
-  }, [queryString])
+  }, [queryString]);
 
   useEffect(() => {
     fetchProductsByUser();
@@ -235,7 +232,6 @@ export default function SellerShop() {
   const handleShowNumber = () => {
     setShowNumber((prevState) => !prevState);
   };
-
 
   useEffect(() => {
     if (searchTerm) {
@@ -264,7 +260,7 @@ export default function SellerShop() {
         }
         const data = await res.json();
 
-        console.log(data);
+        console.log(data.reviews);
         setReviews(data.reviews);
       } catch (error) {
         setError(true);
@@ -368,7 +364,6 @@ export default function SellerShop() {
                     {/* Show Categories and Select Categories */}
                   </div>
                 </div>
-               
               </form>
             </div>
           </div>
@@ -381,14 +376,13 @@ export default function SellerShop() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
-             
               {sellerProducts && sellerProducts?.length > 0 ? (
                 sellerProducts.map((product) => (
                   <ProductItem key={product._id} product={product} />
                 ))
               ) : (
                 <p className="text-center col-span-12 text-lg font-semibold text-slate-500">
-                  { isSellerProductsLoading ? "Loading..." : "No product found" }
+                  {isSellerProductsLoading ? "Loading..." : "No product found"}
                 </p>
               )}
             </div>
@@ -446,7 +440,33 @@ export default function SellerShop() {
                 <>
                   <div className="flex flex-col flex-wrap gap-2 my-6">
                     <h2 className="text-base text-gray-500">REVIEWS SECTION</h2>
-                    <div className="flex flex-col w-full gap-3 "></div>
+                    {reviews.length > 0 ? (
+                      reviews.map((review) => (
+                        <div
+                          key={review.id}
+                          className="flex gap-3 p-2 items-center border-2 rounded-full"
+                        >
+                          <div className="rounded-lg my-2 flex items-start">
+                            <img
+                              src={review.seller.avatar}
+                              alt="customer img"
+                              className="rounded-full w-12 h-12 mr-4"
+                            />
+                          </div>
+                          <div className="">
+                            <p className="text-xl font-semibold">
+                              {review.name}
+                            </p>
+                            <div className="flex items-center flex-wrap gap-3">
+                              <StarRating rating={review.rating} readOnly />
+                            </div>
+                            <p className="text-xl">{review.comment}</p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="">No reviews yet.</p>
+                    )}
                   </div>
                 </>
               )}
