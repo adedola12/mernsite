@@ -2,7 +2,7 @@
 // https://mernsite-k2ky.onrender.com
 
 const prod = {
-  baseUrl: "https://mernsite-k2ky.onrender.com",
+  baseUrl: "https://adlmmarketplace.onrender.com",
 };
 
 // http://localhost:3000

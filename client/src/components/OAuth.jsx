@@ -20,12 +20,15 @@ export default function OAuth() {
     const auth = getAuth(app);
 
     try {
+
       setIsLoading(true);
+
       const result = await signInWithPopup(auth, provider);
       // const credential = GoogleAuthProvider.credentialFromResult(result);
 
       if(!result?.user?.uid) {
         alert("Unable to login, please try again");
+
         return;
       }
 

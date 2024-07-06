@@ -57,9 +57,7 @@ const NIGERIAN_STATES = [
 ];
 
 export default function SellerShop() {
-
-// Review API GET REQUEST:: /api/review/get-reviews/sellerId
-
+  // Review API GET REQUEST:: /api/review/get-reviews/sellerId
 
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -72,6 +70,7 @@ export default function SellerShop() {
   const { userId } = useParams();
   const [selectedTab, setSelectedTab] = useState(1);
   const [rating, setRating] = useState(0);
+  const [reviews, setReviews] = useState([]);
 
   const [params, setParams, queryString] = useSearchParams();
 
@@ -160,7 +159,12 @@ export default function SellerShop() {
       return;
     }
 
-    if(!reviewForm.email || !reviewForm.message || !reviewForm.name || !rating) {
+    if (
+      !reviewForm.email ||
+      !reviewForm.message ||
+      !reviewForm.name ||
+      !rating
+    ) {
       alert("All form fields are required to submit a review");
       return;
     }
@@ -243,6 +247,37 @@ export default function SellerShop() {
       setParams({ name: null });
     }
   }, [searchTerm, debounceSearch]);
+
+  // New useEffect to fetch reviews
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `${config.baseUrl}/api/review/get-reviews/${userId}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+        const data = await res.json();
+
+        console.log(data);
+        setReviews(data.reviews);
+      } catch (error) {
+        setError(true);
+        throw new Error("Failed to fetch reviews");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (selectedTab === 0) {
+      fetchReviews();
+    }
+  }, [selectedTab, userId]);
 
   return (
     <div className="">
