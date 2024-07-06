@@ -21,8 +21,6 @@ const ShopDetails = () => {
     handleShowProduct();
   }, []);
 
-  console.log(userProducts);
-  console.log(currentUser._id);
 
   const handleShowListing = async () => {
     try {
@@ -35,8 +33,6 @@ const ShopDetails = () => {
       );
 
       const data = await res.json();
-
-      console.log(data);
 
       setUserListings(data);
     } catch (error) {
@@ -216,7 +212,7 @@ const ShopDetails = () => {
                     <div className="flex items-center flex-row">
                       <img
                         src={product.imageUrls[0]}
-                        alt="product Image"
+                        alt="Product Image"
                         className="h-16 w-16 object-cover rounded-md mr-4"
                       />
                       <Link to={`/product/${product._id}`}>

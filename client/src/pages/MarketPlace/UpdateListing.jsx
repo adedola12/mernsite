@@ -9,6 +9,7 @@ import { app } from "../../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { config } from "../../../config";
+import toast from "react-hot-toast";
 
 export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -34,20 +35,27 @@ export default function UpdateListing() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const listingId = params.listingId;
+
   useEffect(() => {
     const fetchListing = async () => {
-      const listingId = params.listingId;
-      const res = await fetch(`${config.baseUrl}/api/listing/get/${listingId}`);
 
-      const data = await res.json();
-      //   console.log("fetched Data", data);
+      try {
+        const res = await fetch(`${config.baseUrl}/api/listing/get/${listingId}`);
 
-      if (data.success === false) {
-        console.log(data.message);
-        return;
-      }
+        const data = await res.json();
 
-      setFormData(data);
+        if(!res.ok) {
+          toast.error(data?.message)
+          return;
+        }
+
+        setFormData(data);
+        toast.success("Updated successfully")
+      } catch (error) {
+        toast.error(error?.message)
+      } 
+
     };
 
     fetchListing();
@@ -160,7 +168,7 @@ export default function UpdateListing() {
       setError(false);
 
       const res = await fetch(`/api/listing/update/${params.listingId}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -168,17 +176,18 @@ export default function UpdateListing() {
           ...formData,
           userRef: currentUser._id,
         }),
-      });
+        credentials: "include"
+      }
+    );
 
       const data = await res.json();
-      setLoading(false);
-
-      if (data.success === false) {
-        setError(data.message);
-      }
+   
       navigate(`/listing/${data._id}`);
+
     } catch (error) {
+      console.log(error)
       setError(error.message);
+    } finally {
       setLoading(false);
     }
   };

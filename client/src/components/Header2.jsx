@@ -13,8 +13,6 @@ import {
   signOutUser,
 } from "../redux/user/userSlice";
 import { config } from "../../config";
-import SignInModal from "../pages/MarketPlace/SignIn";
-import SignUpModal from "../pages/MarketPlace/SignUp";
 
 const Header2 = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -23,11 +21,9 @@ const Header2 = () => {
   const dispatch = useDispatch();
 
 
-  const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
-
-
-
+  const handleChangeAuthUrl = (urlString) => {
+      navigate(`?auth=${urlString}`);
+  }
 
   const [windowSize, setWindowSize] = useState(window.innerWidth ?? 0);
 
@@ -39,15 +35,6 @@ const Header2 = () => {
 
   const smallScreen = () => windowSize < 1024;
 
-  const toggleModal = (modalName) => {
-    if (modalName === "signIn") {
-      setShowSignInModal(!showSignInModal);
-      setShowSignUpModal(false);
-    } else if (modalName === "signUp") {
-      setShowSignUpModal(!showSignUpModal);
-      setShowSignInModal(false);
-    }
-  };
 
   const handleSignOut = async () => {
     try {
@@ -113,7 +100,7 @@ const Header2 = () => {
             <img
               src="..\logo\ADLM Studio Logo PNG-07.png"
               alt="adlmlogo"
-              className="w-16 h-16 lg:w-[95px] lg:h-[95px] pointer-events-none"
+              className="w-16 h-16 lg:w-[95px] lg:h-[90px] pointer-events-none"
             />
           </Link>
         </div>
@@ -242,16 +229,16 @@ const Header2 = () => {
             <ul className="flex items-center justify-between gap-2">
               {!currentUser && (
                 <>
-                  <li onClick={() => toggleModal("signIn")}>
-                    <Link className="rounded-full px-1 py-2 font-semibold text-[#00263D] hover:text-opacity-70 duration-300 bg-opacity-10 flex items-center group">
+                  <li onClick={() => handleChangeAuthUrl("sign-in")}>
+                    <button type="button" className="rounded-full px-3 py-2 font-semibold text-[#00263D] hover:text-opacity-70 duration-300 bg-opacity-10 flex items-center group">
                       <span className="">Sign In</span>
-                    </Link>
+                    </button>
                   </li>
-                  <li onClick={() => toggleModal("signUp")}>
-                    <Link className="rounded-full px-3 py-2 font-semibold text-[#00263D] bg-gray-900 bg-opacity-10 flex items-center group">
+                  <li onClick={() => handleChangeAuthUrl("sign-up")}>
+                    <button type="button" className="rounded-full px-3 py-2 font-semibold text-[#00263D] bg-gray-900 bg-opacity-10 flex items-center group">
                       <span className="">Sign Up</span>
                       <MdKeyboardArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition ease-in-out duration-200 mt-1" />
-                    </Link>
+                    </button>
                   </li>
                 </>
               )}
@@ -260,10 +247,10 @@ const Header2 = () => {
                   <Link to="/profile" className="">
                     <img
                       src={
-                        (currentUser?.avatar && currentUser?.avatar) ||
+                        currentUser?.avatar ? currentUser?.avatar :
                         "https://placehold.jp/150x150.png"
                       }
-                      alt="pp"
+                      alt="profile image"
                       className="rounded-full h-7 w-7 object-cover pointer-events-none"
                     />
                   </Link>
@@ -405,14 +392,12 @@ const Header2 = () => {
               </div>
             )}
 
-            {/* <li onClick={closeNavMenu} className='relative group px-1 py-2'> 
-                    </li> */}
+            {/* <li onClick={closeNavMenu} className='relative group px-1 py-2'>  </li> */}
           </ul>
         </nav>
       )}
     </header>
-    {showSignInModal && <SignInModal onClose={() => toggleModal("signIn")} />}
-    {showSignUpModal && <SignUpModal onClose={() => toggleModal("signUp")} />}
+    
     </>
   );
 };

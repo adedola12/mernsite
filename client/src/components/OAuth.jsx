@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import { config } from "../../config";
+import toast from "react-hot-toast";
+import { PiSpinnerGapBold } from "react-icons/pi";
 
-export default function OAuth({ onClose }) {
+
+export default function OAuth() {
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -16,7 +20,7 @@ export default function OAuth({ onClose }) {
     const auth = getAuth(app);
 
     try {
-
+      setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
       // const credential = GoogleAuthProvider.credentialFromResult(result);
 
@@ -39,16 +43,25 @@ export default function OAuth({ onClose }) {
       });
 
       const data = await res.json();
-      
+
+      if(!res.ok) {
+        toast.error(data?.message)
+        return;
+      }
+
       dispatch(signInSuccess(data));
-      onClose();
       navigate("/");
+
     } catch (error) {
       if (error.code === 'auth/popup-closed-by-user') {
         console.error('The popup was closed before completing the sign-in process.', error);
+        toast.error("Unable to signin, please try again")  
       } else {
-        console.error('An error occurred during sign-in:', error);        
+        console.error('An error occurred during sign-in:', error);
+        toast.error("An error occured, please try again")    
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -56,9 +69,14 @@ export default function OAuth({ onClose }) {
     <button
       onClick={handleGoogleClick}
       type="button"
-      className="mt-2 p-3 w-full bg-red-600 text-white rounded"
+      className="mt-2 p-3 w-full disabled:cursor-not-allowed disabled:bg-red-400 bg-red-600 text-white rounded flex items-center justify-center"
     >
-      Continue with google
+        {
+            isLoading
+            ? <PiSpinnerGapBold className="text-white animate-spine" />
+            : "Continue with google"
+        }
+      
     </button>
   );
 }

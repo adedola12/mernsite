@@ -22,6 +22,7 @@ import SellerShop from "./pages/MarketPlace/SellerShop";
 import PrivateRoute from "./components/PrivateRoute";
 import UpdateProduct from "./pages/MarketPlace/UpdateProduct";
 import MainLayout from "./pages/MarketPlace/MainLayout";
+import AuthForm from "./components/auth/AuthForm";
 
 export default function App() {
 
@@ -60,7 +61,7 @@ export default function App() {
 
         </Route>
       </Routes>
-
+      <AuthForm />
     </BrowserRouter>
   );
 }

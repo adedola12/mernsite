@@ -116,7 +116,7 @@ export default function SignUpModal({ onClose }) {
           </form>
 
           <div className="flex my-5 mx-auto max-w-lg gap-2">
-            <p>Have an account?</p>
+            <p>Already have an account?</p>
             <button onClick={toggleSignInModal}>
               <span className="text-blue-600">Sign in</span>
             </button>

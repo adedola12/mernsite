@@ -162,9 +162,10 @@ export default function SignInModal({ onClose }) {
                 {loading ? "Please wait..." : "SIGN IN"}
               </button>
               <OAuth onClose={onClose} />
-              <div className="mt-3 text-center">
+              <div className="flex my-5 mx-auto max-w-lg gap-2 items-center justify-center">
+                <p>Don{"'"}t have an account?</p>
                 <button onClick={toggleSignUpModal} className="text-[#828282]">
-                  Create account
+                  <span className="text-blue-600">Signup</span>
                 </button>
               </div>
             </form>
