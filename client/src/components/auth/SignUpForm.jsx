@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import OAuth from '../OAuth'
+import OAuth from './OAuth'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { config } from '../../../config';
@@ -54,7 +54,8 @@ const SignUpForm = () => {
           return;
         }
         
-        navigate("/");
+        navigate("/", {replace: true});
+        navigate(0)
       } catch (error) {
         toast.error("An error occured, please try again")
       } finally {
@@ -119,7 +120,7 @@ const SignUpForm = () => {
           <OAuth />
           <div className="flex my-5 mx-auto max-w-lg gap-2">
             <p>Already have an account?</p>
-            <button onClick={() => handleChangeAuthUrl("sign-in")}>
+            <button type='button' onClick={() => handleChangeAuthUrl("sign-in")}>
               <span className="text-blue-600">Sign in</span>
             </button>
           </div>

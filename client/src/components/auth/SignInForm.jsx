@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import OAuth from '../OAuth'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { signInFaliure, signInStart, signInSuccess } from '../../redux/user/userSlice';
 import { config } from '../../../config';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { PiSpinnerGapBold } from "react-icons/pi";
+import OAuth from './OAuth';
 
 
 const SignInForm = () => {
@@ -62,7 +62,8 @@ const SignInForm = () => {
         }
 
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/", {replace: true});
+        navigate(0)
       } catch (error) {
         toast.error("An error occured, please try again")
         dispatch(signInFaliure(error.message));
@@ -123,10 +124,10 @@ const SignInForm = () => {
         </button>
         </form>
 
-        <OAuth  />
+        <OAuth />
         <div className="flex my-5 mx-auto max-w-lg gap-2 items-center justify-center">
         <p>Don{"'"}t have an account?</p>
-        <button onClick={() => handleChangeAuthUrl("sign-up")} className="text-[#828282]">
+        <button type='button' onClick={() => handleChangeAuthUrl("sign-up")} className="text-[#828282]">
           <span className="text-blue-600">Signup</span>
         </button>
         </div>

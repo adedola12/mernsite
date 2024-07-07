@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +44,7 @@ const ResetPassword = () => {
           return;
         }
 
-        navigate("/");
+        navigate("/", {replace: true});
       } catch (error) {
         toast.error("An error occured, please try again")
       } finally {
@@ -74,7 +73,6 @@ const ResetPassword = () => {
         className="text-sm text-center w-full text-blue-600 my-3 hover:underline "
         onClick={() => handleChangeAuthUrl("sign-in")}
       >
-
         Login with email and password?
       </button>
       <button

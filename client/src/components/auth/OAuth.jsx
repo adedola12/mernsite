@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { app } from "../firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase";
 import { useDispatch } from "react-redux";
-import { signInSuccess } from "../redux/user/userSlice";
+import { signInSuccess } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
-import { config } from "../../config";
+import { config } from "../../../config";
 import toast from "react-hot-toast";
 import { PiSpinnerGapBold } from "react-icons/pi";
+
 
 
 export default function OAuth() {
@@ -16,9 +17,9 @@ export default function OAuth() {
   const navigate = useNavigate();
 
   const handleGoogleClick = async () => {
+ 
     const provider = new GoogleAuthProvider();
-    const auth = getAuth(app);
-
+    
     try {
       setIsLoading(true);
       const result = await signInWithPopup(auth, provider);
@@ -50,15 +51,15 @@ export default function OAuth() {
       }
 
       dispatch(signInSuccess(data));
-      navigate("/");
-
+      navigate("/", {replace: true});
+      navigate(0)
     } catch (error) {
       if (error.code === 'auth/popup-closed-by-user') {
         console.error('The popup was closed before completing the sign-in process.', error);
-        toast.error("Unable to signin, please try again")  
+        toast.error("Unable to signin!, please try again")  
       } else {
         console.error('An error occurred during sign-in:', error);
-        toast.error("An error occured, please try again")    
+        toast.error("An error occured!, please try again")    
       }
     } finally {
       setIsLoading(false);
@@ -67,6 +68,7 @@ export default function OAuth() {
 
   return (
     <button
+    disabled={isLoading}
       onClick={handleGoogleClick}
       type="button"
       className="mt-2 p-3 w-full disabled:cursor-not-allowed disabled:bg-red-400 bg-red-600 text-white rounded flex items-center justify-center"

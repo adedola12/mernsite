@@ -1,5 +1,5 @@
 // HomeA.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   FaArrowDown,
   FaArrowLeft,
@@ -11,23 +11,9 @@ import { Link,  } from "react-router-dom";
 
 import "swiper/css/bundle";
 import ImageSlider from "../../components/ImageSlider";
-import PageLoader from "../../components/PageLoader";
 
 export default function Home() {
-    
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    if(isLoading) {
-      setTimeout(() => {
-        setIsLoading(false)
-      }, 2000)
-    }
-  }, [isLoading])
-
-  if(isLoading) {
-    return <PageLoader />
-  }
 
   return (
     <>
