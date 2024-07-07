@@ -6,8 +6,8 @@ import { ImSpinner9 } from "react-icons/im";
 const PageLoader = () => {
 
   return (
-    <div  className="fixed px-2 z-50 inset-0 bg-white bg-opacity-5 backdrop-blur-md overflow-y-auto min-h-screen w-full" >
-    <div className="w-full h-screen flex items-center justify-center">
+    <div  className="fixed z-50 inset-0 bg-white bg-opacity-5 backdrop-blur-md overflow-y-auto min-h-screen w-full" >
+    <div className="w-full h-full flex flex-col items-center justify-center">
         <ImSpinner9 className='text-[#00263D] animate-spin' size={50} />
     </div>
   </div>
