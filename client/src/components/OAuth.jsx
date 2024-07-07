@@ -73,7 +73,7 @@ export default function OAuth() {
     >
         {
             isLoading
-            ? <PiSpinnerGapBold className="text-white animate-spine" />
+            ? <PiSpinnerGapBold className="text-white animate-spin" />
             : "Continue with google"
         }
       

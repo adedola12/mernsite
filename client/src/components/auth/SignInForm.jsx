@@ -117,7 +117,7 @@ const SignInForm = () => {
         >
             {
               isLoading
-              ? <PiSpinnerGapBold className="text-white animate-spine" />
+              ? <PiSpinnerGapBold className="text-white animate-spin" />
               : "SIGN IN"
             }
         </button>

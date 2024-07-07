@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 
 import "swiper/css/bundle";
 import ImageSlider from "../../components/ImageSlider";
-import Marketplace from "../../components/MarketPlace";
 
 export default function Home() {
   return (
