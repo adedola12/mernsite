@@ -56,10 +56,10 @@ export default function OAuth() {
     } catch (error) {
       if (error.code === 'auth/popup-closed-by-user') {
         console.error('The popup was closed before completing the sign-in process.', error);
-        toast.error("Unable to signin!, please try again")  
+        toast.error("Unable to signin, please try again")  
       } else {
         console.error('An error occurred during sign-in:', error);
-        toast.error("An error occured!, please try again")    
+        toast.error("An error occured, please try again")    
       }
     } finally {
       setIsLoading(false);
