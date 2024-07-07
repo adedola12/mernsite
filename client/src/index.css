@@ -5,6 +5,6 @@
 
 @layer base {
     body {
-        @apply bg-gray-600 bg-opacity-50 backdrop-blur-md min-h-screen scroll-smooth;
+        @apply bg-white bg-opacity-50 backdrop-blur-md min-h-screen scroll-smooth;
     }
 }
