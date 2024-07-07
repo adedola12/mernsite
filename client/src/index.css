@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background-color: #ece8e8;
-    min-height: 100vh;
+
+@layer base {
+    body {
+        @apply bg-gray-600 bg-opacity-50 backdrop-blur-md min-h-screen scroll-smooth;
+    }
 }

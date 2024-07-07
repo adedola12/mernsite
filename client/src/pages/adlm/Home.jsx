@@ -1,5 +1,5 @@
 // HomeA.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaArrowDown,
   FaArrowLeft,
@@ -7,14 +7,31 @@ import {
   FaPlay,
   FaStar,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 import "swiper/css/bundle";
 import ImageSlider from "../../components/ImageSlider";
+import PageLoader from "../../components/PageLoader";
 
 export default function Home() {
+    
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if(isLoading) {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
+    }
+  }, [isLoading])
+
+  if(isLoading) {
+    return <PageLoader />
+  }
+
   return (
-    <main className="min-h-screen">
+    <>
+    <main className="h-full">
       {/* Top Section */}
       <div className="w-full text-center md:text-start">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:py-16 px-4 sm:px-0 lg:pl-10  gap-5">
@@ -353,5 +370,6 @@ export default function Home() {
       </div>
       {/* News Letter */}
     </main>
+    </>
   );
 }

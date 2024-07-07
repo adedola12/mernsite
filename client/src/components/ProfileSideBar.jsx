@@ -41,9 +41,8 @@ export default function ProfileSideBar() {
       }
 
       dispatch(signOutSuccess(data));
-
       navigate("/", { replace: true });
-      navigate(0);
+      // navigate(0);
 
     } catch (error) {
       dispatch(signOutFaliure("Error signing out"));
