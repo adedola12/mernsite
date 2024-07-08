@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CATEGORY_DATA } from "../constants/data";
+import { PiSpinnerGapBold } from "react-icons/pi";
 
 const CreateProductStageTwo = ({
   previousStep,
@@ -180,9 +181,15 @@ const CreateProductStageTwo = ({
           <button
             onClick={handleSubmit}
             type="button"
-            className="px-12 py-3 ml-auto inline-block text-white bg-blue-950 hover:bg-blue-900 duration-200 rounded-md "
+            disabled={isLoading}
+            className="px-12 py-3 ml-auto  disabled:cursor-not-allowed disabled:bg-[#00263d85] flex items-center justify-center text-white bg-blue-950 hover:bg-blue-900 duration-200 rounded-md "
           >
-            {isLoading ? "Creating..." : "Create Product"}
+            {
+              isLoading
+              ? <PiSpinnerGapBold className="text-white animate-spin" />
+              : "Create Product"
+            }
+
           </button>
         </div>
       </div>

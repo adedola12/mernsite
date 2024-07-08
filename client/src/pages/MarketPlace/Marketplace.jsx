@@ -111,14 +111,14 @@ export default function Marketplace() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-4 items-center w-full lg:max-w-6xl mx-auto  px-3">
+      <div className="flex flex-col md:flex-row gap-4 items-center w-full lg:max-w-6xl mx-auto mb-4 px-3">
         {/* TODO: ADD SIDEBAR FUNCTIONALITY AND CODE FUNCIONALITY */}
         <div className="bg-white w-full flex-1 rounded-lg lg:p-6 mt-4">
           <div className="p-3 w-full">
             <h2 className="text-2xl font-semibold mb-4 inline-block">
               ADLM Marketplace
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5  w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 place-items-center gap-5 w-full">
               {isloading ? (
                 <h2 className="text-center col-span-1 sm:col-span-2 lg:col-span-4  text-lg font-semibold text-slate-500">
                   Loading...
