@@ -147,6 +147,7 @@ export default function CreateProduct() {
   };
 
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
 
     const { categories: categoryName } = formData;
@@ -230,7 +231,7 @@ export default function CreateProduct() {
       categoryName,
       userRef: currentUser._id,
     };
-
+    setLoading(true)
     try {
       const response = await fetchWithTokenRefresh(
         `${config.baseUrl}/api/product/create-product`,
