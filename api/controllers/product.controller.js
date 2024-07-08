@@ -33,7 +33,7 @@ export const createProduct = async (req, res, next) => {
       storeAddress,
       type,
       regularPrice,
-      discountPrice,
+      discountPrice: regularPrice,
       discount,
       imageUrls,
       mobile,

@@ -198,11 +198,6 @@ export default function CreateProduct() {
       return;
     }
 
-    if(!formData.discountPrice.trim()) {
-      toast.error("Product discountPrice is required");
-      return;
-    }
-
     if(!formData.unit.trim()) {
       toast.error("Product unit is required");
       return;
