@@ -16,8 +16,8 @@ const Modal = ({children, showModal, onCloseModal}) => {
       if(!showModal) return null;
     
       return (
-        <div onClick={onCloseModal} className="fixed px-2 z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-md overflow-y-auto h-full w-full" >
-          <div className="w-full h-full items-center justify-center" >
+        <div onClick={onCloseModal} className="fixed px-2 z-50 inset-0 bg-gray-600 bg-opacity-50 backdrop-blur-md overflow-y-auto min-h-dvh w-full" >
+          <div className="w-full h-full flex flex-col items-center justify-center" >
             {children}
           </div>
         </div>
