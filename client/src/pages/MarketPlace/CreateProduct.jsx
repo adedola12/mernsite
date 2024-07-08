@@ -20,6 +20,7 @@ import { config } from "../../../config";
 import fetchWithTokenRefresh from "../../hooks/fetchWithTokenRefresh";
 
 export default function CreateProduct() {
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -44,6 +45,8 @@ export default function CreateProduct() {
   const navigate = useNavigate();
 
   const [steps, setSteps] = useState(1);
+
+
 
   const previousStep = () => {
     setSteps((prevState) => prevState - 1);
@@ -147,7 +150,79 @@ export default function CreateProduct() {
     e.preventDefault();
 
     const { categories: categoryName } = formData;
-    const subCategories = CATEGORY_DATA[formData.categories];
+
+    if(!formData?.categories) {
+      toast.error("Product category is required");
+      return;
+    }
+
+    if(!formData.name.trim()) {
+      toast.error("Product name is required");
+      return;
+    }
+
+
+    if(!formData.name.trim()) {
+      toast.error("Product name is required");
+      return;
+    }
+
+    if(!formData.description.trim()) {
+      toast.error("Product description is required");
+      return;
+    }
+
+    if(!formData.location.trim()) {
+      toast.error("Product location is required");
+      return;
+    }
+
+    if(!formData.storeAddress.trim()) {
+      toast.error("Product storeAddress is required");
+      return;
+    }
+
+    if(!formData.type.trim()) {
+      toast.error("Product type is required");
+      return;
+    }
+
+    if(!formData.categories.trim()) {
+      toast.error("Product categories is required");
+      return;
+    }
+
+    if(!formData.regularPrice.trim()) {
+      toast.error("Product regularPrice is required");
+      return;
+    }
+
+    if(!formData.discountPrice.trim()) {
+      toast.error("Product discountPrice is required");
+      return;
+    }
+
+    if(!formData.unit.trim()) {
+      toast.error("Product unit is required");
+      return;
+    }
+
+    if(!formData.mobile.trim()) {
+      toast.error("Mobile number is required");
+      return;
+    }
+
+    if(!formData.imageUrls?.length) {
+      toast.error("Product images are required");
+      return;
+    }
+
+    const subCategories = CATEGORY_DATA[formData?.categories];
+
+    if(!subCategories) {
+      toast.error("Product category is required");
+      return;
+    }
 
     const submissionData = {
       ...formData,
@@ -170,12 +245,17 @@ export default function CreateProduct() {
       );
 
       const data = await response.json();
-      if (!response.ok)
-        throw new Error(data.message || "Failed to create product");
+
+      if (!response.ok) {
+        toast.error(data?.message);
+        return;
+      }
+
+      toast.success("Product created");
       navigate(`/product/${data._id}`);
     } catch (error) {
-      toast.error(error.message);
       setError(error.message);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

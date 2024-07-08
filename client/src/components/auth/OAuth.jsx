@@ -52,7 +52,7 @@ export default function OAuth() {
 
       dispatch(signInSuccess(data));
       navigate("/", {replace: true});
-      navigate(0)
+      // navigate(0)
     } catch (error) {
       if (error.code === 'auth/popup-closed-by-user') {
         console.error('The popup was closed before completing the sign-in process.', error);

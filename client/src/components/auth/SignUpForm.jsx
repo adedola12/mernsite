@@ -55,7 +55,6 @@ const SignUpForm = () => {
         }
         
         navigate("/", {replace: true});
-        navigate(0)
       } catch (error) {
         toast.error("An error occured, please try again")
       } finally {

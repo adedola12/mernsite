@@ -11,7 +11,7 @@ import OAuth from './OAuth';
 const SignInForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
   
     const [formInput, setFormInput] = useState({
     email: "",
@@ -60,10 +60,9 @@ const SignInForm = () => {
           toast.error(data?.message)
           return;
         }
-
+        
         dispatch(signInSuccess(data));
         navigate("/", {replace: true});
-        navigate(0)
       } catch (error) {
         toast.error("An error occured, please try again")
         dispatch(signInFaliure(error.message));
