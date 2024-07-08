@@ -21,6 +21,7 @@ import {
   updateUserSuccess,
 } from "../../redux/user/userSlice";
 import { config } from "../../../config";
+import { PiSpinnerGapBold } from "react-icons/pi";
 
 const views = {
   Personal_Details: "PersonalDetails",
@@ -129,11 +130,12 @@ export default function Profile() {
         toast.error(data?.message)
         return;
       }
+
       toast.success("Updated successfully")
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
-      dispatch(updateUserFaliure(error.message));
+      dispatch(updateUserFaliure(error?.message));
     }
   };
 
@@ -285,6 +287,7 @@ export default function Profile() {
 
   const handleListingEdit = async (listingId) => {
     try {
+
       setEditListingError(false);
 
       const res = await fetch(
@@ -294,6 +297,7 @@ export default function Profile() {
           credentials: "include",
         }
       );
+
       const data = await res.json();
 
       if(!res.ok) {
@@ -302,7 +306,6 @@ export default function Profile() {
       }
   
     } catch (error) {
-      console.log(error)
       setEditListingError(true);
     }
   };
@@ -409,11 +412,15 @@ export default function Profile() {
                 />
 
                 <button
-                  className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+                  className="disabled:cursor-not-allowed disabled:bg-[#00263d85] bg-[#00263D] text-white text-bold rounded-lg flex items-center justify-center max-w-auto p-3 hover:opacity-80 uppercase"
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "Please wait" : "Update"}
+                  {
+                      loading
+                      ? <PiSpinnerGapBold className="text-white animate-spin" />
+                      : "Update"
+                    }
                 </button>
               </form>
             </>
@@ -504,11 +511,15 @@ export default function Profile() {
                 />
 
                 <button
-                  className="bg-[#00263D] text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
+                  className="disabled:cursor-not-allowed disabled:bg-[#00263d85] bg-[#00263D] flex items-center justify-center text-white text-bold rounded-lg max-w-auto p-3 hover:opacity-80 uppercase"
                   type="submit"
                   disabled={loading}
                 >
-                  {loading ? "Please wait" : "Update"}
+                   {
+                      loading
+                      ? <PiSpinnerGapBold className="text-white animate-spin" />
+                      : "Update"
+                    }
                 </button>
               </form>
             </>

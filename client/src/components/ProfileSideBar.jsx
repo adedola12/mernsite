@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   deleteUserFaliure,
@@ -11,6 +11,8 @@ import {
 } from "../redux/user/userSlice";
 import { LuArrowLeftSquare, LuPower } from "react-icons/lu";
 import { config } from "../../config";
+import toast from 'react-hot-toast';
+
 
 export default function ProfileSideBar() {
   const location = useLocation();
@@ -24,17 +26,27 @@ export default function ProfileSideBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+
   const handleSignOut = async () => {
+
     try {
+
       dispatch(signOutUser());
 
       const res = await fetch(`${config.baseUrl}/api/auth/signout`);
 
       const data = await res.json();
 
-      dispatch(signOutSuccess(data));
+      if(!res.ok) {
+        toast.error(data?.message);
+        return;
+      }
 
-      navigate("/", { replace: true });
+      dispatch(signOutSuccess(data));
+      navigate("/", {replace: true});
+      navigate(0);
     } catch (error) {
       dispatch(signOutFaliure("Error signing out"));
     } finally {

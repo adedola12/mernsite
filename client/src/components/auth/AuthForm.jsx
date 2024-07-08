@@ -25,17 +25,17 @@ const AuthForm = () => {
 
   return (
     <>
-    <AuthModal onCloseModal={() => handleCloseModal()} showModal={showModal}>
+    <AuthModal onCloseModal={handleCloseModal} showModal={showModal}>
 
-    <div  className="relative mx-auto border w-full md:max-w-96 shadow-lg rounded-md bg-white" >
+    <div  className="relative mx-auto border bg-white w-full flex flex-col items-center justify-center md:max-w-96 shadow-lg rounded-md " >
         <button
           onClick={handleCloseModal}
-          className="absolute group top-2 right-2 h-8 w-8 flex items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300"
+          className="absolute group top-2 right-2 h-8 w-8 flex flex-col items-center justify-center text-lg rounded-full hover:bg-gray-200 duration-300"
         >
           <MdClose  className="text-gray-500 group-hover:text-gray-600" />
         </button>
 
-        <div className="flex p-5 flex-col items-center justify-center" onClick={event => event.stopPropagation()}>
+        <div className="flex flex-col items-center justify-center p-5" onClick={event => event.stopPropagation()}>
             <img
                 src="..\logo\ADLM Studio Logo PNG-07.png" 
                 alt="ADLM Logo" 

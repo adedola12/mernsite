@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import OAuth from '../OAuth'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { signInFaliure, signInStart, signInSuccess } from '../../redux/user/userSlice';
 import { config } from '../../../config';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import { PiSpinnerGapBold } from "react-icons/pi";
+import OAuth from './OAuth';
 
 
 const SignInForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
   
     const [formInput, setFormInput] = useState({
     email: "",
@@ -60,9 +60,9 @@ const SignInForm = () => {
           toast.error(data?.message)
           return;
         }
-
+        
         dispatch(signInSuccess(data));
-        navigate("/");
+        navigate("/", {replace: true});
       } catch (error) {
         toast.error("An error occured, please try again")
         dispatch(signInFaliure(error.message));
@@ -117,16 +117,16 @@ const SignInForm = () => {
         >
             {
               isLoading
-              ? <PiSpinnerGapBold className="text-white animate-spine" />
+              ? <PiSpinnerGapBold className="text-white animate-spin" />
               : "SIGN IN"
             }
         </button>
         </form>
 
-        <OAuth  />
+        <OAuth />
         <div className="flex my-5 mx-auto max-w-lg gap-2 items-center justify-center">
         <p>Don{"'"}t have an account?</p>
-        <button onClick={() => handleChangeAuthUrl("sign-up")} className="text-[#828282]">
+        <button type='button' onClick={() => handleChangeAuthUrl("sign-up")} className="text-[#828282]">
           <span className="text-blue-600">Signup</span>
         </button>
         </div>
