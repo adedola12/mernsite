@@ -25,7 +25,7 @@ const AuthForm = () => {
 
   return (
     <>
-    <AuthModal onCloseModal={() => handleCloseModal()} showModal={showModal}>
+    <AuthModal onCloseModal={handleCloseModal} showModal={showModal}>
 
     <div  className="relative mx-auto border w-full md:max-w-96 shadow-lg rounded-md bg-white" >
         <button

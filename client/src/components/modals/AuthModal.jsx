@@ -16,7 +16,7 @@ const AuthModal = ({children, showModal, onCloseModal}) => {
   if(!showModal) return null;
 
   return (
-    <div onClick={onCloseModal} className="fixed z-50 inset-0 bg-white bg-opacity-50 backdrop-blur-md overflow-y-auto min-h-dvh w-full" >
+    <div onClick={() => onCloseModal()} className="fixed z-50 inset-0 bg-white bg-opacity-5 backdrop-blur-md overflow-y-auto min-h-dvh w-full" >
       <div className="w-full h-screen flex flex-col items-center justify-center px-2" >
         {children}
       </div>
