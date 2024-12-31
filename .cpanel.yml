@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export NVM_DIR="$HOME/.nvm"
+    - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    - nvm install # Installs node version from .nvmrc
+    - npm install # Install dependencies
+    - npm run build # Build your project (if applicable)
+    - /bin/cp -r build/* /home/yourusername/public_html/ # Copy the build output to your web root
