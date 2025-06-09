@@ -46,7 +46,7 @@ app.use(
       "http://localhost:5174",
       "http://127.0.0.1:3000",
       "https://mernsite-frontend.onrender.com",
-      "https://adlmmarketplace.onrender.com",
+      "https://adlmmarketplace-m9fk.onrender.com",
       "https://adlmmarketplace.vercel.app",
       "https://www.adlmstudio.net",
       "https://accounts.google.com",

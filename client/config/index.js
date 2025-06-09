@@ -2,11 +2,11 @@
 // https://mernsite-k2ky.onrender.com
 
 const prod = {
-  baseUrl: "https://adlmmarketplace.onrender.com",
+  baseUrl: "https://adlmmarketplace-m9fk.onrender.com",
 };
 
 // http://localhost:3000
-// "https://adlmmarketplace.onrender.com
+// "https://adlmmarketplace-m9fk.onrender.com
 // https://mernsite-k2ky.onrender.com
 
 // PLEASE DO NOT CHANGE THE VALUE IN THE dev.baseUrl
