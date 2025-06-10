@@ -19,20 +19,8 @@ const allowedOrigins = [
   "https://adlmmarketplace-git-main-adedola12s-projects.vercel.app",
   "https://www.adlmstudio.net",
   "https://accounts.google.com",
-  "https://mernsite.firebaseapp.com",
+  "adlm-marketplace.firebaseapp.com",
 ];
-
-// const corsOptions = {
-//   origin: (origin, callback) => {
-
-//     if (allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-// };
 
 const corsOptions = {
   origin: allowedOrigins,
@@ -50,7 +38,7 @@ app.use(
       "https://adlmmarketplace.vercel.app",
       "https://www.adlmstudio.net",
       "https://accounts.google.com",
-      "https://mernsite.firebaseapp.com",
+      "https://adlm-marketplace.firebaseapp.com",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
     allowedHeaders: [
